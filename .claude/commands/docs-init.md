@@ -1,0 +1,70 @@
+---
+description: Bootstrap the docs/ system — interview the user and generate the Tier-0 documentation
+---
+
+# /docs-init — Bootstrap the documentation system
+
+You are bootstrapping this project's `docs/` from the `ai-docs-template` skeleton.
+The human will NOT write docs — you generate them. Read
+`docs/_meta/DOCS_SYSTEM.md` first if you haven't this session.
+
+## Idempotency check (do this first)
+
+Read `docs/INDEX.md` front-matter. If `status: active` (already bootstrapped),
+**do not overwrite** — switch to *reconcile mode*: report what exists, run the
+`/docs-audit` checks, and offer to fill only missing/stale Tier-0 docs. Otherwise
+proceed with a fresh bootstrap below.
+
+## Step 1 — Infer silently
+
+Scan the repo before asking anything:
+- Manifests: `package.json`, `pyproject.toml`, `go.mod`, `Cargo.toml`, `composer.json`, etc. → stack + deps.
+- Framework/config files (Next.js, Vite, Nuxt, Django, Rails, etc.) → project type (web?) and structure.
+- `src/` / app layout → modules for the architecture source map.
+- Existing `README`, and `git log` → intent and activity.
+
+Build a draft model of stack, type, and structure from this.
+
+## Step 2 — Ask a short, batched interview (in TURKISH)
+
+Ask **all** of these in ONE message, numbered, and wait for the answers. Keep it to
+these ~6 — never an interrogation. Phrase in Turkish:
+
+1. Bu proje **ne** ve **kim için**? (bir-iki cümle)
+2. Önümüzdeki kilometre taşı için **en önemli 1–3 hedef** ne?
+3. Açıkça **kapsam dışı** (non-goal) olan bir şey var mı?
+4. **Zorunlu kısıtlar** var mı? (X kullanılmalı, Y üzerinde çalışmalı, deadline…)
+5. Tahmin ettiğim teknoloji yığını şu: **<inferred stack>** — doğru mu, ekleme/çıkarma?
+6. Projenin **görünen adı** ne olsun?
+
+If the stack was fully inferable, still confirm it in Q5. Everything else
+(architecture skeleton, tech-stack table, initial state) you draft yourself.
+
+## Step 3 — Draft Tier-0 from answers + inference
+
+Populate, using `docs/_meta/templates/*` and the existing stubs:
+- `docs/project-brief.md` — from Q1–Q4, Q6.
+- `docs/tech-stack.md` — from inference + Q5 (fill the tables; leave ADR column blank until a decision is recorded).
+- `docs/architecture.md` — Overview + a Source map from the actual directory tree (even if skeletal); Components from what exists.
+- `docs/STATE.md` — `Now` = "project bootstrapped"; `Next steps` = the Q2 milestone goals; `health: green`; set `session: 1`, `branch` to the current branch.
+- `docs/INDEX.md` — set front-matter `project_type`, `current_tier: 0`, `status: active`, `last_verified: <today>`; refresh the `updated`/`status` cells to `fresh`.
+- Leave `ADR-0001` as-is (it already records adopting the system).
+
+Write doc **content in the project's own language** (match the user's answers);
+keep the structural labels/front-matter in English.
+
+Respect size caps (`DOCS_SYSTEM.md §7`): STATE ≤ ~400 tokens, INDEX ≤ ~600.
+
+## Step 4 — Preview & confirm (in TURKISH)
+
+Before writing, show a compact preview: the file list + a 2–3 line summary of each.
+Ask: **"Bunları oluşturayım mı?"** Wait for a yes. This is the one confirmation gate.
+
+## Step 5 — Write & report (in TURKISH)
+
+Write the files, then print a short Turkish note:
+- Hangi dosyalar oluşturuldu,
+- Bundan sonra dokümanların **otomatik** olarak (sen kod yazdıkça) güncelleneceği,
+- İstediğinde `/docs-audit` ile manuel tutarlılık kontrolü yapılabileceği.
+
+Do **not** create Tier-1/2 docs now — they appear when their triggers fire.

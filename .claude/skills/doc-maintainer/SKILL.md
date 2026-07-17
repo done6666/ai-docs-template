@@ -1,0 +1,62 @@
+---
+name: doc-maintainer
+description: Keep this project's docs/ in sync with the code, autonomously. Use whenever finishing a task or work session, making an architectural or technology decision, starting or completing a feature, or changing dependencies, routes, data models, or module structure — i.e. any time the codebase changes in a way a doc in docs/ should reflect. The human never edits docs; you do.
+---
+
+# doc-maintainer
+
+This project uses the AI-managed, tiered `docs/` system. **You own `docs/`; the
+human never edits it.** Maintaining docs is part of finishing the task, not a
+separate thing to ask permission for. Announce doc changes in one line.
+
+The authoritative spec is `docs/_meta/DOCS_SYSTEM.md` — consult it for full
+semantics, templates, and the fact-ownership matrix. This skill is the operational
+checklist.
+
+## Before you write: orient
+
+If you haven't this session, read `docs/INDEX.md` then `docs/STATE.md`. Use
+`INDEX.md`'s **routing table** to decide *where* a fact goes and its **load rules**
+to decide *what* to open. Never crawl the tree.
+
+## Triggers → actions
+
+Apply these as they occur:
+
+| Trigger | Action → target |
+|---------|-----------------|
+| Session ending / context compacting | Rewrite `docs/STATE.md` (Now, In progress, Next steps, Open questions, Blockers, Do-not-repeat, Uncommitted work) |
+| Decision with a lasting trade-off | Append `docs/decisions/ADR-NNNN-*` (template: `_meta/templates/adr.md`); link from `architecture.md`; add to `decisions/README.md` |
+| Non-trivial feature starting | Create `docs/features/FEAT-*` **before** coding (template: `_meta/templates/feature.md`) |
+| Feature completed | Mark spec `shipped`; fold summary into `STATE.md`; update `architecture.md` if structure changed; add a `CHANGELOG.md` `[Unreleased]` entry |
+| Dependency/tool added/removed/major-bumped | Update `docs/tech-stack.md` |
+| Module/boundary/data-flow change | Update `docs/architecture.md` (Components / Source map / Invariants) |
+| Route/endpoint added or changed | Update `docs/api/*` (create the `api/` area if first → Tier 1) |
+| Schema / data-model change | Update `docs/data-model.md` (create if first) |
+| Recurring non-obvious domain term (≥~3 uses) | Add to `docs/glossary.md` (create if first) |
+| Scope / goal / non-goal change | Update `docs/project-brief.md` |
+| User-visible change ships | Add entry under `CHANGELOG.md` `[Unreleased]` |
+| Code contradicts a doc | Reconcile that doc in the same change |
+
+## Rules that keep docs trustworthy
+
+- **SSOT:** before writing a fact, check the fact-ownership matrix
+  (`DOCS_SYSTEM.md §6`). If owned elsewhere, **link** — don't restate. Each doc's
+  `owns`/`does_not_own` front-matter is the boundary.
+- **Don't duplicate code/git:** if a fresh agent could recover it from the code or
+  `git log` in under a minute, link to the path — don't copy it in.
+- **Precedence:** code = *what*; ADRs = *why*. Reconcile everything else to those.
+- **Freshness:** bump `updated:` on every doc you touch; keep `INDEX.md` rows in
+  sync (add new docs, update `status`/`updated`).
+- **Size caps:** `STATE.md` ≤ ~400 tokens (overwrite, don't append; promote lasting
+  items to their owner doc first); `INDEX.md` ≤ ~600; other docs ≤ ~1,200–1,500.
+  On overflow: split, summarise, or archive — never keep appending.
+- **Tiering:** don't create a doc until its trigger fires; prefer updating over
+  spawning; archive (`status: archived`), never delete. Log tier escalations in
+  `INDEX.md`.
+
+## Session end
+
+The single most important habit: **before you stop, update `docs/STATE.md`** so the
+next amnesiac session resumes cleanly — current focus, next steps, blockers, and
+whether the working tree is dirty.
