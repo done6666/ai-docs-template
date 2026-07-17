@@ -14,30 +14,35 @@ related: [docs/architecture.md, docs/decisions/README.md]
 > ⚠️ **NOT BOOTSTRAPPED.** Run **`/docs-init`**. This is the SSOT for *what
 > technology + which version*. The *why* lives in ADRs — link, don't restate.
 > Keep this in sync with the lockfile/manifest (`/docs-audit` checks it).
+>
+> **Put the exact package identifier in the `Package` column** (e.g. `next-auth`,
+> not "NextAuth") so `/docs-audit` matches it against the lockfile mechanically;
+> use `Choice` for the human-friendly name. Omit transitive/peer packages
+> (`react-dom`, `@types/*`) — list only dependencies a reader actually chooses.
 
 ## Frontend
 
-| Layer | Choice | Version | ADR |
-|-------|--------|---------|-----|
-| <framework> | | | |
+| Layer | Choice | Package | Version | ADR |
+|-------|--------|---------|---------|-----|
+| <framework> | <friendly name> | `<pkg-id>` | | |
 
 ## Backend
 
-| Layer | Choice | Version | ADR |
-|-------|--------|---------|-----|
-| <runtime/framework> | | | |
+| Layer | Choice | Package | Version | ADR |
+|-------|--------|---------|---------|-----|
+| <runtime/framework> | | `<pkg-id>` | | |
 
 ## Data
 
-| Layer | Choice | Version | ADR |
-|-------|--------|---------|-----|
-| <database/cache> | | | |
+| Layer | Choice | Package | Version | ADR |
+|-------|--------|---------|---------|-----|
+| <database/cache> | | `<pkg-id>` | | |
 
 ## Infra / Tooling
 
-| Layer | Choice | Version | ADR |
-|-------|--------|---------|-----|
-| <build/CI/host> | | | |
+| Layer | Choice | Package | Version | ADR |
+|-------|--------|---------|---------|-----|
+| <build/CI/host> | | `<pkg-id>` | | |
 
 ## Version policy
 

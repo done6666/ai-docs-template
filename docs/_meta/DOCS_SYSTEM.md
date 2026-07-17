@@ -198,7 +198,7 @@ Section skeletons (summarised; see the template files for the full form):
 - **STATE:** `Now · In progress · Next steps · Open questions · Blockers · Do-not-repeat · Uncommitted work`. Front-matter adds `session, branch, health`.
 - **project-brief:** `Problem · Target users · Value proposition · Scope · Non-goals · Success metrics · Constraints`.
 - **architecture:** `Overview (≤5 lines) · Components (C4 L2 table + Mermaid) · Boundaries & data flow · Invariants · Tech philosophy · Source map (path → responsibility)`.
-- **tech-stack:** `Frontend · Backend · Data · Infra/Tooling · Version policy` (tables: layer | choice | version | ADR ref).
+- **tech-stack:** `Frontend · Backend · Data · Infra/Tooling · Version policy` (tables: layer | choice | **package** | version | ADR ref). The `package` column holds the exact lockfile identifier (`next-auth`) so `/docs-audit` matches mechanically; `choice` is the friendly name. Omit transitive/peer packages.
 
 ---
 
@@ -238,9 +238,11 @@ specific*) → code (*how, literal*).
   whether to open the body. `INDEX.md`'s `tokens~` and `status` columns make the
   budget explicit.
 - **Size caps (self-check on write):** `STATE.md` ≤ ~400 tokens (it is a snapshot,
-  not a journal); `INDEX.md` ≤ ~600; any core/content doc ≤ ~1,500; area/reference
-  doc ≤ ~1,200. On exceeding a cap: **split, summarise, or archive** — never keep
-  appending.
+  not a journal); `INDEX.md` ≤ ~900 (it carries static routing + load-rule tables
+  plus the growing Areas manifest — if it nears the cap on a large project, split
+  the Areas manifest into a linked `INDEX-areas.md` rather than trimming the routing
+  table); any core/content doc ≤ ~1,500; area/reference doc ≤ ~1,200. On exceeding a
+  cap: **split, summarise, or archive** — never keep appending.
 - **Archival, not deletion.** When `decisions/` or a history doc grows, move
   superseded/old entries to `docs/_archive/<name>-YYYYqN.md`, mark `status:
   archived`, and update `INDEX.md`. Archived docs are never read unless a task

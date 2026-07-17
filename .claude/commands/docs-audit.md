@@ -12,8 +12,11 @@ report first, then offer fixes. Follow the audit procedure in
 
 Run each and collect findings:
 
-1. **Deps** — every entry in `tech-stack.md` exists in the lockfile/manifest, and
-   every major dependency in the manifest appears in `tech-stack.md`.
+1. **Deps** — match `tech-stack.md`'s **`Package` column** (exact package ids)
+   against the lockfile/manifest, not the human-friendly `Choice` name (so
+   "NextAuth" vs `next-auth` doesn't false-flag). Every listed package must exist in
+   the manifest, and every *direct, chosen* dependency should appear in the table.
+   Ignore transitive/peer packages (`react-dom`, `@types/*`, framework-bundled deps).
 2. **Routes** — endpoints listed in `docs/api/*` match the router/source; flag
    missing or undocumented endpoints.
 3. **Structure** — every path in `architecture.md`'s **Source map** resolves on
