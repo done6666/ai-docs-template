@@ -9,12 +9,18 @@ status: proposed        # proposed | accepted | superseded | deprecated
 date: YYYY-MM-DD
 supersedes: []          # e.g. [ADR-0003]
 superseded_by: null     # e.g. ADR-0012
+reconstructed: false    # true when reverse-engineered from code during /docs-adopt
 related: []
 ---
 
 # ADR-NNNN: <title>
 
 > One-line summary of the decision and why it matters.
+
+<!-- Include this banner ONLY when reconstructed: true -->
+> **Reconstructed retroactively** from the codebase during docs adoption. The
+> decision is evident in code (see the paths in `related`); the rationale below is
+> inferred and unconfirmed unless a line cites a human-confirmed source.
 
 ## Context
 

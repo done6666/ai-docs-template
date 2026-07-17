@@ -13,3 +13,10 @@ versioning: [SemVer](https://semver.org/spec/v2.0.0.html).
 - Initial `ai-docs-template` scaffolding: AI-managed, tiered `docs/` system with
   `CLAUDE.md` rules, `doc-maintainer` skill, and `/docs-init`, `/docs-audit`,
   `/adr`, `/feature` commands.
+- Concurrency support: dual-mode `STATE.md` (solo + parallel dashboard), per-feature
+  `## Current state` resume cursor, `/handoff` command, `.gitattributes`
+  (EOL normalization + `CHANGELOG merge=union`), and `DOCS_SYSTEM.md §10`
+  (branches, worktrees, regenerate-don't-merge).
+- Existing-project adoption: `/docs-adopt` (deep scan, `_ingest/` quarantine,
+  tier detection, evidence-only retroactive ADRs), `/docs-init` redirect heuristic,
+  retroactive-ADR flag in the ADR template, and `DOCS_SYSTEM.md §11`.

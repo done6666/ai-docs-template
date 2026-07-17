@@ -16,6 +16,19 @@ related: []
 
 > One-line summary of what this feature does and for whom.
 
+## Current state
+
+> Live resume cursor for THIS workstream — **branch-scoped**, updated continuously
+> as you work (not only at session end), so a compacted or fresh session resumes
+> here. This is the SSOT for what this feature is doing right now; `STATE.md` only
+> links to it. Anchor: `#current-state`.
+
+- **Status:** draft — 0%
+- **Last done:** <last completed step>
+- **Next step:** <single next resumable action>
+- **Uncommitted:** <dirty files / "clean">
+- **Open now:** <immediate question / "None.">
+
 ## Summary
 
 The user-facing capability in a short paragraph. Link the goal it serves in

@@ -193,8 +193,8 @@ Template files shipped:
 - `templates/convention.md` — a generic conventions/reference doc.
 
 Section skeletons (summarised; see the template files for the full form):
-- **ADR:** `Context · Decision · Consequences · Alternatives Considered`. Front-matter adds `id, status, date, supersedes, superseded_by`.
-- **Feature spec:** `Summary · User stories / acceptance criteria · UX notes · API changes · Data changes · Rollout/flags · Open questions`. Front-matter adds `id, requirements[], adrs[]`.
+- **ADR:** `Context · Decision · Consequences · Alternatives Considered`. Front-matter adds `id, status, date, supersedes, superseded_by, reconstructed`. A retroactive ADR (from `/docs-adopt`) sets `reconstructed: true`, `status: accepted`, shows the inferred-rationale banner, and cites the code paths that prove it in `related` — if it can't cite proof, it isn't written.
+- **Feature spec:** `Current state · Summary · User stories / acceptance criteria · UX notes · API changes · Data changes · Rollout/flags · Open questions`. Front-matter adds `id, requirements[], adrs[]`. The `## Current state` subsection is the branch-scoped live resume cursor (§10.1), kept current as you work.
 - **STATE:** `Now · In progress · Next steps · Open questions · Blockers · Do-not-repeat · Uncommitted work`. Front-matter adds `session, branch, health`.
 - **project-brief:** `Problem · Target users · Value proposition · Scope · Non-goals · Success metrics · Constraints`.
 - **architecture:** `Overview (≤5 lines) · Components (C4 L2 table + Mermaid) · Boundaries & data flow · Invariants · Tech philosophy · Source map (path → responsibility)`.
@@ -245,9 +245,13 @@ specific*) → code (*how, literal*).
   superseded/old entries to `docs/_archive/<name>-YYYYqN.md`, mark `status:
   archived`, and update `INDEX.md`. Archived docs are never read unless a task
   explicitly needs history.
-- **STATE is overwritten, never appended.** Anything in STATE with lasting value
-  (a decision, a learned constraint, a term) must be **promoted** to its owner doc
-  (ADR / glossary / architecture) *before* it is dropped from STATE.
+- **STATE is overwritten, never appended, and regenerated — not hand-merged.**
+  Anything in STATE with lasting value (a decision, a learned constraint, a term)
+  must be **promoted** to its owner doc (ADR / glossary / architecture) *before* it
+  is dropped from STATE. STATE and INDEX are derivable snapshots; on a merge
+  conflict, take either side and rewrite from the branch list + feature specs
+  (§10). For parallel work, per-workstream detail lives in each feature spec's
+  `## Current state`, and STATE becomes a thin dashboard (§10).
 - **Stable anchors.** Section headers are fixed; cross-link by anchor
   (`architecture.md#invariants`) so links survive edits.
 - **Tables & bullets over prose** — cheaper to read, diff, and update.
@@ -269,9 +273,10 @@ offers to fix mechanical drift and lists judgment calls for confirmation.
    mark `status: stale?` in `INDEX.md`.
 6. **Index integrity:** every *content* doc on disk appears in `INDEX.md`, and
    every INDEX row points to an existing file. `docs/_meta/**` (this spec,
-   `templates/`, `examples/`) is infrastructure, not content — it is exempt from
-   the manifest (except `DOCS_SYSTEM.md`, listed for freshness). A content doc not
-   in INDEX is invisible by rule.
+   `templates/`, `examples/`) and `docs/_ingest/**` (pre-adoption originals, §11)
+   are infrastructure, not content — exempt from the manifest (except
+   `DOCS_SYSTEM.md`, listed for freshness). A content doc not in INDEX is invisible
+   by rule.
 7. **Contradiction scan:** no two docs `own` the same fact class; no accepted ADR
    contradicts a later accepted ADR without a `superseded_by` link.
 8. **Cross-links:** every `related[]` path and routing-table path resolves.
@@ -284,3 +289,103 @@ offers to fix mechanical drift and lists judgment calls for confirmation.
 find `CLAUDE.md`'s doc rules missing or reduced, **this document is authoritative**
 — act on it and reconcile `CLAUDE.md` back to it in the same session. `ADR-0001`
 records the *decision* to adopt this system; this file is its living *specification*.
+
+---
+
+## 10. Concurrency, branches & worktrees
+
+STATE and INDEX are *derivable snapshots* — they hold nothing not recoverable from
+branches, feature specs, and `git log`. Everything here follows from that. **None of
+this applies to solo, single-branch work** — don't add concurrency machinery to a
+project that has no parallel work.
+
+### 10.1 Where live state lives
+- **Per-workstream live detail is owned by that workstream's feature spec**, in its
+  `## Current state` subsection — branch-scoped, so it travels with the branch that
+  implements the feature and merges cleanly (different features = different files).
+- **`STATE.md` has two modes.** *Solo* (default): the classic
+  `Now / Next / Blockers` snapshot. *Dashboard* (activates at ≥2 concurrent
+  workstreams): one row per in-flight workstream (scope, branch, agent, link to the
+  spec's `#current-state`, health). A dashboard row changes when a workstream
+  starts/ends — not per step.
+
+### 10.2 Branches
+- Never trust a single `branch:` field as global truth. The dashboard lists every
+  active branch; the branch you are on tells you which feature spec is authoritative.
+- Work a feature on its own branch; its `## Current state` is edited only there.
+
+### 10.3 Worktrees & parallel sessions (preferred pattern)
+- Two Claude sessions must **never share one working directory.** For parallel work,
+  use `git worktree add ../<repo>-<slug> <branch>` (or a second clone) — one
+  worktree per workstream. Each has its own tree, branch, STATE checkout, and spec,
+  so sessions can't stomp each other; contention is deferred to merge time.
+- Before claiming a workstream, write its dashboard row (branch + agent). If you boot
+  and see a fresh row for your branch owned by another agent, coordinate — don't
+  overwrite their work.
+
+### 10.4 Merge conflicts in STATE.md / INDEX.md — regenerate, don't hand-merge
+- These two are regenerated, never hand-merged. On conflict/rebase:
+  `git checkout --theirs docs/STATE.md docs/INDEX.md` (or `--ours`) to clear it, then
+  **rewrite from ground truth** (active branches + feature specs) before continuing.
+- Do NOT `merge=union` STATE/INDEX (their YAML front-matter would gain duplicate
+  keys). `merge=union` is set only on `CHANGELOG.md` (append-only) via
+  `.gitattributes`. Feature specs, ADRs, and other content docs merge normally —
+  resolve them by hand.
+
+### 10.5 Compaction safety
+- The feature `## Current state` is the resume anchor and is kept current *as you
+  work*, so a mid-task compaction loses nothing already on disk. Run **`/handoff`**
+  before ending, or when compaction looks imminent, to flush state deliberately.
+
+### 10.6 Monorepos
+- Default to one root `docs/`; tag dashboard rows with a `scope` (package) value.
+  Escalate to `packages/<pkg>/docs/` only at Tier 2, when a package is independently
+  deployed/owned. The root boot path and root STATE dashboard remain the single
+  entry point regardless.
+
+### 10.7 Teams
+- The single-writer rule is really single-writer-per-file-per-branch, preserved by
+  §10.1–10.3. Dashboard rows carry an agent/owner tag for visibility. Humans still
+  don't edit docs; the AI reconciles on merge via §10.4.
+
+---
+
+## 11. Adopting into an existing project
+
+Greenfield repos run `/docs-init`. Repos that already have real code (and often
+ad-hoc docs) run **`/docs-adopt`** instead. Adoption inverts init's emphasis: **the
+codebase is the primary source; the human interview is minimal.**
+
+1. **Reconstruct, don't ask.** Anything recoverable from code or `git log` (stack,
+   structure, endpoints, entities, contributors, releases) is scanned, never asked.
+   The interview covers only what code can't hold: vision, non-goals, roadmap, and
+   the *why* behind decisions the code shows but doesn't explain.
+2. **Land at the real tier.** Existing projects are usually Tier-1/2. Adoption
+   evaluates the §3 triggers against the scan and creates ALL docs up to the highest
+   satisfied tier, **populated from code** — not just Tier-0. Log each escalation in
+   the INDEX ledger as "adopted into existing project".
+3. **Additive and non-destructive — always.** Never overwrite or delete human
+   content. Source-of-record files (`README`, `CONTRIBUTING`, `.github/**`) are left
+   in place and referenced, their *why*-content extracted into docs. A pre-existing
+   `docs/` file colliding with a reserved schema path is **moved to
+   `docs/_ingest/<original-path>`** (a quarantine preserving structure + content),
+   then folded into the new canonical doc. `docs/_ingest/**` is infrastructure like
+   `_meta/**` — exempt from the manifest, never auto-read after adoption.
+4. **Retroactive ADRs, evidence-only.** Record the 3–7 most consequential decisions
+   the code makes evident. Each is `status: accepted`, `reconstructed: true`, with
+   the inferred-rationale banner and `related:` links to the evidencing paths.
+   **Never fabricate a rationale:** state only what code proves; route ambiguous
+   "why"s to the interview; if still unknown, write "rationale not recorded at the
+   time." Retroactive ADRs start at ADR-0002 (0001 stays the adopt-the-system record).
+5. **One confirmation gate.** Nothing is written until a full preview
+   (create / move-to-`_ingest` / reference / retroactive-ADRs / detected tier) is
+   shown and explicitly approved.
+6. **Idempotency.** `status: active` → reconcile mode (run `/docs-audit`, fill only
+   gaps). A prior partial run → resume: keep already-written docs, propose only the
+   rest.
+
+**Handoff.** After adoption the ordinary triggers (§4) and the `doc-maintainer`
+skill maintain everything — no special mode persists. The one recommended follow-up
+is **`/docs-audit`**, because reconstructed architecture/API/data-model docs are
+inferred from a first-pass scan and should be verified against reality once before
+the project trusts them.

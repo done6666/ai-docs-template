@@ -15,6 +15,15 @@ Read `docs/INDEX.md` front-matter. If `status: active` (already bootstrapped),
 `/docs-audit` checks, and offer to fill only missing/stale Tier-0 docs. Otherwise
 proceed with a fresh bootstrap below.
 
+## Step 0.5 — Redirect if this is an existing project
+
+Before interviewing, check for **substantial existing code**. If ANY holds — the
+repo has >~15 tracked source files, OR >~20 commits in `git log`, OR a non-template
+README with real project content, OR any pre-existing `docs/**` content, ADRs, or
+wiki — this is NOT greenfield. Stop and tell the user (in their language) to run
+**`/docs-adopt`** instead, which deep-scans the code and ingests existing docs
+without loss. Proceed with `/docs-init` only for a genuinely empty/scaffold repo.
+
 ## Step 1 — Infer silently
 
 Scan the repo before asking anything:

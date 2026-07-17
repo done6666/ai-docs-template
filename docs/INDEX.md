@@ -11,8 +11,9 @@ status: not-bootstrapped    # not-bootstrapped | active
 > **Boot read #1.** Read `CLAUDE.md`, then this file, then `STATE.md`. Use the
 > tables and rules below to load only what a task needs — never crawl the tree.
 >
-> **This project is NOT bootstrapped yet.** Run **`/docs-init`** to interview and
-> generate the Tier-0 docs. Until then, the rows below describe the *skeleton*.
+> **This project is NOT bootstrapped yet.** Run **`/docs-init`** (empty/new repo) or
+> **`/docs-adopt`** (a repo that already has substantial code) to generate the docs.
+> Until then, the rows below describe the *skeleton*.
 
 ## Core (Tier 0 — always available)
 

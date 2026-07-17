@@ -25,7 +25,7 @@ Apply these as they occur:
 
 | Trigger | Action → target |
 |---------|-----------------|
-| Session ending / context compacting | Rewrite `docs/STATE.md` (Now, In progress, Next steps, Open questions, Blockers, Do-not-repeat, Uncommitted work) |
+| Session ending / context compacting | Update the active feature's `## Current state` (keep current *as you work*), then refresh `docs/STATE.md`. `/handoff` flushes deliberately. See `DOCS_SYSTEM.md §10` |
 | Decision with a lasting trade-off | Append `docs/decisions/ADR-NNNN-*` (template: `_meta/templates/adr.md`); link from `architecture.md`; add to `decisions/README.md` |
 | Non-trivial feature starting | Create `docs/features/FEAT-*` **before** coding (template: `_meta/templates/feature.md`) |
 | Feature completed | Mark spec `shipped`; fold summary into `STATE.md`; update `architecture.md` if structure changed; add a `CHANGELOG.md` `[Unreleased]` entry |
@@ -55,8 +55,16 @@ Apply these as they occur:
   spawning; archive (`status: archived`), never delete. Log tier escalations in
   `INDEX.md`.
 
+## Parallel work (only when it happens)
+
+Solo/single-branch work ignores this. With ≥2 workstreams: each feature on its own
+branch, live detail in that feature's `## Current state`, `docs/STATE.md` as a thin
+dashboard. Never two sessions in one working dir — use `git worktree`. `STATE.md`/
+`INDEX.md` conflicts are **regenerated, not hand-merged** (`DOCS_SYSTEM.md §10`).
+
 ## Session end
 
-The single most important habit: **before you stop, update `docs/STATE.md`** so the
-next amnesiac session resumes cleanly — current focus, next steps, blockers, and
-whether the working tree is dirty.
+The single most important habit: **before you stop, update the resume cursor** — the
+active feature's `## Current state` (branch-scoped) and `docs/STATE.md` — so the next
+amnesiac session resumes cleanly: current focus, next steps, blockers, and whether
+the working tree is dirty. `/handoff` does this on demand.

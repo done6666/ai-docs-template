@@ -38,13 +38,21 @@ projenizin diline göre yazılır. Bu README ve `/docs-init` röportajı **Türk
 1. GitHub'da **"Use this template"** ile yeni bir repo oluşturun (veya bu repoyu
    klonlayın).
 2. Projeyi Claude Code ile açın.
-3. **`/docs-init`** komutunu çalıştırın. Claude:
-   - repoyu tarayıp teknoloji yığınını ve yapıyı **çıkarımlar**,
-   - size **~6 kısa soru** sorar (proje ne, hedefler, kapsam dışı, kısıtlar, yığın onayı, ad),
-   - Tier-0 dokümanlarını taslak olarak hazırlar ve **yazmadan önce onay ister**.
+3. Bootstrap:
+   - **Boş/yeni proje** → **`/docs-init`**: repoyu tarar, size **~6 kısa soru**
+     sorar, Tier-0 dokümanlarını taslak hazırlar ve **yazmadan önce onay ister**.
+   - **Mevcut/süregelen proje** (kodu zaten olan) → **`/docs-adopt`**: kodu derin
+     tarar, mevcut README/docs içeriğini **kayıpsız** içeri alır (`_ingest/` altına),
+     gerçek katmanı (Tier-1/2) ve retroaktif ADR'leri kurar, yine onay ister.
 4. Artık kod geliştirmeye başlayın. Dokümanlar **otomatik** güncellenir — karar
    verdikçe ADR, özellik başladıkça spec, bağımlılık değiştikçe tech-stack, vb.
 5. Ara sıra **`/docs-audit`** ile dokümanların kod ile tutarlılığını denetleyin.
+
+> **Paralel çalışma:** Aynı anda birden fazla iş akışı (branch) yürütüyorsanız her
+> biri için ayrı bir `git worktree` kullanın; asla aynı çalışma dizininde iki oturum
+> açmayın. Her özelliğin canlı durumu kendi feature spec'inin `## Current state`
+> bölümünde tutulur; `STATE.md` ince bir panoya dönüşür. Ayrıntı:
+> `docs/_meta/DOCS_SYSTEM.md §10`.
 
 ---
 
@@ -52,10 +60,12 @@ projenizin diline göre yazılır. Bu README ve `/docs-init` röportajı **Türk
 
 | Komut | Ne yapar |
 |-------|----------|
-| `/docs-init` | Bootstrap: röportaj + Tier-0 dokümanlarını üretir (bir kez). |
+| `/docs-init` | Bootstrap (boş/yeni repo): röportaj + Tier-0 dokümanlarını üretir. |
+| `/docs-adopt` | Bootstrap (**mevcut proje**): kodu derin tarar, varsa mevcut dokümanları kayıpsız içeri alır, gerçek katmanı ve retroaktif ADR'leri yeniden kurar. |
 | `/docs-audit` | Salt-okunur sapma denetimi: dokümanları kod/git ile karşılaştırır. |
 | `/adr "<başlık>"` | Bir sonraki mimari karar kaydını (ADR) oluşturur. |
 | `/feature "<ad>"` | Bir sonraki özellik spec'ini oluşturur (features/ alanını açar). |
+| `/handoff` | Devam noktasını diske yazar (oturum sonu / context compaction öncesi). |
 
 Otonominin motoru `doc-maintainer` **skill**'idir: Claude, işi sırasında ilgili bir
 olay olduğunda (karar, özellik, bağımlılık/route/şema/yapı değişimi, oturum sonu)

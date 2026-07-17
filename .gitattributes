@@ -1,0 +1,15 @@
+# Normalize line endings across Windows/macOS/Linux so parallel sessions on
+# different OSes don't produce whole-file EOL diffs that look like conflicts.
+* text=auto eol=lf
+
+# docs/STATE.md and docs/INDEX.md are AI-regenerated snapshots — never hand-merge.
+# On conflict, take either side to clear it, then rewrite from the branch list +
+# feature specs. See docs/_meta/DOCS_SYSTEM.md §10 (Concurrency). We deliberately
+# avoid a custom merge driver here so the template stays portable (no local git
+# config required), for the same reason the system uses no hooks.
+docs/STATE.md   text
+docs/INDEX.md   text
+
+# CHANGELOG's [Unreleased] section is append-only; union keeps both sides' new
+# bullet entries without a conflict and without corrupting structure.
+CHANGELOG.md    merge=union
