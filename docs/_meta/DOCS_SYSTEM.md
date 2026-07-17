@@ -275,10 +275,10 @@ offers to fix mechanical drift and lists judgment calls for confirmation.
    mark `status: stale?` in `INDEX.md`.
 6. **Index integrity:** every *content* doc on disk appears in `INDEX.md`, and
    every INDEX row points to an existing file. `docs/_meta/**` (this spec,
-   `templates/`, `examples/`) and `docs/_ingest/**` (pre-adoption originals, §11)
-   are infrastructure, not content — exempt from the manifest (except
-   `DOCS_SYSTEM.md`, listed for freshness). A content doc not in INDEX is invisible
-   by rule.
+   `templates/`, `examples/`, `VERSION`, `MIGRATIONS.md`) and `docs/_ingest/**`
+   (pre-adoption originals, §11) are infrastructure, not content — exempt from the
+   manifest (except `DOCS_SYSTEM.md`, listed for freshness). A content doc not in
+   INDEX is invisible by rule.
 7. **Contradiction scan:** no two docs `own` the same fact class; no accepted ADR
    contradicts a later accepted ADR without a `superseded_by` link.
 8. **Cross-links:** every `related[]` path and routing-table path resolves.
@@ -391,3 +391,48 @@ skill maintain everything — no special mode persists. The one recommended foll
 is **`/docs-audit`**, because reconstructed architecture/API/data-model docs are
 inferred from a first-pass scan and should be verified against reality once before
 the project trusts them.
+
+---
+
+## 12. Template versioning & upgrades
+
+The **machinery** is upstream-owned and versioned; project **content** is yours.
+Keeping them separable lets a project pull upstream improvements without losing its
+docs.
+
+### 12.1 Machinery vs content
+- **Machinery (upstream-owned — never hand-edit):** `.claude/commands/*`,
+  `.claude/skills/*`, `docs/_meta/DOCS_SYSTEM.md`, `docs/_meta/templates/*`,
+  `docs/_meta/examples/*`, `docs/_meta/VERSION`, `docs/_meta/MIGRATIONS.md`,
+  `.gitattributes`, and the **managed block** of `CLAUDE.md` (between the
+  `ai-docs-template:managed` markers). Editing any of these means `/docs-upgrade`
+  will overwrite your change. Project-specific agent rules go in `CLAUDE.md`
+  **outside** the managed block; a custom command goes in a **new** file, never by
+  editing a shipped one.
+- **Content (project-owned):** everything else under `docs/` — `INDEX`, `STATE`,
+  `project-brief`, `architecture`, `tech-stack`, `decisions/`, `features/`, `api/`,
+  etc. Upgrades never overwrite content; at most they *migrate* its format with a
+  preview + confirm.
+
+### 12.2 Version stamps
+- Upstream ships its version in `docs/_meta/VERSION` (SemVer).
+- Each project records the version it has migrated to in `docs/INDEX.md`
+  front-matter (`template_version`) and where it came from (`template_source`), both
+  set at bootstrap (`/docs-init` or `/docs-adopt`).
+- SemVer meaning here: **PATCH** = machinery wording/fix, no content impact;
+  **MINOR** = new machinery or optional content fields (existing content stays
+  valid); **MAJOR** = a content-format change that requires migration.
+
+### 12.3 Upgrading (`/docs-upgrade`)
+`/docs-upgrade` fetches the latest machinery from `template_source`, overwrites the
+pure-machinery files and the `CLAUDE.md` managed block, then reads
+`docs/_meta/MIGRATIONS.md` and applies the **content migration** steps for every
+version in `(template_version, VERSION]` — previewing and confirming before writing
+any content change. It then stamps `INDEX.template_version`, logs the upgrade, and
+adds a `CHANGELOG` entry. Run `/docs-audit` afterward.
+
+### 12.4 Authoring a migration (template maintainers)
+When a template change affects downstream **content** format: bump
+`docs/_meta/VERSION`, and append a `MIGRATIONS.md` entry giving the machinery change
+(informational) and concrete, AI-executable **content migration** steps (or "None —
+backward compatible"). This is what makes downstream upgrades safe and automatic.

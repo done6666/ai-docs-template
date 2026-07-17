@@ -4,6 +4,8 @@ project_type: unknown       # web | api | library | cli | service | ...  (set by
 current_tier: 0
 last_verified: <pending>    # set when an agent last confirmed INDEX matches reality
 status: not-bootstrapped    # not-bootstrapped | active
+template_version: <set on bootstrap>   # ai-docs-template version this project is on (see docs/_meta/VERSION)
+template_source: <set on bootstrap>    # URL to pull upgrades from (used by /docs-upgrade)
 ---
 
 # Documentation Manifest

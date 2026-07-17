@@ -1,5 +1,9 @@
 # Operating Rules for Claude Code
 
+<!-- ai-docs-template:managed:start (template v1.0.0) — Machinery, upstream-owned.
+     Do NOT hand-edit; `/docs-upgrade` replaces everything between these markers.
+     Put project-specific rules BELOW the :end marker, not inside this block. -->
+
 > This project uses an **AI-managed `docs/` system**. This file is the short
 > constitution; the full spec is `docs/_meta/DOCS_SYSTEM.md`. **On conflict, that
 > file wins** — reconcile this one to it.
@@ -74,4 +78,14 @@ those flows unless the user asks.
 The complete protocol — file inventory, tier triggers, templates, fact-ownership
 matrix, size caps, and the audit procedure — lives in
 **`docs/_meta/DOCS_SYSTEM.md`**. If these rules and that file conflict, that file
-wins; reconcile this file to it.
+wins; reconcile this file to it. To pull upstream improvements to this system, run
+**`/docs-upgrade`** (see `DOCS_SYSTEM.md §12`).
+
+<!-- ai-docs-template:managed:end -->
+
+## Project-specific rules
+
+<!-- Everything below this line is yours. `/docs-upgrade` never touches it. Add your
+     project's own build/test/style/agent rules here. Keep them brief and high-signal. -->
+
+_(none yet)_

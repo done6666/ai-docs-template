@@ -6,8 +6,13 @@ versioning: [SemVer](https://semver.org/spec/v2.0.0.html).
 
 > Claude Code adds an entry under `[Unreleased]` whenever a user-visible change
 > ships. Detailed *why* lives in ADRs; roadmap "Shipped" only summarises.
+>
+> **Downstream migration steps** (what an adopting project must do to upgrade) live
+> in `docs/_meta/MIGRATIONS.md`, not here.
 
 ## [Unreleased]
+
+## [1.0.0] - 2026-07-17
 
 ### Added
 - Initial `ai-docs-template` scaffolding: AI-managed, tiered `docs/` system with
@@ -20,6 +25,9 @@ versioning: [SemVer](https://semver.org/spec/v2.0.0.html).
 - Existing-project adoption: `/docs-adopt` (deep scan, `_ingest/` quarantine,
   tier detection, evidence-only retroactive ADRs), `/docs-init` redirect heuristic,
   retroactive-ADR flag in the ADR template, and `DOCS_SYSTEM.md §11`.
+- Template versioning: `docs/_meta/VERSION` + `MIGRATIONS.md`, `/docs-upgrade`
+  command, `CLAUDE.md` managed-block markers (machinery vs project rules),
+  `template_version`/`template_source` in `INDEX`, and `DOCS_SYSTEM.md §12`.
 
 ### Changed
 - Live-test fixes (from a full `/docs-init` dry run on a sample Next.js project):

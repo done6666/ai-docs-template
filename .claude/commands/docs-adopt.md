@@ -121,7 +121,9 @@ altına taşınır.)"** Wait for an explicit yes.
 ## Step 7 — Write & report (in TURKISH)
 
 On yes, execute in order: quarantine moves → new docs → `INDEX.md` (`project_type`,
-`current_tier`, `status: active`, `last_verified: <today>`, Core+Areas rows, ledger)
+`current_tier`, `status: active`, `last_verified: <today>`, `template_version` (=
+`docs/_meta/VERSION`), `template_source` (ask once if unknown), Core+Areas rows,
+ledger)
 → `STATE.md` (`Now` = "adopted into existing project"; `Next steps` = Q3 goals +
 deferred ADRs; current branch + tree status) → ADRs + `decisions/README.md` →
 `CHANGELOG.md` `[Unreleased]` from tags.

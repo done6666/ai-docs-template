@@ -66,6 +66,7 @@ projenizin diline göre yazılır. Bu README ve `/docs-init` röportajı **Türk
 | `/adr "<başlık>"` | Bir sonraki mimari karar kaydını (ADR) oluşturur. |
 | `/feature "<ad>"` | Bir sonraki özellik spec'ini oluşturur (features/ alanını açar). |
 | `/handoff` | Devam noktasını diske yazar (oturum sonu / context compaction öncesi). |
+| `/docs-upgrade` | Şablon makinesini en son sürüme günceller ve içerik göçünü uygular (proje içeriğine dokunmadan). |
 
 Otonominin motoru `doc-maintainer` **skill**'idir: Claude, işi sırasında ilgili bir
 olay olduğunda (karar, özellik, bağımlılık/route/şema/yapı değişimi, oturum sonu)
@@ -88,6 +89,8 @@ docs/
     DOCS_SYSTEM.md            # Tam kurallar (yetkili kaynak, kendini onarır)
     templates/                # AI'nin kopyaladığı boş şemalar
     examples/                 # Doldurulmuş örnek dokümanlar (referans)
+    VERSION                   # Şablon sürümü (SemVer)
+    MIGRATIONS.md             # Sürümler arası içerik göç kılavuzu
   # Tier 1+ (tetiklendikçe AI oluşturur):
   requirements.md · roadmap.md · data-model.md · glossary.md
   api/ · features/ · conventions/ · guides/
@@ -106,6 +109,22 @@ CHANGELOG.md                  # Keep a Changelog
 | **2 — Karmaşık** | Prod / çok servis / çok geliştirici | operations/, openapi.yaml, architecture-components |
 
 ---
+
+## Sürümleme ve güncelleme
+
+Şablon **SemVer** ile sürümlenir (`docs/_meta/VERSION`). Bir projeyi bootstrap
+ederken (`/docs-init` veya `/docs-adopt`), o anki sürüm ve kaynak `docs/INDEX.md`
+front-matter'ına damgalanır (`template_version`, `template_source`).
+
+Şablon ileride iyileştirildiğinde, projenizde **`/docs-upgrade`** çalıştırın:
+en son *machinery*'i (`.claude/`, `docs/_meta/`, `CLAUDE.md`'nin yönetilen bloğu)
+çeker ve gerekli **içerik göçlerini** (`MIGRATIONS.md`) önizleme+onayla uygular —
+proje içeriğinize (kararlar, mimari, spec'ler) asla dokunmadan.
+
+**Önemli ayrım:** *Machinery* dosyaları yukarı-akış sahibidir, elle düzenlenmez
+(upgrade üzerine yazar). Projeye özel kurallarınızı `CLAUDE.md`'nin yönetilen blok
+**dışına** yazın; özel bir komut gerekiyorsa **yeni** bir dosya ekleyin. Ayrıntı:
+`docs/_meta/DOCS_SYSTEM.md §12`.
 
 ## Bu repoyu şablon yapmak
 
