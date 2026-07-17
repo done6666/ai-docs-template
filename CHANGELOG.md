@@ -12,6 +12,22 @@ versioning: [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-07-17
+
+### Added
+- Large-scale / federated mode (Tier 3): `DOCS_SYSTEM.md §13` — partition an
+  overflowing doc into a directory + index (`architecture/<subsystem>.md`,
+  `data-model/<domain>.md`), federated index-of-indexes, monorepo federation.
+- Per-doc `covers` + `last_verified` front-matter for per-subsystem freshness.
+- `/docs-audit` gains an `[area]` argument plus incremental and coverage-report
+  modes for auditing large repos a subsystem at a time.
+- Tier-2 → Tier-3 escalation triggers (§3).
+
+### Changed
+- `tech-stack.md` documents **architecturally-significant** technologies only (link
+  the lockfile for the full list); `/docs-audit`'s dep check no longer demands
+  exhaustive parity — it flags undocumented framework/major deps instead.
+
 ## [1.0.0] - 2026-07-17
 
 ### Added

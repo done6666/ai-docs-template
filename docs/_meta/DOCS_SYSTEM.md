@@ -124,6 +124,17 @@ but with front-matter + section headers) and logs the escalation in `INDEX.md`.
 - More than one contributor, or a handoff is expected → `guides/how-to-*`.
 - Any incident-response / on-call need → `runbook.md`.
 
+**Tier 2 → Tier 3 (federated / large-scale)** — when *any* fires (see §13):
+- Any core/area doc can no longer stay under its size cap without dropping real
+  content (e.g. `architecture.md`, `data-model.md`, `tech-stack.md`).
+- More than ~8–10 distinct subsystems/modules, or a monorepo with several
+  independently-owned packages.
+- More than ~30 entities, or an API/domain too large to hold in one file.
+- A full `/docs-audit` no longer fits one working context.
+When Tier 3 fires, **partition** the overflowing docs into per-subsystem/per-domain
+directories with the top-level doc becoming an index (§13) — don't just keep
+appending.
+
 Record the current tier and the escalation history in `INDEX.md` front-matter
 (`current_tier`) and its **Escalation ledger** section.
 
@@ -173,13 +184,16 @@ with the front-matter contract, then a ≤5-line summary, then the schema sectio
 ```yaml
 ---
 title: <human title>
-tier: 0 | 1 | 2
+tier: 0 | 1 | 2 | 3
 type: reference | explanation | decision | spec | index | tutorial | how-to
 owns: "<the one class of fact this doc is the SSOT for>"
 does_not_own: "<facts that live elsewhere; name where>"
 status: current | draft | superseded | archived
 updated: YYYY-MM-DD
 related: [<ID or path>, ...]
+# Optional, for large-scale / federated mode (§13.4):
+covers: [<code path glob>, ...]   # the code this doc documents (enables scoped/incremental audit)
+last_verified: YYYY-MM-DD         # when /docs-audit last confirmed this doc vs code
 ---
 ```
 
@@ -436,3 +450,84 @@ When a template change affects downstream **content** format: bump
 `docs/_meta/VERSION`, and append a `MIGRATIONS.md` entry giving the machinery change
 (informational) and concrete, AI-executable **content migration** steps (or "None —
 backward compatible"). This is what makes downstream upgrades safe and automatic.
+
+---
+
+## 13. Large-scale / federated mode (Tier 3)
+
+At large scale (100k+ LOC, many deps, many subsystems), the flat "one file per
+concern" model breaks: single docs blow their caps, duplicate the file tree, and a
+whole-repo audit no longer fits one context. Tier 3 adds a **partitioning
+dimension**: an overflowing doc becomes a **directory + a top-level index**.
+**Small/medium projects never see this** — it activates only on the §3 Tier-3
+triggers.
+
+### 13.1 The partitioning principle
+When a doc would exceed its size cap with real content, split it by
+**subsystem** (code module/bounded context) or **domain**, and turn the original
+doc into an **index** that links the parts. Partition boundaries follow the code's
+own seams (packages, modules, bounded contexts) so they stay stable.
+
+| Doc | Partitions into | Top-level file becomes |
+|-----|-----------------|------------------------|
+| `architecture.md` | `architecture/<subsystem>.md` (C4 L3 per subsystem) | C4 L1/L2 overview + **subsystem catalog** (table: subsystem → path → doc) |
+| `data-model.md` | `data-model/<domain>.md` (per bounded context) | ER overview + **domain index** |
+| `api/endpoints.md` | `openapi.yaml` (SSOT) or `api/<resource>.md` | overview that defers to the spec / resource docs |
+| `conventions/*` | already a directory — add per-area files as needed | — |
+| `INDEX.md` | per-area indexes: `docs/<area>/INDEX.md` | **index-of-indexes** (see 13.2) |
+
+New partition files carry the same front-matter contract; add `covers` (13.4).
+
+### 13.2 Federated INDEX (index-of-indexes)
+When the Areas manifest outgrows the root INDEX cap, don't trim the routing/load
+tables — **federate**:
+- Root `docs/INDEX.md` keeps: front-matter, the **Core** table, the static routing
+  + load tables, the escalation ledger, and a **Subsystems** table pointing to each
+  area/subsystem index (`docs/architecture/INDEX.md`, `docs/data-model/INDEX.md`,
+  `docs/api/INDEX.md`, …).
+- Each `docs/<area>/INDEX.md` is a local manifest for that subtree (its docs +
+  freshness). It is the boot read for work *inside* that area.
+- Boot path stays cheap: `CLAUDE.md → docs/INDEX.md → STATE.md`; then load only the
+  one subsystem index the task implicates. The load rules (13.3) route you there.
+
+### 13.3 Subsystem-aware navigation
+- `architecture.md`'s **subsystem catalog** is the map: subsystem → code path →
+  its architecture/data/api docs. A session working in a subsystem loads that
+  subsystem's index + docs, nothing else.
+- INDEX **load rules** gain a subsystem column at Tier 3 (task in `packages/billing`
+  → open `docs/architecture/billing.md`, `docs/data-model/billing.md`).
+
+### 13.4 Per-doc freshness at scale (`covers` + `last_verified`)
+Global freshness is too coarse when 40 subsystems drift independently. At Tier 3,
+each partitioned doc carries in front-matter:
+- `covers: [<path glob>, ...]` — the code paths it documents.
+- `last_verified: YYYY-MM-DD` (or a git SHA) — when an audit last confirmed it vs code.
+This lets `/docs-audit` report *per subsystem* ("`billing` docs unverified for 200
+commits") and lets a scoped audit know exactly which code a doc claims to cover.
+
+### 13.5 tech-stack by significance, not exhaustiveness
+`tech-stack.md` documents only **architecturally-significant** technologies (~10–20:
+framework, DB, auth, queue, cache, key libraries) — each with a `Package` id and an
+ADR. The **full dependency list stays in the lockfile/manifest** (link it); never
+mirror 150 deps into a doc (that violates §1.3). `/docs-audit`'s dep check verifies
+the *listed significant* packages exist, and flags only **framework/major** manifest
+deps that are undocumented — not exhaustive parity.
+
+### 13.6 Scoped & incremental audit
+A whole-repo audit doesn't fit one context at scale. `/docs-audit` therefore
+supports:
+- **Scoped:** `/docs-audit <area>` audits one subsystem (its `covers` paths + its
+  index), cheap and focused.
+- **Incremental:** audit only code paths changed since a doc's `last_verified`
+  SHA/date (from `git diff`), and refresh that doc's `last_verified`.
+- **Coverage report:** list subsystems whose `last_verified` is old relative to
+  their `covers` paths' churn — the drift backlog.
+Index integrity in federated mode: every content doc appears in **its area index**,
+and every area index appears in the **root** INDEX Subsystems table.
+
+### 13.7 Monorepos at scale
+Per §10.6, escalate to `packages/<pkg>/docs/` when a package is independently
+owned/deployed. The **root** `docs/` keeps the federated root INDEX (Subsystems
+table pointing into each package's docs), the cross-cutting ADRs, and the STATE
+dashboard. Package-local docs own that package's architecture/data/api. One boot
+path, federated downward.

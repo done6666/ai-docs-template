@@ -107,6 +107,7 @@ CHANGELOG.md                  # Keep a Changelog
 | **0 — Çekirdek** | Her projede (`/docs-init`) | INDEX, STATE, project-brief, architecture, tech-stack, decisions, DOCS_SYSTEM |
 | **1 — Büyüyen** | İlk gerçek özellik / API / veri modeli | requirements, roadmap, data-model, api/, features/, conventions/, glossary, guides/ |
 | **2 — Karmaşık** | Prod / çok servis / çok geliştirici | operations/, openapi.yaml, architecture-components |
+| **3 — Federatif** | Bir doküman cap'ini aşıyor / çok alt-sistem / büyük monorepo | Bölümleme: `architecture/<alt-sistem>.md`, `data-model/<domain>.md`, index-of-indexes, kapsamlı/artımlı audit (`DOCS_SYSTEM §13`) |
 
 ---
 

@@ -1,6 +1,6 @@
 # Operating Rules for Claude Code
 
-<!-- ai-docs-template:managed:start (template v1.0.0) — Machinery, upstream-owned.
+<!-- ai-docs-template:managed:start (template v1.1.0) — Machinery, upstream-owned.
      Do NOT hand-edit; `/docs-upgrade` replaces everything between these markers.
      Put project-specific rules BELOW the :end marker, not inside this block. -->
 
@@ -58,6 +58,11 @@ work each feature on its own branch, keep its live detail in that feature's
 sessions in the same working directory** — use `git worktree add` per workstream.
 `STATE.md`/`INDEX.md` conflicts are **regenerated, not hand-merged** (see
 `DOCS_SYSTEM.md §10`).
+
+At **large scale** (a doc can't stay under its cap, many subsystems, monorepo):
+partition the overflowing doc into a directory + index and federate the INDEX
+instead of appending — **Tier 3 / federated mode** (`DOCS_SYSTEM.md §13`). Small
+projects ignore this.
 
 ## 6. Tiering (don't over-document)
 

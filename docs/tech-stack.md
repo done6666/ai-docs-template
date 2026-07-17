@@ -11,14 +11,16 @@ related: [docs/architecture.md, docs/decisions/README.md]
 
 # Tech Stack
 
-> ⚠️ **NOT BOOTSTRAPPED.** Run **`/docs-init`**. This is the SSOT for *what
-> technology + which version*. The *why* lives in ADRs — link, don't restate.
-> Keep this in sync with the lockfile/manifest (`/docs-audit` checks it).
+> ⚠️ **NOT BOOTSTRAPPED.** Run **`/docs-init`**. This is the SSOT for the *why + which
+> version* of **architecturally-significant** technologies — not an exhaustive
+> dependency list (that lives in the lockfile/manifest; link it). List the load-bearing
+> choices (framework, DB, auth, queue, cache, key libraries) — roughly 10–20 even on a
+> large project; see `DOCS_SYSTEM.md §13.5`.
 >
 > **Put the exact package identifier in the `Package` column** (e.g. `next-auth`,
 > not "NextAuth") so `/docs-audit` matches it against the lockfile mechanically;
 > use `Choice` for the human-friendly name. Omit transitive/peer packages
-> (`react-dom`, `@types/*`) — list only dependencies a reader actually chooses.
+> (`react-dom`, `@types/*`) and incidental utilities.
 
 ## Frontend
 

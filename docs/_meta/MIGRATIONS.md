@@ -22,6 +22,23 @@ before writing (same safety gate as `/docs-adopt`).
 
 ---
 
+## 1.1.0 — Large-scale / federated mode (Tier 3)
+
+- **Machinery:** added `DOCS_SYSTEM.md §13` (partitioning, federated INDEX,
+  per-doc `covers`/`last_verified`, scoped/incremental audit, monorepo federation);
+  Tier-2→3 escalation triggers (§3); `/docs-audit` gains an `[area]` argument +
+  incremental/coverage modes; `tech-stack.md` guidance shifts to
+  architecturally-significant deps (not exhaustive); front-matter gains optional
+  `covers` and `last_verified`.
+- **Content migration:** None (backward compatible). Existing docs stay valid.
+  *Optional, only if the project is already very large:* if any doc (e.g.
+  `architecture.md`, `data-model.md`) is over its cap, partition it per §13.1 and
+  federate the INDEX per §13.2; trim `tech-stack.md` to significant deps per §13.5.
+  Otherwise do nothing.
+- **Breaking:** no.
+
+---
+
 ## 1.0.0 — Initial release
 
 - **Machinery:** full system — `CLAUDE.md` (managed block), `.claude/**`,
