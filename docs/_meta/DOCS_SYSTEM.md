@@ -718,6 +718,22 @@ is there so the read path stays **cheap and grounded** as the project grows. But
 "read the doc, not the code" is only safe when the doc is *trustworthy* — see §15,
 which resolves the tension between cheap reads and stale docs.
 
+### 14.6 Surface the state to the human (resume brief & `/docs-status`)
+The docs are written for the agent (§0), but the *human steers* — and they can only
+steer what they can see. Two cheap surfaces render the state to them:
+- **Resume brief (automatic):** open the session's **first reply** with 2–3 lines in
+  the user's language: where work left off (`Now`), the immediate next action
+  (`Next`), blockers, and — most importantly — any **Open questions** waiting on the
+  human (otherwise they sit unseen in `STATE.md`). Costs ~nothing: the data is
+  already in context from the boot reads. Skip only when docs aren't bootstrapped or
+  `STATE.md` is empty.
+- **`/docs-status` (on demand):** a read-only dashboard composing `STATE.md`, the
+  implementation map's counts, in-flight features, recent decisions, and doc trust
+  into ≤~15 lines, with an optional "since you left" git digest. It reads headings
+  and counts — never full bodies.
+Neither surface is a new fact home — both *render* what the owner docs already hold
+(mirroring by rendering, nothing stored twice).
+
 ---
 
 ## 15. Trust & verification — don't follow stale docs blindly

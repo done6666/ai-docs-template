@@ -1,6 +1,6 @@
 # Operating Rules for Claude Code
 
-<!-- ai-docs-template:managed:start (template v1.11.0) — Machinery, upstream-owned.
+<!-- ai-docs-template:managed:start (template v1.12.0) — Machinery, upstream-owned.
      Do NOT hand-edit; `/docs-upgrade` replaces everything between these markers.
      Put project-specific rules BELOW the :end marker, not inside this block. -->
 
@@ -14,7 +14,11 @@ finishing the task. Never ask permission; announce doc changes in one line.
 
 ## 2. Working a task (read path)
 
-At session start read **`docs/INDEX.md`** then **`docs/STATE.md`**. Then (detail: §14–§17):
+At session start read **`docs/INDEX.md`** then **`docs/STATE.md`**, and **open your
+first reply with a resume brief** — 2–3 lines in the user's language: where work
+left off, the immediate next action, blockers, and any `Open questions` awaiting the
+user. Skip it only if docs aren't bootstrapped; `/docs-status` is the fuller
+on-demand dashboard (§14.6). Then (detail: §14–§17):
 
 1. **Locate** the *minimal* doc set from the task's nouns via INDEX routing/load
    rules — open only what the task implicates, never the whole tree. Multi-subsystem

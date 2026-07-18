@@ -22,6 +22,24 @@ before writing (same safety gate as `/docs-adopt`).
 
 ---
 
+## 1.12.0 — Human-facing state surfaces (resume brief + /docs-status)
+
+- **Machinery:**
+  - **Resume brief** (CLAUDE.md managed block §2 + spec §14.6): the session's
+    first reply now opens with 2–3 lines rendered from the boot reads — where work
+    left off, next action, blockers, and `Open questions` awaiting the human.
+    Zero extra reads; skipped when docs aren't bootstrapped.
+  - **`/docs-status`** (new command): read-only ≤~15-line dashboard composing
+    `STATE.md`, implementation-map counts, in-flight features, recent decisions,
+    and doc trust; optional `[days]` argument adds a "since you left" git digest.
+    Reads headings/counts only, never full bodies.
+  - Neither surface stores anything — both render what the owner docs already
+    hold (§14.6), so no new fact home and nothing to migrate.
+- **Content migration:** None (backward compatible).
+- **Breaking:** no.
+
+---
+
 ## 1.11.0 — Advisory hooks, quick-reference card, language neutrality, coherence fixes
 
 - **Machinery:**

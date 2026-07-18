@@ -91,6 +91,7 @@ projenizin diline göre yazılır. Bu README ve `/docs-init` röportajı **Türk
 | `/docs-init`      | Bootstrap (boş/yeni repo): röportaj + Tier-0 dokümanlarını üretir.                                                                                 |
 | `/docs-adopt`     | Bootstrap (**mevcut proje**): kodu derin tarar, varsa mevcut dokümanları kayıpsız içeri alır, gerçek katmanı ve retroaktif ADR'leri yeniden kurar. |
 | `/docs-audit`     | Salt-okunur sapma denetimi: dokümanları kod/git ile karşılaştırır.                                                                                 |
+| `/docs-status`    | Salt-okunur gösterge paneli: neredeyiz — şu an / sıradaki / blocker / sizi bekleyen sorular / ilerleme / son kararlar (+ "siz yokken" git özeti).   |
 | `/adr "<başlık>"` | Bir sonraki mimari karar kaydını (ADR) oluşturur.                                                                                                  |
 | `/feature "<ad>"` | Bir sonraki özellik spec'ini oluşturur (features/ alanını açar).                                                                                   |
 | `/handoff`        | Devam noktasını diske yazar (oturum sonu / context compaction öncesi).                                                                             |

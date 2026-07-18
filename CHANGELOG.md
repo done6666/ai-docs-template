@@ -12,6 +12,18 @@ versioning: [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.12.0] - 2026-07-18
+
+### Added
+- **Resume brief:** every session's first reply now opens with a 2–3 line brief in
+  the user's language — where work left off, the next action, blockers, and any
+  `Open questions` waiting on the human (previously these sat unseen in `STATE.md`).
+  Rendered from the boot reads at ~zero cost (spec §14.6, CLAUDE.md §2).
+- **`/docs-status`:** read-only project dashboard — now / next / in-flight features /
+  progress counts / recent decisions / doc trust in ≤~15 lines, plus an optional
+  "since you left" git digest (`/docs-status [days]`). Renders owner docs; stores
+  nothing.
+
 ## [1.11.0] - 2026-07-18
 
 ### Added
