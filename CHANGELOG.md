@@ -12,6 +12,10 @@ versioning: [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+- English README variant (`README.en.md`) with a language switcher at the top of both
+  READMEs, for wider adoption. Repo front-door only — no machinery/version change.
+
 ## [1.10.1] - 2026-07-18
 
 ### Changed

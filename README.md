@@ -1,5 +1,7 @@
 # ai-docs-template
 
+<sub>**Türkçe** · [English](README.en.md)</sub>
+
 **Claude Code'un %100 hakim olduğu, kendi kendini yöneten bir `docs/` mimarisi.**
 Her tür projeyle uyumlu, web projeleri için optimize edilmiş, uyarlanabilir
 (katmanlı) bir dokümantasyon şablonu.
