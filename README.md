@@ -52,11 +52,11 @@ onaran bir yapıya kavuşturur:
   içindedir; `CLAUDE.md` onun özetidir. Çelişki olursa spec kazanır.
 - **AI için optimize okuma yolu** — minimum doküman seti + katmanlı okuma (az token);
   okumadığını uydurmaz ("belgelenmemiş" der); bayat dokümanı koda karşı **dar
-  doğrular**; çok-alt-sistemli görevde *kenarları (seams)* okur. Detay: `§14–§17`.
+  doğrular**; çok-alt-sistemli görevde _kenarları (seams)_ okur. Detay: `§14–§17`.
 - **Negatif bilgi de var** — projeye özel "asla/hep" kuralları, tuzaklar ve
   **başarısız yaklaşımlar** (`guardrails.md`) → AI aynı hatayı tekrarlamaz.
 
-Dil: kurallar, şablonlar ve yapı **İngilizce**; oluşturulan doküman *içeriği*
+Dil: kurallar, şablonlar ve yapı **İngilizce**; oluşturulan doküman _içeriği_
 projenizin diline göre yazılır. Bu README ve `/docs-init` röportajı **Türkçe**.
 
 ---
@@ -86,15 +86,15 @@ projenizin diline göre yazılır. Bu README ve `/docs-init` röportajı **Türk
 
 ## Komutlar
 
-| Komut | Ne yapar |
-|-------|----------|
-| `/docs-init` | Bootstrap (boş/yeni repo): röportaj + Tier-0 dokümanlarını üretir. |
-| `/docs-adopt` | Bootstrap (**mevcut proje**): kodu derin tarar, varsa mevcut dokümanları kayıpsız içeri alır, gerçek katmanı ve retroaktif ADR'leri yeniden kurar. |
-| `/docs-audit` | Salt-okunur sapma denetimi: dokümanları kod/git ile karşılaştırır. |
-| `/adr "<başlık>"` | Bir sonraki mimari karar kaydını (ADR) oluşturur. |
-| `/feature "<ad>"` | Bir sonraki özellik spec'ini oluşturur (features/ alanını açar). |
-| `/handoff` | Devam noktasını diske yazar (oturum sonu / context compaction öncesi). |
-| `/docs-upgrade` | Şablon makinesini en son sürüme günceller ve içerik göçünü uygular (proje içeriğine dokunmadan). |
+| Komut             | Ne yapar                                                                                                                                           |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/docs-init`      | Bootstrap (boş/yeni repo): röportaj + Tier-0 dokümanlarını üretir.                                                                                 |
+| `/docs-adopt`     | Bootstrap (**mevcut proje**): kodu derin tarar, varsa mevcut dokümanları kayıpsız içeri alır, gerçek katmanı ve retroaktif ADR'leri yeniden kurar. |
+| `/docs-audit`     | Salt-okunur sapma denetimi: dokümanları kod/git ile karşılaştırır.                                                                                 |
+| `/adr "<başlık>"` | Bir sonraki mimari karar kaydını (ADR) oluşturur.                                                                                                  |
+| `/feature "<ad>"` | Bir sonraki özellik spec'ini oluşturur (features/ alanını açar).                                                                                   |
+| `/handoff`        | Devam noktasını diske yazar (oturum sonu / context compaction öncesi).                                                                             |
+| `/docs-upgrade`   | Şablon makinesini en son sürüme günceller ve içerik göçünü uygular (proje içeriğine dokunmadan).                                                   |
 
 Otonominin motoru `doc-maintainer` **skill**'idir: Claude, işi sırasında ilgili bir
 olay olduğunda (karar, özellik, bağımlılık/route/şema/yapı değişimi, oturum sonu)
@@ -130,11 +130,11 @@ CHANGELOG.md                  # Keep a Changelog
 
 ### Katmanlar
 
-| Katman | Ne zaman | Ekler |
-|--------|----------|-------|
-| **0 — Çekirdek** | Her projede (`/docs-init`) | INDEX, STATE, project-brief, architecture, tech-stack, decisions, DOCS_SYSTEM |
-| **1 — Büyüyen** | İlk gerçek özellik / API / veri modeli | requirements, roadmap, data-model, api/, features/, conventions/, glossary, guides/ |
-| **2 — Karmaşık** | Prod / çok servis / çok geliştirici | operations/, openapi.yaml, architecture-components |
+| Katman            | Ne zaman                                                     | Ekler                                                                                                                             |
+| ----------------- | ------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
+| **0 — Çekirdek**  | Her projede (`/docs-init`)                                   | INDEX, STATE, project-brief, architecture, tech-stack, decisions, DOCS_SYSTEM                                                     |
+| **1 — Büyüyen**   | İlk gerçek özellik / API / veri modeli                       | requirements, roadmap, data-model, api/, features/, conventions/, glossary, guides/                                               |
+| **2 — Karmaşık**  | Prod / çok servis / çok geliştirici                          | operations/, openapi.yaml, architecture-components                                                                                |
 | **3 — Federatif** | Bir doküman cap'ini aşıyor / çok alt-sistem / büyük monorepo | Bölümleme: `architecture/<alt-sistem>.md`, `data-model/<domain>.md`, index-of-indexes, kapsamlı/artımlı audit (`DOCS_SYSTEM §13`) |
 
 ---
@@ -146,19 +146,14 @@ ederken (`/docs-init` veya `/docs-adopt`), o anki sürüm ve kaynak `docs/INDEX.
 front-matter'ına damgalanır (`template_version`, `template_source`).
 
 Şablon ileride iyileştirildiğinde, projenizde **`/docs-upgrade`** çalıştırın:
-en son *machinery*'i (`.claude/`, `docs/_meta/`, `CLAUDE.md`'nin yönetilen bloğu)
+en son _machinery_'i (`.claude/`, `docs/_meta/`, `CLAUDE.md`'nin yönetilen bloğu)
 çeker ve gerekli **içerik göçlerini** (`MIGRATIONS.md`) önizleme+onayla uygular —
 proje içeriğinize (kararlar, mimari, spec'ler) asla dokunmadan.
 
-**Önemli ayrım:** *Machinery* dosyaları yukarı-akış sahibidir, elle düzenlenmez
+**Önemli ayrım:** _Machinery_ dosyaları yukarı-akış sahibidir, elle düzenlenmez
 (upgrade üzerine yazar). Projeye özel kurallarınızı `CLAUDE.md`'nin yönetilen blok
 **dışına** yazın; özel bir komut gerekiyorsa **yeni** bir dosya ekleyin. Ayrıntı:
 `docs/_meta/DOCS_SYSTEM.md §12`.
-
-## Bu repoyu şablon yapmak
-
-Kendi kopyanızı başkalarının kullanabileceği bir GitHub template'i yapmak için:
-GitHub'da repo **Settings → General → "Template repository"** kutusunu işaretleyin.
 
 ## Lisans
 
