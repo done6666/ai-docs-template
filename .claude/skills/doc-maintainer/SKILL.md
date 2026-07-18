@@ -29,7 +29,8 @@ Apply these as they occur:
 | Trigger | Action → target |
 |---------|-----------------|
 | Session ending / context compacting | Update the active feature's `## Current state` (keep current *as you work*), then refresh `docs/STATE.md`. `/handoff` flushes deliberately. See `DOCS_SYSTEM.md §10` |
-| Decision with a lasting trade-off | Append `docs/decisions/ADR-NNNN-*` (template: `_meta/templates/adr.md`); link from `architecture.md`; add to `decisions/README.md` |
+| Decision with a lasting trade-off | Append `docs/decisions/ADR-NNNN-*` (template: `_meta/templates/adr.md`); link from `architecture.md`; add/move the topic in the `decisions/README.md` register |
+| A past decision is reversed / superseded | Set the old ADR's `superseded_by` **and** move that topic in the register to the new ADR (same change). A `superseded` ADR is not current truth (§17) |
 | Non-trivial feature starting | Create `docs/features/FEAT-*` **before** coding (template: `_meta/templates/feature.md`) |
 | Implementation unit finished | Flip it to `[x]` in `docs/implementation-map.md`, add a tight "how built" note + code path, update **Last implemented** (create the map if first) |
 | Failed approach / must-never rule / recurring bug learned | Record it in `docs/guardrails.md` (rule · why · where); promote out of `STATE` Do-not-repeat so it persists (create if first) |

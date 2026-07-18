@@ -22,6 +22,23 @@ before writing (same safety gate as `/docs-adopt`).
 
 ---
 
+## 1.7.0 — Decisions at scale (register, currency, decay)
+
+- **Machinery:** new `DOCS_SYSTEM.md §17` — `decisions/README.md` evolves from a flat
+  chronological table into a topic-grouped **register** (current-governing decision
+  per topic) as ADRs accumulate; a **currency** signal (`context_review` +
+  `context-stale`) for decisions whose rationale rotted while the decision stands; a
+  retrieval rule (read the register, not the raw log; a superseded ADR isn't current
+  truth); and `/docs-audit` decay checks (broken chains, silent contradictions, stale
+  context). ADR template gains `context_review`; wired into §4/§6, `CLAUDE.md`, `INDEX`,
+  and the `doc-maintainer` skill.
+- **Content migration:** None (backward compatible). The flat ADR table stays valid;
+  reorganize into the register only when it stops scaling. *Optional:* add `context_review`
+  to ADRs whose rationale you want re-checked.
+- **Breaking:** no.
+
+---
+
 ## 1.6.0 — Seams & multi-subsystem tasks (lateral context)
 
 - **Machinery:** new `DOCS_SYSTEM.md §16` — **seams** (cross-subsystem contracts:

@@ -10,6 +10,7 @@ date: YYYY-MM-DD
 supersedes: []          # e.g. [ADR-0003]
 superseded_by: null     # e.g. ADR-0012
 reconstructed: false    # true when reverse-engineered from code during /docs-adopt
+context_review: null    # YYYY-MM-DD if the rationale should be re-checked; see context-stale (§17.2)
 related: []
 ---
 

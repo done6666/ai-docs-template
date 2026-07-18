@@ -61,6 +61,11 @@ Run each and collect findings:
    **Subsystems** table. (`docs/_meta/**` and `docs/_ingest/**` are exempt.)
 7. **Contradiction scan** — no two docs `own` the same fact class; no accepted ADR
    contradicts a later one without a `superseded_by` link.
+7b. **Decision decay** (§17) — broken supersession chains (an ADR whose `superseded_by`
+   target is missing, or a superseded ADR still shown as current in the register);
+   silent contradictions (two `accepted` ADRs governing the same topic without a
+   supersession/scoping); and stale context (ADRs whose cited constraints no longer
+   hold — flag `context-stale`). Report the decay backlog.
 8. **Cross-links** — every `related[]` entry and routing-table path resolves.
 
 ## Output

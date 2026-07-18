@@ -44,6 +44,7 @@ template_source: <set on bootstrap>    # URL to pull upgrades from (used by /doc
 | To record… | Canonical path | Tier |
 |------------|----------------|------|
 | A structural / tech decision (the *why*) | `decisions/ADR-NNNN-<slug>.md` | 0 |
+| Which decision currently governs a topic | `decisions/README.md` (register, §17) | 0 |
 | A technology or version (the *what*) | `tech-stack.md` | 0 |
 | System structure / boundary / invariant | `architecture.md` | 0 |
 | Vision / scope / non-goal change | `project-brief.md` | 0 |
@@ -75,6 +76,7 @@ template_source: <set on bootstrap>    # URL to pull upgrades from (used by /doc
 | An endpoint | `api/api-overview.md`, `api/endpoints.md` |
 | Persistence / schema | `data-model.md` |
 | Architecture / a boundary | `architecture.md`, relevant `decisions/ADR-*` |
+| "Why is X this way / can I change X" | `decisions/README.md` register first (current standing), then the governing ADR |
 | Dependencies / build | `tech-stack.md` |
 | A named feature | that feature's `features/FEAT-*` |
 

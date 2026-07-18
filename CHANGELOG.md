@@ -12,6 +12,21 @@ versioning: [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.7.0] - 2026-07-17
+
+### Added
+- Decisions at scale (`DOCS_SYSTEM.md §17`): as ADRs accumulate over a long-lived
+  project, `decisions/README.md` evolves from a flat chronological table into a
+  topic-grouped **register** showing only the currently-governing decision per topic
+  — so "what governs auth now?" is one cheap read, not a walk through hundreds of
+  append-only records. The ADR files stay the immutable *why*.
+- Decision **currency**: a decision can stand while its rationale rots (constraints
+  changed); an ADR gains `context_review` + a `context-stale` flag, surfaced in the
+  register, so the AI never cites a void rationale.
+- Retrieval rule: read the register first; a `superseded`/`deprecated` ADR is not
+  current truth. `/docs-audit` gains decay checks (7b): broken supersession chains,
+  silent same-topic contradictions, and stale context.
+
 ## [1.6.0] - 2026-07-17
 
 ### Added

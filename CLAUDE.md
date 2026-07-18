@@ -1,6 +1,6 @@
 # Operating Rules for Claude Code
 
-<!-- ai-docs-template:managed:start (template v1.6.0) — Machinery, upstream-owned.
+<!-- ai-docs-template:managed:start (template v1.7.0) — Machinery, upstream-owned.
      Do NOT hand-edit; `/docs-upgrade` replaces everything between these markers.
      Put project-specific rules BELOW the :end marker, not inside this block. -->
 
@@ -76,6 +76,10 @@ a doc describes, update that doc in the same change. **Code is authoritative for
 *what*; ADRs (`docs/decisions/`) are authoritative for *why*.** Reconcile
 everything else to those. Bump each touched doc's `updated:` date. Don't store
 what code or `git log` already hold — link to it instead.
+
+For a **past decision** ("why is X this way / can I change it"), read the decisions
+**register** (`docs/decisions/README.md`, current standing per topic) — not the whole
+ADR log. A `superseded`/`deprecated` ADR is **not** current truth (`DOCS_SYSTEM.md §17`).
 
 ## 5. Parallel work (only when it happens)
 

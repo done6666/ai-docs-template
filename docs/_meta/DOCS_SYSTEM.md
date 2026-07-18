@@ -158,7 +158,9 @@ being asked. Each is detectable from work you are already doing.
 | Trigger event | Action | Target |
 |---------------|--------|--------|
 | Session ending / context about to compact | Rewrite current focus, changes, next steps, open questions, blockers, uncommitted work | `STATE.md` |
-| A decision with a lasting trade-off (framework, pattern, boundary, build-vs-buy) | Append an ADR; link it from `architecture.md` | `decisions/ADR-NNNN-*.md` |
+| A decision with a lasting trade-off (framework, pattern, boundary, build-vs-buy) | Append an ADR; link it from `architecture.md`; add/move its topic in the register | `decisions/ADR-NNNN-*.md` + `decisions/README.md` |
+| A past decision is reversed / a new one supersedes it | Set the old ADR's `superseded_by`; move that topic in the register to the new ADR (same change) | `decisions/*` + `decisions/README.md` |
+| A decision's rationale is invalidated by changed constraints (but stands) | Flag `context-stale` on the ADR + surface in the register | `decisions/*` + `decisions/README.md` |
 | A non-trivial feature is starting (>1-file change; new user-visible capability) | Create the feature spec **before** writing code | `features/FEAT-NNNN-*.md` |
 | **An implementation unit is finished** | Flip it to `[x]`, add a tight "how it was built" note + code path, update **Last implemented** (create the map if first → Tier 1) | `implementation-map.md` |
 | **A failed approach / must-never rule / recurring bug is learned** | Record a tight entry (rule · why · where it applies); promote it out of `STATE`'s Do-not-repeat so it persists (create if first → Tier 1) | `guardrails.md` |
@@ -248,7 +250,8 @@ doc's `owns` field.
 | Fact | Owner (SSOT) | Everyone else |
 |------|--------------|---------------|
 | *What* tech + which version | `tech-stack.md` | link to it |
-| *Why* a tech/pattern was chosen | ADR (`decisions/`) | link to the ADR |
+| *Why* a tech/pattern was chosen (immutable, point-in-time) | ADR (`decisions/`) | link to the ADR |
+| Which decision *currently governs* a topic | `decisions/README.md` (register, §17) | others link to the register, not the raw log |
 | Logical entities & relationships | `data-model.md` | link |
 | Physical schema / DDL | migrations (code) | `data-model.md` links out |
 | Endpoint contracts | `openapi.yaml`, else `api/endpoints.md` | features link |
@@ -737,3 +740,53 @@ Naive breadth = N subsystems × their full docs (blowup), or guessing the wiring
 (hallucination). Seam-based breadth = the edges (small, structured) + one relevant
 section per node + a narrow spot-check of the contracts you build on. That is how a
 multi-subsystem task stays both **complete** and **cheap**.
+
+---
+
+## 17. Decisions at scale — register, currency & decay
+
+ADRs are an **append-only journal**: immutable history plus the *why* of each
+decision, never rewritten — their strength. But in a long-lived project the log grows
+to hundreds of records, while the AI mostly needs **the current standing on a topic,
+cheaply** — which a chronological log doesn't give. So separate the two: ADRs stay the
+journal; `decisions/README.md` becomes a **register** — a synthesized, topic-organized
+index of what *currently* governs.
+
+### 17.1 The decision register (`decisions/README.md`)
+- **Small projects:** the flat chronological table (ID · title · status · date) is enough.
+- **As ADRs accumulate or supersession chains appear:** reorganize into a register —
+  grouped by **topic/area** (Auth, Data, API, Infra, Frontend…), showing per topic only
+  the **currently-governing** decision (link + one-line standing), superseded ones
+  collapsed (link the chain / `_archive`, don't inline them).
+- "What currently governs auth?" is then one cheap read of the Auth group — not a walk
+  through 250 records. The register is the **current-standing index**; the ADR files
+  remain the immutable *why*. (Same pattern as `implementation-map`/`INDEX`: a cheap
+  synthesis over granular records.)
+- At Tier 3 the register federates per subsystem, with a root register for cross-cutting ones.
+
+### 17.2 Currency — a decision can stand while its rationale rots
+Status (`accepted`/`superseded`/`deprecated`) tracks whether the *decision* holds. But
+a decision can hold while its **context/rationale is obsolete** (ADR-0030: "chose X
+because we're on Heroku" — but the project moved to AWS). Flag it: front-matter
+`context_review: YYYY-MM-DD` and/or a `> ⚠ context-stale: <what changed>` note in the
+ADR, surfaced in the register. Never treat a void rationale as live justification.
+
+### 17.3 Retrieval rule (read path)
+- For "why is X this way / can I change X", read the **register** (current standing per
+  topic) first; open a specific ADR only when you need its full rationale/alternatives.
+- **A `superseded`/`deprecated` ADR is not current truth** — the register and the ADR's
+  `superseded_by` point to what replaced it. Never apply a superseded decision (this is
+  a currency/trust signal, §15).
+- A `context-stale` ADR: the decision may stand, but don't cite its obsolete rationale;
+  verify against current constraints or flag for review.
+
+### 17.4 Decay hygiene & audit
+- **Superseding hygiene:** superseding an ADR MUST set the old one's `superseded_by`
+  **and** move that topic in the register to the new ADR, in the same change.
+- **Archive settled history:** fully-superseded/deprecated ADRs whose topic is closed →
+  `_archive/` (§7); the register links there, keeping the hot path small.
+- **`/docs-audit` decay checks:** broken supersession chains (an ADR whose
+  `superseded_by` target is missing, or a superseded ADR still shown current in the
+  register); **silent contradictions** (two `accepted` ADRs governing the same topic
+  without a supersession or explicit scoping); and **stale context** (ADRs whose cited
+  constraints no longer hold). Report the decay backlog for cleanup.
