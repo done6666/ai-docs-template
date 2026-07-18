@@ -39,9 +39,15 @@ process.stdin.on('end', () => {
     f === 'CLAUDE.md' ||
     f === 'CHANGELOG.md' ||
     f.startsWith('.claude/');
+  // Overlay projects keep their own state file — point CLAUDE_DOCS_STATE at it
+  // (repo-relative, forward slashes). Default: the template's docs/STATE.md.
+  const statePath = (process.env.CLAUDE_DOCS_STATE || 'docs/STATE.md').replace(
+    /\\/g,
+    '/'
+  );
   const codeChanged = files.some((f) => !isDocsSystem(f));
   const stateTouched = files.some(
-    (f) => f === 'docs/STATE.md' || f.endsWith('-> docs/STATE.md')
+    (f) => f === statePath || f.endsWith('-> ' + statePath)
   );
 
   if (codeChanged && !stateTouched) {
@@ -49,7 +55,11 @@ process.stdin.on('end', () => {
       JSON.stringify({
         decision: 'block',
         reason:
-          'Docs-system check (ai-docs-template): the working tree has code changes but docs/STATE.md was not updated this cycle. Before stopping, apply any pending doc-maintainer triggers and refresh the resume cursor — docs/STATE.md and the active feature\'s "## Current state" (or run /handoff). If skipping is deliberate (e.g. a checkpoint is coming right after), say so in one line and stop.',
+          'Docs-system check (ai-docs-template): the working tree has code changes but ' +
+          statePath +
+          ' was not updated this cycle. Before stopping, apply any pending doc-maintainer triggers and refresh the resume cursor — ' +
+          statePath +
+          ' and the active feature\'s "## Current state" (or run /handoff). If skipping is deliberate (e.g. a checkpoint is coming right after), say so in one line and stop.',
       })
     );
   }

@@ -12,6 +12,20 @@ versioning: [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.15.0] - 2026-07-18
+
+### Added
+- **Overlay learnings** from a live run on a real ~500-doc monorepo with its own
+  docs constitution: a **trust-ledger fallback** (single verification-log doc when
+  the host corpus has no front-matter) and an explicit **machinery-overlay policy**
+  (overlay adds content only; hooks/skill/managed block never shadow a host
+  `CLAUDE.md` — adaptation is opt-in).
+
+### Fixed
+- Stop hook no longer hardcodes `docs/STATE.md`: the state-file path is
+  configurable via `CLAUDE_DOCS_STATE`, so adapted overlay installs can point it
+  at the host project's own state doc.
+
 ## [1.14.0] - 2026-07-18
 
 ### Added

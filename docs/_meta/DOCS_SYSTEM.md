@@ -504,7 +504,18 @@ genuinely missing pieces — **in their conventions and language**, strictly add
 (new files + at most a one-line registration in their existing index), never moving or
 renaming their docs. Respect their SSOT: don't create a second home for a fact they
 already own. When unsure whether docs are "ad-hoc" or "mature", prefer overlay — it is
-non-destructive.
+non-destructive. Two patterns from real overlay runs:
+- **Trust-ledger fallback:** if their corpus carries no front-matter, don't impose
+  `last_verified` fields on their files — add a single **verification-log doc**
+  (doc · last-verified date · verified-against · note) as the one trust home. Same
+  §15 signal, zero intrusion.
+- **Machinery stays out by default.** Overlay adds *content* only. This template's
+  machinery (managed `CLAUDE.md` block, `doc-maintainer` skill, hooks) assumes the
+  template's file layout and would collide with the host system's own constitution
+  — never replace or shadow their `CLAUDE.md`. If the host wants the hooks, adapt
+  them explicitly (the Stop hook's state-file path is configurable via the
+  `CLAUDE_DOCS_STATE` env var) and register the adaptation in *their* maintenance
+  system.
 
 **Handoff.** After adoption the ordinary triggers (§4) and the `doc-maintainer`
 skill maintain everything — no special mode persists. The one recommended follow-up

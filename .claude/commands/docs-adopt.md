@@ -49,6 +49,13 @@ better-than-default) corpus under our defaults — the opposite of helpful. Swit
 3. **Never move, rename, or quarantine their docs.** Overlay is strictly additive:
    new files + at most a one-line registration in their existing index (follow their
    own maintenance rule for how new docs get registered).
+3b. **Two proven overlay patterns** (§11): if their corpus has no front-matter,
+   don't impose `last_verified` fields — add a single **verification-log doc**
+   (doc · date · verified-against · note) as the one trust home. And **install no
+   machinery by default** — the managed `CLAUDE.md` block, skill, and hooks assume
+   the template layout and would collide with their constitution; if they want the
+   hooks, adapt explicitly (`CLAUDE_DOCS_STATE` env for the state path) and
+   register it in *their* maintenance system.
 4. **Preview + confirm** (Step 6) lists only the additive files and the exact
    one-line index edits — nothing else. Get an explicit yes before writing.
 

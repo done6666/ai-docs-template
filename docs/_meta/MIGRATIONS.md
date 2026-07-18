@@ -22,6 +22,27 @@ before writing (same safety gate as `/docs-adopt`).
 
 ---
 
+## 1.15.0 — Overlay learnings from a live mature-project run
+
+Applied after running `/docs-adopt` overlay mode on a real ~500-doc Nx monorepo
+with its own sophisticated docs constitution (Turkish, canonical-home/mirror
+discipline, no front-matter on the corpus). Three gaps surfaced:
+- **Machinery:**
+  - **Trust-ledger fallback** (§11, adopt Step 0.5): a host corpus without
+    front-matter gets a single **verification-log doc** (doc · date ·
+    verified-against · note) instead of imposed `last_verified` fields.
+  - **Machinery-overlay policy made explicit** (§11, adopt Step 0.5): overlay adds
+    content only; the managed `CLAUDE.md` block, skill, and hooks assume the
+    template layout and are never installed over a host constitution. Explicit
+    adaptation is the opt-in path.
+  - **Stop hook state path is now configurable**: `CLAUDE_DOCS_STATE` env var
+    (repo-relative), default `docs/STATE.md` — was hardcoded, which made the hook
+    useless in overlay projects with their own state file.
+- **Content migration:** None (backward compatible).
+- **Breaking:** no.
+
+---
+
 ## 1.14.0 — Template front-door cleanup at bootstrap
 
 - **Machinery:** `/docs-init` Step 3 now drafts a **minimal project README** to
