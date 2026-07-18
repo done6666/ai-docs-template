@@ -12,6 +12,20 @@ versioning: [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-07-17
+
+### Added
+- Implementation map (`implementation-map.md`, Tier 1): the AI's build ledger — a
+  checklist of implementation units (`[ ]`/`[~]`/`[x]`), a tight "how it was built"
+  note + code path per done unit, and a `Last implemented` pointer. Lets "what's
+  left / what was last built / how was X built" be answered from one cheap read
+  instead of scanning the codebase. Wired into tier + lifecycle triggers, the
+  fact-ownership matrix, the read path (§14.1), `/docs-audit`, routing/load rules,
+  and the `doc-maintainer` skill.
+- `DOCS_SYSTEM.md §0` now states explicitly that `docs/` content is written **for
+  the coding AI** (to stay faithful and efficient), not for humans — the root README
+  and `/docs-init` interview being the only human-facing exceptions.
+
 ## [1.2.0] - 2026-07-17
 
 ### Added

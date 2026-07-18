@@ -1,6 +1,6 @@
 # Operating Rules for Claude Code
 
-<!-- ai-docs-template:managed:start (template v1.2.0) — Machinery, upstream-owned.
+<!-- ai-docs-template:managed:start (template v1.3.0) — Machinery, upstream-owned.
      Do NOT hand-edit; `/docs-upgrade` replaces everything between these markers.
      Put project-specific rules BELOW the :end marker, not inside this block. -->
 
@@ -32,7 +32,9 @@ task, orient cheaply and stay grounded (full detail: `DOCS_SYSTEM.md §14`):
    *why*.** If a needed fact is in neither the docs nor the code you've checked, say
    "not documented" and read the code or ask — never invent it.
 4. **Resume fast.** For work already in progress, `STATE.md` + the active feature's
-   `## Current state` is your on-ramp — don't re-derive what they already say.
+   `## Current state` is your on-ramp — don't re-derive what they already say. For
+   "what's left / what was last built / how was X built", read
+   `docs/implementation-map.md` — one cheap doc instead of scanning the codebase.
 
 ## 3. Write as you work (triggers)
 
@@ -43,7 +45,8 @@ Apply these without being asked (full semantics in `docs/_meta/DOCS_SYSTEM.md §
 | Session ending / context compacting | Update the active feature's `## Current state` (keep current *as you work*); refresh `docs/STATE.md`. Use `/handoff` to flush deliberately |
 | Decision with a lasting trade-off | Append `docs/decisions/ADR-NNNN-*`, link from `architecture.md` |
 | Non-trivial feature starting | Create `docs/features/FEAT-*` **before** coding |
-| Feature completed | Mark spec shipped; fold into `STATE.md`; update `architecture.md` if structure changed |
+| Implementation unit finished | Flip it to `[x]` in `docs/implementation-map.md`, add a "how built" note + code path, update **Last implemented** (create if first) |
+| Feature completed | Mark spec shipped; fold into `STATE.md`; update `architecture.md` if structure changed; mark units done in `implementation-map.md` |
 | Dependency/tool added/removed/major-bumped | Update `docs/tech-stack.md` |
 | Module/boundary/data-flow change | Update `docs/architecture.md` |
 | Route/endpoint added or changed | Update `docs/api/*` (create if first → Tier 1) |

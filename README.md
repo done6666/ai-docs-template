@@ -6,7 +6,9 @@ Her tür projeyle uyumlu, web projeleri için optimize edilmiş, uyarlanabilir
 
 > **Temel ilke:** Dokümanları **siz yazmazsınız**. Tüm `docs/` klasörünü Claude
 > Code oluşturur ve günceller — siz sadece kod isteyin, dokümanlar arkada kendini
-> tutar.
+> tutar. Dokümanlar insanlar için değil, **kodu yazan yapay zeka için**dir: projeye
+> sadık kalması ve en verimli şekilde çalışması için (bu README ve `/docs-init`
+> röportajı, insana bakan tek istisnalardır).
 
 ---
 
@@ -97,7 +99,7 @@ docs/
     VERSION                   # Şablon sürümü (SemVer)
     MIGRATIONS.md             # Sürümler arası içerik göç kılavuzu
   # Tier 1+ (tetiklendikçe AI oluşturur):
-  requirements.md · roadmap.md · data-model.md · glossary.md
+  requirements.md · roadmap.md · implementation-map.md · data-model.md · glossary.md
   api/ · features/ · conventions/ · guides/
   # Tier 2:
   operations/ · api/openapi.yaml · architecture-components.md

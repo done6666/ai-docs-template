@@ -22,6 +22,21 @@ before writing (same safety gate as `/docs-adopt`).
 
 ---
 
+## 1.3.0 — Implementation map (build ledger)
+
+- **Machinery:** new `implementation-map.md` doc type + template — a build ledger
+  (units as `[ ]`/`[~]`/`[x]`, a "how built" note + code path per done unit, a
+  `Last implemented` pointer). Wired into tier triggers (§3), lifecycle triggers
+  (§4), fact-ownership (§6), the read path (§14.1), `/docs-audit` (check 3b), the
+  routing/load rules, and the `doc-maintainer` skill.
+- **Content migration:** None (backward compatible). *Optional:* if the project
+  already has substantial code, create `docs/implementation-map.md` from the
+  template and back-fill the major done units (with brief notes + code paths) so the
+  ledger reflects reality — or just let it accrue from the next unit onward.
+- **Breaking:** no.
+
+---
+
 ## 1.2.0 — Read-path optimization (task intake, grounding, token budget)
 
 - **Machinery:** added `DOCS_SYSTEM.md §14` (the read path: task-intake procedure,

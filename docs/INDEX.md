@@ -43,6 +43,7 @@ template_source: <set on bootstrap>    # URL to pull upgrades from (used by /doc
 | System structure / boundary / invariant | `architecture.md` | 0 |
 | Vision / scope / non-goal change | `project-brief.md` | 0 |
 | Live task status / next steps | `STATE.md` | 0 |
+| An implementation unit finished (mark done + how-note) | `implementation-map.md` | 1 |
 | A normative requirement | `requirements.md` (REQ-ID) | 1 |
 | A feature's design | `features/FEAT-NNNN-<slug>.md` | 1 |
 | An endpoint contract | `api/endpoints.md` → `api/openapi.yaml` | 1→2 |
@@ -61,6 +62,7 @@ template_source: <set on bootstrap>    # URL to pull upgrades from (used by /doc
 
 | Task touches… | Open |
 |---------------|------|
+| "What's left / last built / how was X built" | `implementation-map.md` (one read; avoids a code scan) |
 | UI / components | `conventions/ui-ux-guidelines.md`, the relevant `features/FEAT-*` |
 | An endpoint | `api/api-overview.md`, `api/endpoints.md` |
 | Persistence / schema | `data-model.md` |

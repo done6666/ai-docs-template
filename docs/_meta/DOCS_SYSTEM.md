@@ -23,10 +23,14 @@ maintain 100% of `docs/` autonomously**, as an ordinary part of doing the work �
 not as a separate task to ask permission for. The only doc work you announce is a
 one-line note of what you changed.
 
-Documentation exists so that a **fresh, amnesiac session** can (a) orient in
-minimal tokens, (b) resume exactly where the last session stopped, and (c) make
-the same decisions the last session would have. Everything below serves those
-three goals, in that priority order.
+**These docs are written for the AI that writes the code — not for humans and not
+for the code's author.** Their sole purpose is to let the coding agent stay faithful
+to the project and work efficiently. So documentation exists so that a **fresh,
+amnesiac session** can (a) orient in minimal tokens, (b) resume exactly where the
+last session stopped, and (c) make the same decisions the last session would have.
+Everything below serves those three goals, in that priority order. (The human-facing
+surfaces — the root `README` and the `/docs-init` interview — are the only exceptions;
+the `docs/` content itself is for the agent.)
 
 ---
 
@@ -81,6 +85,7 @@ Docs grow with the project. Create a doc only when its tier trigger fires (§3).
 |------|---------|
 | `docs/requirements.md` | Functional + non-functional requirements (REQ-IDs). |
 | `docs/roadmap.md` | Now / Next / Later; links to features. |
+| `docs/implementation-map.md` | Build ledger: which units are done, what's left, and a per-unit "how it was built" note. |
 | `docs/data-model.md` | Entities, relationships, invariants — **logical** model only. |
 | `docs/api/api-overview.md` | Style, auth, versioning, error/pagination conventions. |
 | `docs/api/endpoints.md` | Human endpoint reference (defers to `openapi.yaml` at Tier 2). |
@@ -116,6 +121,8 @@ but with front-matter + section headers) and logs the escalation in `INDEX.md`.
 - The first decision needing recorded rationale → create `decisions/` ADR beyond 0001.
 - Any HTTP endpoint or persisted entity is introduced → `api/` and/or `data-model.md`.
 - Distinct capabilities exceed ~5 (outgrows the brief's Scope section) → `requirements.md`.
+- Implementation work spans multiple units or sessions → `implementation-map.md`
+  (so progress and per-unit "how built" notes survive without re-scanning code).
 
 **Tier 1 → Tier 2** — when *any* fires:
 - More than one deployable/runnable container (e.g. frontend + backend + worker).
@@ -150,7 +157,8 @@ being asked. Each is detectable from work you are already doing.
 | Session ending / context about to compact | Rewrite current focus, changes, next steps, open questions, blockers, uncommitted work | `STATE.md` |
 | A decision with a lasting trade-off (framework, pattern, boundary, build-vs-buy) | Append an ADR; link it from `architecture.md` | `decisions/ADR-NNNN-*.md` |
 | A non-trivial feature is starting (>1-file change; new user-visible capability) | Create the feature spec **before** writing code | `features/FEAT-NNNN-*.md` |
-| A feature is completed | Mark spec `shipped`; fold a summary into `STATE.md`; update `architecture.md` if structure changed | feature spec + `STATE.md` |
+| **An implementation unit is finished** | Flip it to `[x]`, add a tight "how it was built" note + code path, update **Last implemented** (create the map if first → Tier 1) | `implementation-map.md` |
+| A feature is completed | Mark spec `shipped`; fold a summary into `STATE.md`; update `architecture.md` if structure changed; mark its units done in the map | feature spec + `STATE.md` + `implementation-map.md` |
 | A dependency/tool is added, removed, or major-version bumped | Update the stack table + rationale pointer | `tech-stack.md` |
 | A module/subsystem is added, or a boundary/data-flow changes | Update structure + diagram/description | `architecture.md` |
 | A route/endpoint is added or changed | Update the API inventory (create `api/` if first → Tier 1) | `api/endpoints.md` / `openapi.yaml` |
@@ -201,10 +209,19 @@ Template files shipped:
 - `templates/adr.md` — Architecture Decision Record.
 - `templates/feature.md` — feature spec.
 - `templates/state.md` — the STATE.md skeleton.
+- `templates/implementation-map.md` — the build ledger (progress + per-unit notes).
 - `templates/requirements.md` — requirements doc.
 - `templates/data-model.md` — logical data model.
 - `templates/api-overview.md` — API conventions.
 - `templates/convention.md` — a generic conventions/reference doc.
+
+The **implementation map** (`implementation-map.md`) is the AI's build ledger:
+a checklist of implementation units (`[ ]`/`[~]`/`[x]`), each done unit carrying a
+tight "how it was built" note + code path, plus a `Last implemented` pointer. It
+exists so "what's left / what was last built / how was X built" is answered from one
+cheap read instead of a codebase scan. It tracks *progress + non-obvious how* and
+links to code — it must never restate the code itself (§1.3); `/docs-audit` keeps it
+honest (done units whose code is gone, or done code missing from the map).
 
 Section skeletons (summarised; see the template files for the full form):
 - **ADR:** `Context · Decision · Consequences · Alternatives Considered`. Front-matter adds `id, status, date, supersedes, superseded_by, reconstructed`. A retroactive ADR (from `/docs-adopt`) sets `reconstructed: true`, `status: accepted`, shows the inferred-rationale banner, and cites the code paths that prove it in `related` — if it can't cite proof, it isn't written.
@@ -231,6 +248,7 @@ doc's `owns` field.
 | Endpoint contracts | `openapi.yaml`, else `api/endpoints.md` | features link |
 | Requirements (normative) | `requirements.md` (REQ-IDs) | features reference REQ-IDs |
 | Feature design | `features/FEAT-*` | roadmap links |
+| Implementation progress + "how built" notes | `implementation-map.md` | STATE/roadmap link; features link their units |
 | Shipped history | `CHANGELOG.md` | roadmap "Shipped" summarises only |
 | Domain terms | `glossary.md` | all docs link on first use |
 | System structure & invariants | `architecture.md` | features link |
@@ -545,7 +563,10 @@ confusing to read won't be used — so the read path is a first-class design goa
 ### 14.1 Task intake (the cheap procedure)
 On any task, in order:
 1. **Classify from the prompt's nouns.** Which feature, entity, endpoint, module, or
-   subsystem does the task name? Those nouns are your index keys.
+   subsystem does the task name? Those nouns are your index keys. For a
+   *progress/build* task ("what's left?", "what was last built?", "implement X"),
+   the **`implementation-map.md`** is the first and often only read — it answers
+   from one cheap doc instead of a codebase scan.
 2. **Route to the minimal set.** Use `INDEX.md`'s **routing table** (where a fact
    lives) and **load rules** (task → docs) to pick the 1–3 docs that actually bear
    on the task. At Tier 3, the subsystem catalog (§13.3) narrows it to one subsystem.

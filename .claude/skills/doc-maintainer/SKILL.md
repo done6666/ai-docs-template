@@ -31,6 +31,7 @@ Apply these as they occur:
 | Session ending / context compacting | Update the active feature's `## Current state` (keep current *as you work*), then refresh `docs/STATE.md`. `/handoff` flushes deliberately. See `DOCS_SYSTEM.md §10` |
 | Decision with a lasting trade-off | Append `docs/decisions/ADR-NNNN-*` (template: `_meta/templates/adr.md`); link from `architecture.md`; add to `decisions/README.md` |
 | Non-trivial feature starting | Create `docs/features/FEAT-*` **before** coding (template: `_meta/templates/feature.md`) |
+| Implementation unit finished | Flip it to `[x]` in `docs/implementation-map.md`, add a tight "how built" note + code path, update **Last implemented** (create the map if first) |
 | Feature completed | Mark spec `shipped`; fold summary into `STATE.md`; update `architecture.md` if structure changed; add a `CHANGELOG.md` `[Unreleased]` entry |
 | Dependency/tool added/removed/major-bumped | Update `docs/tech-stack.md` |
 | Module/boundary/data-flow change | Update `docs/architecture.md` (Components / Source map / Invariants) |

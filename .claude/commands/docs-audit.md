@@ -37,6 +37,10 @@ Run each and collect findings:
    missing or undocumented endpoints.
 3. **Structure** — every path in `architecture.md`'s **Source map** resolves on
    disk; flag moved/renamed/deleted paths.
+3b. **Implementation map** (if present) — each `[x]` unit's code path resolves (flag
+   done units whose code is gone); and code that clearly implements a listed `[ ]`
+   unit → flag the map as stale (unit built but not marked). Don't demand a unit for
+   every file — the map tracks meaningful units, not every path.
 4. **State freshness** — `STATE.md` "Next steps" vs recent `git log`; flag if the
    branch or health looks stale relative to actual activity.
 5. **Freshness** — any doc whose `updated` is old relative to related code churn →
