@@ -12,6 +12,24 @@ versioning: [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-07-17
+
+### Added
+- Trust & verification model (`DOCS_SYSTEM.md §15`): resolves the tension between
+  cheap doc reads and stale docs. Trust is calibrated by stakes × volatility ×
+  freshness; a volatile, high-stakes fact you'll code against is spot-checked
+  **narrowly** against the code the doc points to (O(1), not a re-scan) before you
+  depend on it — so a stale doc no longer yields confident-wrong code.
+- `last_verified` front-matter generalized to all tiers (trust-time), distinct from
+  `updated` (touch-time); `INDEX` `status` gains `suspect`; `/docs-audit` sets
+  `last_verified` on confirmed docs and flags the rest `suspect`.
+
+### Changed
+- Grounding rule (§14.4) and `CLAUDE.md` read path now include "don't follow a
+  suspect doc blindly"; §14.5 notes verification is part of the token economy, not
+  opposed to it. `doc-maintainer` skill sets `last_verified` and cites ground-truth
+  code paths for volatile facts.
+
 ## [1.4.0] - 2026-07-17
 
 ### Added

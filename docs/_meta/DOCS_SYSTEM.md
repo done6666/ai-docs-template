@@ -203,9 +203,9 @@ does_not_own: "<facts that live elsewhere; name where>"
 status: current | draft | superseded | archived
 updated: YYYY-MM-DD
 related: [<ID or path>, ...]
-# Optional, for large-scale / federated mode (§13.4):
-covers: [<code path glob>, ...]   # the code this doc documents (enables scoped/incremental audit)
-last_verified: YYYY-MM-DD         # when /docs-audit last confirmed this doc vs code
+# Optional:
+last_verified: YYYY-MM-DD          # when this doc was last confirmed to match code (trust-time; §15). Distinct from `updated` (touch-time). Recommended on volatile docs (data-model, api, architecture).
+covers: [<code path glob>, ...]    # the code this doc documents — enables scoped/incremental audit + suspect detection (§13.4, §15.1)
 ---
 ```
 
@@ -606,6 +606,10 @@ genuinely informative when you write, so future reads can decide cheaply.
   statement or a line of code — not to assumption.
 - **Precedence:** code is authoritative for *what* the system does; ADRs for *why*.
   If a doc and the code disagree, trust the code and reconcile the doc (§4, §7).
+- **Don't follow a suspect doc blindly.** Before writing code against a *volatile,
+  high-stakes* fact (a field, a contract), spot-check it against the code the doc
+  points to — especially if the doc is suspect (§15). Cheap check, avoids
+  confident-wrong code.
 - **If a needed fact is in neither the docs nor the code you've checked, say
   "not documented"** and then read the code or ask the user. Never fill the gap by
   inventing a plausible answer. A missing doc is a signal to read code or write a
@@ -624,4 +628,60 @@ genuinely informative when you write, so future reads can decide cheaply.
 - **Per task:** the 1–3 docs the task implicates, read by layers (14.2). This is the
   variable cost, and the intake procedure exists to keep it small.
 The whole design — INDEX summaries, `owns` filters, size caps, anchors, federation —
-is there so the read path stays **cheap and grounded** as the project grows.
+is there so the read path stays **cheap and grounded** as the project grows. But
+"read the doc, not the code" is only safe when the doc is *trustworthy* — see §15,
+which resolves the tension between cheap reads and stale docs.
+
+---
+
+## 15. Trust & verification — don't follow stale docs blindly
+
+§14 tells you to prefer docs over re-scanning code — cheaper and more faithful. But
+a **stale doc followed faithfully produces confident wrong code**, which is worse
+than no doc: you *feel* grounded (you cited a doc) yet you're wrong. Resolve this by
+**calibrating trust** and **verifying narrowly** — never by re-reading everything
+(that would defeat §14).
+
+### 15.1 `updated` ≠ `last_verified`
+- `updated:` = when the doc's content last changed (**touch-time**).
+- `last_verified:` = when it was last confirmed to match the code (**trust-time** — a
+  date or git SHA), set by `/docs-audit` or by a session that checked it against code.
+A doc is **suspect** when `last_verified` is absent, older than `updated`, or older
+than the last change to the code it covers/cites. A recent `updated` alone is *not* a
+trust signal — it says "edited", not "true".
+
+### 15.2 Trust = stakes × volatility × freshness
+Before acting on a doc's claim, calibrate:
+- **Volatility (altitude).** Stable facts — *why* (ADRs), scope (`project-brief`),
+  terms (`glossary`) — are rarely invalidated by code changes; trust them. Volatile
+  facts — `data-model` fields, API contracts, source-map paths, signatures — are
+  invalidated constantly; treat with suspicion.
+- **Stakes.** Are you about to *write code against* this fact (a field name, a
+  contract, an invariant)? High stakes. Or just orienting? Low stakes.
+- **Freshness.** Is the doc verified (§15.1) and its code unchurned?
+
+Rule of thumb: **stable or low-stakes → trust the doc as-is. Volatile + high-stakes +
+suspect → verify before you build.**
+
+### 15.3 Verify narrowly (the O(1) spot-check)
+Verifying does NOT mean re-reading a subsystem. It means: **follow the doc's own
+pointer to the exact code that owns the fact, and check that one thing.** This is why
+volatile facts must cite their ground-truth code path (`data-model` → the model file,
+`api` → the router). A one-file / one-symbol check is cheap — do it for the
+high-stakes fact you're about to depend on, and nothing more.
+
+### 15.4 Verification is part of efficiency (not opposed to §14)
+A spot-check costs a few tokens; shipping code against a stale contract costs a wrong
+implementation + a correction round-trip + eroded trust in the whole system. So
+verifying the one load-bearing fact *is* the token economy, correctly scoped. §14 and
+§15 compose: **read shallow for orientation, spot-check deep for the one fact you
+build on.**
+
+### 15.5 Keep trust signals honest (write side)
+- After confirming a doc against code, set `last_verified` (= today / the SHA).
+- Cite the ground-truth code path for each volatile fact, so future verification is cheap.
+- If you find a doc was stale, reconcile it (§4) **and** treat its neighbours (same
+  subsystem/era) as suspect — drift clusters.
+- `/docs-audit` sets `last_verified` on docs it confirms and marks the rest
+  `status: suspect`; `INDEX`'s `status` (`fresh` / `stale?` / `suspect`) surfaces
+  trust at boot so you know which docs to spot-check.

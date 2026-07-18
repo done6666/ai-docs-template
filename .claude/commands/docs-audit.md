@@ -47,8 +47,11 @@ Run each and collect findings:
    auto-delete.
 4. **State freshness** — `STATE.md` "Next steps" vs recent `git log`; flag if the
    branch or health looks stale relative to actual activity.
-5. **Freshness** — any doc whose `updated` is old relative to related code churn →
-   propose marking `status: stale?` in `INDEX.md`.
+5. **Freshness & trust** — set `last_verified` (today/SHA) on every doc you confirm
+   matches code, at any tier. Mark `status: suspect` in `INDEX.md` for docs where
+   `last_verified` is missing, older than `updated`, or older than the last change to
+   the code they cover/cite; `stale?` where `updated` lags related code churn. This
+   is the boot-time trust signal the read path relies on (§15).
 6. **Index integrity** — every content doc appears in an index and every index row
    resolves. In **federated mode** (§13.2): each doc appears in *its area index*
    (`docs/<area>/INDEX.md`) and every area index appears in the root INDEX

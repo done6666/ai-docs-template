@@ -17,6 +17,11 @@ template_source: <set on bootstrap>    # URL to pull upgrades from (used by /doc
 > **`/docs-adopt`** (a repo that already has substantial code) to generate the docs.
 > Until then, the rows below describe the *skeleton*.
 
+> **`status` = trust signal:** `fresh` (verified against code) · `stale?` (maybe
+> drifted) · `suspect` (`last_verified` missing/older than `updated`, or its code
+> changed since). Spot-check a `suspect`/`stale?` doc's volatile facts before coding
+> against them (`_meta/DOCS_SYSTEM.md §15`).
+
 ## Core (Tier 0 — always available)
 
 | file | purpose | updated | tokens~ | status |

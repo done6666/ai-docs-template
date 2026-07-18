@@ -22,6 +22,22 @@ before writing (same safety gate as `/docs-adopt`).
 
 ---
 
+## 1.5.0 — Trust & verification (don't follow stale docs blindly)
+
+- **Machinery:** new `DOCS_SYSTEM.md §15` — a read-time trust model (trust =
+  stakes × volatility × freshness; verify volatile high-stakes facts *narrowly*
+  against the code the doc points to). `last_verified` front-matter generalized from
+  Tier-3-only to all tiers (trust-time, distinct from `updated`/touch-time). Grounding
+  rule (§14.4) + `CLAUDE.md` read path gain a "don't follow a suspect doc blindly"
+  step; `INDEX` `status` gains `suspect`; `/docs-audit` sets `last_verified` at all
+  tiers and flags `suspect`; `doc-maintainer` skill updated.
+- **Content migration:** None (backward compatible). `last_verified` is optional;
+  add it to volatile docs (`data-model`, `api/*`, `architecture`) as `/docs-audit`
+  confirms them, or let it accrue. Existing docs stay valid.
+- **Breaking:** no.
+
+---
+
 ## 1.4.0 — Guardrails (negative knowledge)
 
 - **Machinery:** new `guardrails.md` doc type + template — project must/never rules,

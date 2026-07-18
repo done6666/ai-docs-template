@@ -1,6 +1,6 @@
 # Operating Rules for Claude Code
 
-<!-- ai-docs-template:managed:start (template v1.4.0) — Machinery, upstream-owned.
+<!-- ai-docs-template:managed:start (template v1.5.0) — Machinery, upstream-owned.
      Do NOT hand-edit; `/docs-upgrade` replaces everything between these markers.
      Put project-specific rules BELOW the :end marker, not inside this block. -->
 
@@ -33,6 +33,12 @@ task, orient cheaply and stay grounded (full detail: `DOCS_SYSTEM.md §14`):
    "not documented" and read the code or ask — never invent it. Before writing code
    in an area, check `docs/guardrails.md` — don't retry a `FAILED` approach or
    violate a `MUST`/`NEVER`.
+   - **Don't follow a stale doc blindly.** Trust stable/low-stakes docs (why, scope,
+     terms) as-is. But for a **volatile, high-stakes fact you'll code against** (a
+     field, a contract, a path) — especially if the doc is *suspect*
+     (`last_verified` missing/older than `updated`, or its code changed since) —
+     spot-check that one fact against the code the doc points to first. Cheap check;
+     avoids confident-wrong code (`DOCS_SYSTEM.md §15`).
 4. **Resume fast.** For work already in progress, `STATE.md` + the active feature's
    `## Current state` is your on-ramp — don't re-derive what they already say. For
    "what's left / what was last built / how was X built", read

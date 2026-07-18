@@ -51,8 +51,12 @@ Apply these as they occur:
 - **Don't duplicate code/git:** if a fresh agent could recover it from the code or
   `git log` in under a minute, link to the path — don't copy it in.
 - **Precedence:** code = *what*; ADRs = *why*. Reconcile everything else to those.
-- **Freshness:** bump `updated:` on every doc you touch; keep `INDEX.md` rows in
-  sync (add new docs, update `status`/`updated`).
+- **Freshness & trust:** bump `updated:` on every doc you touch; when you've
+  confirmed a doc matches code, set `last_verified:` too (they differ — touch-time vs
+  trust-time, §15). Cite the ground-truth code path for volatile facts (fields,
+  contracts, paths) so future sessions can spot-check cheaply. Don't follow a
+  `suspect` doc blindly — verify its high-stakes facts against that code first. Keep
+  `INDEX.md` rows (`status`/`updated`) in sync.
 - **Size caps:** `STATE.md` ≤ ~400 tokens (overwrite, don't append; promote lasting
   items to their owner doc first); `INDEX.md` ≤ ~600; other docs ≤ ~1,200–1,500.
   On overflow: split, summarise, or archive — never keep appending.
