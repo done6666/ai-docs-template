@@ -20,17 +20,18 @@ updated: YYYY-MM-DD
 **Last implemented:** <unit> — <YYYY-MM-DD> <optional: branch/commit>
 
 ## Legend
-`[ ]` todo · `[~]` in progress · `[x]` done. Under each **done** unit, add a `>` note:
-how it was built, the key decision/gotcha, and the code path(s). Keep notes tight —
-non-obvious *how*, not a re-description of the code.
+`[ ]` todo · `[~]` in progress · `[x]` done. Optional inline tags: `(depends: <unit>)`
+for ordering, `(ref: <commit/PR>)` on a done unit for the change that built it. Under
+each **done** unit, add a `>` note: how it was built, the key decision/gotcha, and the
+code path(s). Keep notes tight — non-obvious *how*, not a re-description of the code.
 
 ## <Area or Feature>
 
-- [x] <implementation unit> — `path/to/code`
+- [x] <implementation unit> — `path/to/code` (ref: a1b2c3d)
   > NOTE: <how it was built; key decision or gotcha; anything a future session would
   > otherwise have to rediscover by reading the code>. Links: `FEAT-00NN`, `ADR-00NN`.
 - [~] <unit in progress> — see `features/FEAT-00NN.md#current-state`
-- [ ] <unit not started> — depends on <unit / decision>
+- [ ] <unit not started> (depends: <the unit it needs>)
 
 ## <Area or Feature>
 

@@ -41,6 +41,7 @@ Apply these as they occur:
 | Route/endpoint added or changed | Update `docs/api/*` (create the `api/` area if first → Tier 1) |
 | Schema / data-model change | Update `docs/data-model.md` (create if first) |
 | Recurring non-obvious domain term (≥~3 uses) | Add to `docs/glossary.md` (create if first) |
+| Stable identifier gains a renamable user-facing name (feature/permission/plan key, event, enum) | Register `key → display name` in `docs/keys.md` (create if first) |
 | Scope / goal / non-goal change | Update `docs/project-brief.md` |
 | User-visible change ships | Add entry under `CHANGELOG.md` `[Unreleased]` |
 | Code contradicts a doc | Reconcile that doc in the same change |

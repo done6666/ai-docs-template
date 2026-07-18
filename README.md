@@ -106,7 +106,7 @@ docs/
     MIGRATIONS.md             # Sürümler arası içerik göç kılavuzu
   # Tier 1+ (tetiklendikçe AI oluşturur):
   requirements.md · roadmap.md · implementation-map.md · guardrails.md
-  data-model.md · glossary.md · api/ · features/ · conventions/ · guides/
+  data-model.md · glossary.md · keys.md · api/ · features/ · conventions/ · guides/
   # Tier 2:
   operations/ · api/openapi.yaml · architecture-components.md
 CHANGELOG.md                  # Keep a Changelog

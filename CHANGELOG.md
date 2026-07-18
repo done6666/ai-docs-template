@@ -12,6 +12,24 @@ versioning: [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.9.0] - 2026-07-18
+
+### Added
+- **`/docs-adopt` overlay mode** (`DOCS_SYSTEM §11`, command Step 0.5): detects a
+  project that already has an organized/mature docs system and adds only the genuinely
+  missing pieces in *their* conventions — strictly additive, never quarantining their
+  docs. (Prompted by adopting onto a real 493-doc Nx monorepo, where the old
+  quarantine-and-regenerate path would have buried a superior corpus.)
+- **`keys.md` name registry** (Tier 1): stable key → mutable display name + role, so
+  renames/i18n change one file, not the code.
+- Implementation-map units gain optional `(depends: …)` ordering and `(ref: <commit>)`
+  provenance.
+
+### Changed
+- **Labeled mirrors** (`§6`): controlled duplication is allowed only when the echo is
+  explicitly labeled a mirror pointing to its authoritative home; unlabeled restatement
+  stays forbidden.
+
 ## [1.8.0] - 2026-07-18
 
 ### Changed

@@ -24,6 +24,38 @@ Read `docs/INDEX.md` front-matter if present:
   `docs/_ingest/`) → **resume**: re-scan, mark already-written docs `keep`, propose
   only what's missing/changed.
 
+## Step 0.5 — Mature-docs check → OVERLAY mode (critical)
+
+Before treating existing docs as ad-hoc, judge whether the project **already has an
+organized docs system**. Signals: many docs (>~20) with an index/entry doc, a
+discernible structure (per-topic/subsystem folders), consistent conventions
+(front-matter, canonical-home discipline, a docs map in `README`/`CLAUDE.md`), and/or
+its own reading-order/routing doc.
+
+If it does → **do NOT quarantine-and-regenerate.** That would bury a mature (often
+better-than-default) corpus under our defaults — the opposite of helpful. Switch to
+**OVERLAY mode**:
+
+1. **Map, don't take over.** Match their artifacts to this system's roles (their
+   index → INDEX; their per-subsystem docs → federated architecture (§13); their
+   progress tracker → `implementation-map`; their decisions/register → `decisions/`;
+   their glossary/keys → glossary/keys). Produce a **gap analysis**, not a rewrite.
+2. **Add only what's genuinely missing**, and **in their conventions and language** —
+   file naming, section style, terminology, authority model. Common real gaps: an
+   append-only decision log (§17), a read-time trust signal (`last_verified`, §15),
+   a consolidated negative-knowledge home (guardrails), explicit seams. Skip anything
+   they already cover (don't create a second home for a fact they own — respect their
+   SSOT).
+3. **Never move, rename, or quarantine their docs.** Overlay is strictly additive:
+   new files + at most a one-line registration in their existing index (follow their
+   own maintenance rule for how new docs get registered).
+4. **Preview + confirm** (Step 6) lists only the additive files and the exact
+   one-line index edits — nothing else. Get an explicit yes before writing.
+
+Full quarantine-and-reconstruct (Steps 1–7 below) is for projects whose docs are
+genuinely **ad-hoc/absent**. When in doubt between the two, prefer overlay — it is
+non-destructive; you can always add more later.
+
 ## Step 1 — Deep scan (read-only; don't ask yet)
 
 Build a factual model from code + git, citing the path each fact came from:

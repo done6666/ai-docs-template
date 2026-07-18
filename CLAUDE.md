@@ -1,6 +1,6 @@
 # Operating Rules for Claude Code
 
-<!-- ai-docs-template:managed:start (template v1.8.0) — Machinery, upstream-owned.
+<!-- ai-docs-template:managed:start (template v1.9.0) — Machinery, upstream-owned.
      Do NOT hand-edit; `/docs-upgrade` replaces everything between these markers.
      Put project-specific rules BELOW the :end marker, not inside this block. -->
 
@@ -47,7 +47,8 @@ every micro-edit. Core triggers (full table: §4):
 - **Code contradicts a doc** → reconcile it in the same change.
 
 Other triggers (deps→`tech-stack`, structure→`architecture`, routes→`api/`,
-schema→`data-model`, terms→`glossary`, shipped→`CHANGELOG`, scope→`project-brief`): see §4.
+schema→`data-model`, terms→`glossary`, renamable keys→`keys.md`, shipped→`CHANGELOG`,
+scope→`project-brief`): see §4.
 
 ## 4. Consistency & single source of truth
 
@@ -56,7 +57,9 @@ change; bump its `updated:`. **Code = *what*, ADRs = *why***; reconcile the rest
 those. Don't store what code or `git log` hold — link. **One home per fact:**
 done/next queue = `implementation-map.md`; live session cursor = `STATE.md`; an
 in-flight feature's resume = its `## Current state` (drop it when shipped) — don't
-restate the same status in all three.
+restate the same status in all three. If you must echo a fact for convenience, label
+it a **mirror** (`> Mirror — home: X`); an unlabeled restatement is a silent second
+home that drifts (§6).
 
 ## 5. Parallel & large scale (only when it happens)
 

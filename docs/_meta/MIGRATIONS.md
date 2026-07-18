@@ -22,6 +22,28 @@ before writing (same safety gate as `/docs-adopt`).
 
 ---
 
+## 1.9.0 — Learnings from adopting a real mature project
+
+Applied after test-driving `/docs-adopt` on a large real project (Nx monorepo) that
+already had a sophisticated 493-doc system — which exposed a flaw and two good ideas:
+- **`/docs-adopt` overlay mode (§11, command Step 0.5):** detect a project that
+  already has an organized docs system and switch to **overlay** (map + gap-analysis
+  + add only what's missing, in *their* conventions, strictly additively) instead of
+  quarantine-and-regenerate, which would bury a mature corpus under defaults.
+- **`keys.md` name registry** (Tier 1): stable key → mutable display name + role, so
+  renames and i18n change one file, not the code. Borrowed from the real project's
+  "key is permanent, name is mutable" discipline.
+- **Implementation-map** units gain optional `(depends: …)` ordering and
+  `(ref: <commit/PR>)` provenance.
+- **Labeled mirrors (§6):** controlled duplication is allowed *only* when the echo is
+  explicitly labeled a mirror pointing to its authoritative home; unlabeled
+  restatement stays forbidden.
+- **Content migration:** None (backward compatible). New optional doc/fields; adopt a
+  `keys.md` if the project has renamable identifiers, otherwise ignore.
+- **Breaking:** no.
+
+---
+
 ## 1.8.0 — Simplifications (from a live end-to-end test)
 
 First *reducing* release. A real multi-scenario run surfaced three frictions, fixed here:

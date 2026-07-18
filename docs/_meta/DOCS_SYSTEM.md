@@ -96,6 +96,7 @@ Docs grow with the project. Create a doc only when its tier trigger fires (§3).
 | `docs/conventions/naming-conventions.md` | Files, vars, branches, commits. |
 | `docs/conventions/ui-ux-guidelines.md` | Web design system: tokens, patterns, a11y, responsive. |
 | `docs/glossary.md` | Domain + naming vocabulary. |
+| `docs/keys.md` | Name registry: stable key → mutable display name + role (rename/i18n safety). |
 | `docs/guides/getting-started.md` | Tutorial: clone → run locally. |
 
 ### Tier 2 — Complex (large / production / multi-container)
@@ -180,6 +181,7 @@ owner (§6) and stop.
 | A route/endpoint is added or changed | Update the API inventory (create `api/` if first → Tier 1) | `api/endpoints.md` / `openapi.yaml` |
 | A schema / data model changes | Update the logical model (create if first) | `data-model.md` |
 | A domain term is used repeatedly (≥ ~3 uses, non-obvious) | Add a glossary entry (create if first) | `glossary.md` |
+| A stable identifier gains a user-facing name that could be renamed (feature/permission/plan key, event name, labelled enum) | Register `key → display name` (create if first) | `keys.md` |
 | Scope / goal / non-goal changes | Update the charter | `project-brief.md` |
 | A user-visible change ships | Add an entry under `[Unreleased]` | `CHANGELOG.md` |
 | Code you just read contradicts a doc | Reconcile the doc in the same change | affected doc |
@@ -227,6 +229,7 @@ Template files shipped:
 - `templates/state.md` — the STATE.md skeleton.
 - `templates/implementation-map.md` — the build ledger (progress + per-unit notes).
 - `templates/guardrails.md` — negative knowledge (must/never rules, pitfalls, failed approaches).
+- `templates/keys.md` — name registry (stable key → mutable display name).
 - `templates/requirements.md` — requirements doc.
 - `templates/data-model.md` — logical data model.
 - `templates/api-overview.md` — API conventions.
@@ -272,6 +275,7 @@ doc's `owns` field.
 | Negative knowledge (must/never, pitfalls, failed approaches) | `guardrails.md` | conventions/architecture link the critical ones |
 | Shipped history | `CHANGELOG.md` | roadmap "Shipped" summarises only |
 | Domain terms | `glossary.md` | all docs link on first use |
+| Display names of stable keys | `keys.md` | code/docs use the key, never the name |
 | System structure & invariants | `architecture.md` | features link |
 | Cross-subsystem contracts (seams) | `architecture.md` Seams (→ `architecture/_seams.md` at Tier 3) | subsystems link to the seams they touch |
 | Scope / goals / non-goals | `project-brief.md` | requirements link |
@@ -281,6 +285,15 @@ doc's `owns` field.
 **Abstraction ladder** (a fact belongs to exactly one altitude): product (*why*) →
 architecture (*how, structural*) → api + data (*how, contract*) → features (*how,
 specific*) → code (*how, literal*).
+
+**Labeled mirrors (controlled duplication).** The default is *link, don't restate*.
+But occasionally echoing a fact where a reader needs it is genuinely clearer than a
+link. That's allowed **only if the echo is explicitly labeled a mirror** pointing to
+its authoritative home — e.g. `> Mirror — authoritative home: docs/data-model.md#invoice`.
+A mirror is never the source of truth; it may be stale and readers know to trust the
+home. An **unlabeled** restatement is still forbidden (it becomes a silent second
+home that drifts). When you change the fact, update the home; `/docs-audit` can check
+that mirrors still match their home.
 
 ---
 
@@ -441,6 +454,18 @@ codebase is the primary source; the human interview is minimal.**
 6. **Idempotency.** `status: active` → reconcile mode (run `/docs-audit`, fill only
    gaps). A prior partial run → resume: keep already-written docs, propose only the
    rest.
+
+**Overlay mode (a project that already has a good docs system).** Some existing
+projects already have an organized, mature docs corpus — sometimes better than the
+default this template would generate. There, quarantine-and-regenerate is *wrong*: it
+buries their work under our defaults. `/docs-adopt` detects this (an index/entry doc,
+per-subsystem structure, consistent conventions) and switches to **overlay**: map
+their artifacts to this system's roles, do a **gap analysis**, and add *only* the
+genuinely missing pieces — **in their conventions and language**, strictly additively
+(new files + at most a one-line registration in their existing index), never moving or
+renaming their docs. Respect their SSOT: don't create a second home for a fact they
+already own. When unsure whether docs are "ad-hoc" or "mature", prefer overlay — it is
+non-destructive.
 
 **Handoff.** After adoption the ordinary triggers (§4) and the `doc-maintainer`
 skill maintain everything — no special mode persists. The one recommended follow-up
