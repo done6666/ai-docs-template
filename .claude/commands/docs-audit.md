@@ -80,6 +80,13 @@ Run each and collect findings:
    card matches its authoritative §s; `INDEX.md`'s `tokens~` estimates are within
    ~2× of actual file size. Flag drift as `high` — a stale machinery number
    silently miscalibrates every future session.
+10. **Expected-but-missing areas** — using `INDEX.md`'s `project_type` and the
+   expectation map (`DOCS_SYSTEM.md §2`), flag each expected area whose **trigger
+   evidence already exists in the code but whose doc doesn't**: a router/endpoint
+   file with no `api/`; persisted entities/migrations with no `data-model.md`;
+   UI components with no `conventions/ui-ux-guidelines.md`; multi-unit work in
+   git with no `implementation-map.md`. An expected area with no trigger evidence
+   is NOT a finding (the map predicts, it doesn't scaffold). Severity `medium`.
 
 ## Output
 

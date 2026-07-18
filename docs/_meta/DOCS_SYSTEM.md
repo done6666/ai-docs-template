@@ -144,6 +144,27 @@ Docs grow with the project. Create a doc only when its tier trigger fires (§3).
 | `docs/operations/observability.md` | Logging, metrics, alerts, dashboards. |
 | `docs/guides/how-to-<task>.md` | Task-oriented how-tos. |
 
+### Expected areas by project type (expectation map, NOT scaffolding)
+
+`project_type` (INDEX front-matter) predicts which areas a project will *naturally
+grow*. This table never causes creation — docs are still created only when their
+§3/§4 trigger fires. Its two uses: a fresh session learns in one glance what is
+normal for this project, and `/docs-audit` uses it to flag an **expected-but-missing
+area whose trigger evidence already exists in the code** (e.g. a router exists but
+no `api/`).
+
+| project_type | Expected to appear | Not expected (absence is normal) |
+|--------------|--------------------|----------------------------------|
+| web | `features/`, `api/`, `data-model.md`, `conventions/ui-ux-guidelines.md` | — |
+| api / service | `api/`, `data-model.md`, `features/`, `operations/` (at Tier 2) | `conventions/ui-ux-guidelines.md` |
+| library | `guides/getting-started.md`, `api/api-overview.md` (public surface), `conventions/` | `conventions/ui-ux-guidelines.md`, `operations/` |
+| cli | `guides/getting-started.md`, `conventions/` | `api/`, `conventions/ui-ux-guidelines.md` |
+| mobile | `features/`, `api/` (consumed backend), `conventions/ui-ux-guidelines.md` | — |
+| monorepo | per-container areas above + `architecture-components.md`; federation at scale (§13.7) | — |
+
+An area in the "expected" column that never appears is *not* a defect by itself —
+only its **trigger having visibly fired without the doc existing** is (§8 check 10).
+
 ---
 
 ## 3. Tier escalation triggers
@@ -390,6 +411,11 @@ offers to fix mechanical drift and lists judgment calls for confirmation.
    skill and `/docs-init`, trigger subsets in `CLAUDE.md` and the skill, the
    Quick-reference card above, `INDEX.md` `tokens~` estimates) still matches this
    file — on drift, this file wins (§9); reconcile the machinery to it.
+10. **Expected-but-missing areas:** per `project_type`'s expectation map (§2),
+   flag an expected area whose trigger evidence exists in code (router but no
+   `api/`, migrations but no `data-model.md`, UI but no `ui-ux-guidelines.md`)
+   while its doc doesn't. Absence without trigger evidence is normal, not a
+   finding.
 
 ---
 

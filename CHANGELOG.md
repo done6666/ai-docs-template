@@ -12,6 +12,19 @@ versioning: [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.16.0] - 2026-07-18
+
+### Added
+- **Project-type expectation map** (spec §2): `project_type` now predicts which
+  doc areas a project naturally grows (web → features/api/data-model/ui-ux;
+  library → guides/api-overview; cli → guides/conventions; …). Deliberately an
+  expectation map, not scaffolding — creation still happens only on triggers, so
+  no empty-template pollution.
+- `/docs-audit` check **10. Expected-but-missing areas**: the map becomes a gap
+  detector — an expected area whose trigger evidence is already visible in code
+  (router but no `api/`, migrations but no `data-model.md`) gets flagged; absence
+  without evidence stays normal.
+
 ## [1.15.0] - 2026-07-18
 
 ### Added

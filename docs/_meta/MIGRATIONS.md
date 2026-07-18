@@ -22,6 +22,23 @@ before writing (same safety gate as `/docs-adopt`).
 
 ---
 
+## 1.16.0 — Project-type expectation map + expected-but-missing audit check
+
+- **Machinery:**
+  - `DOCS_SYSTEM.md §2` gains an **"Expected areas by project type"** table —
+    `project_type` (previously informational-only) now predicts which areas a
+    project naturally grows. Explicitly an *expectation map, not scaffolding*:
+    docs are still created only by §3/§4 triggers.
+  - `/docs-audit` gains check **10. Expected-but-missing areas**: flags an
+    expected area whose trigger evidence exists in code (router but no `api/`,
+    migrations but no `data-model.md`, UI but no `ui-ux-guidelines.md`) while the
+    doc doesn't exist. Absence without trigger evidence is not a finding.
+- **Content migration:** None (backward compatible). Projects with a stale or
+  `unknown` `project_type` in `INDEX.md` should set it on the next audit.
+- **Breaking:** no.
+
+---
+
 ## 1.15.0 — Overlay learnings from a live mature-project run
 
 Applied after running `/docs-adopt` overlay mode on a real ~500-doc Nx monorepo
