@@ -40,6 +40,7 @@ Apply these as they occur:
 | Cross-subsystem contract added/changed (event, internal API, shared invariant) | Record/update the **seam** (edge · contract · producer · consumer · enforcement path) in `architecture` Seams / `architecture/_seams.md` |
 | Route/endpoint added or changed | Update `docs/api/*` (create the `api/` area if first → Tier 1) |
 | Schema / data-model change | Update `docs/data-model.md` (create if first) |
+| A design fact chosen for a user-facing UI (reference, palette, type, spacing, layout rule) | Record in `docs/conventions/ui-ux-guidelines.md` (the design SSOT; template: `_meta/templates/ui-ux-guidelines.md`). After UI work, verify the screen against this doc — fix code or change the doc, never drift silently |
 | Recurring non-obvious domain term (≥~3 uses) | Add to `docs/glossary.md` (create if first) |
 | Stable identifier gains a renamable user-facing name (feature/permission/plan key, event, enum) | Register `key → display name` in `docs/keys.md` (create if first) |
 | Scope / goal / non-goal change | Update `docs/project-brief.md` |

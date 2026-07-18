@@ -143,6 +143,10 @@ the scan answered:
    or two is enough; leave one blank and I'll mark it "rationale not recorded".)
 5. What should the project's **display name** be? (My guess: "<repo/pkg name>".)
 6. Any **technology** I should add or correct? (Detected: "<stack>".)
+7. *(only if a UI exists and no design-system doc was found in the scan)*
+   **Design:** name 1–2 reference sites/products and the feel you're after — this
+   seeds `conventions/ui-ux-guidelines.md` (from
+   `_meta/templates/ui-ux-guidelines.md`) so UI work stops drifting per session.
 
 Q4 answers promote inferred ADR rationale to confirmed; unanswered ones keep the
 honest "rationale not recorded" note.
@@ -174,7 +178,9 @@ Print a short note in the user's language: what was created/moved; that the
 originals are preserved under `_ingest/`; that the docs update automatically from
 here on; and **recommend running `/docs-audit` right away** — to verify the
 reconstructed architecture/endpoints/data-model against the code (the one manual
-step after adoption).
+step after adoption). If the project's signals match the curated catalog
+(`docs/_meta/skills-catalog.md`), add one line: `/docs-skills` can recommend 2–3
+vetted skills for this stack.
 
 Never fabricate. Code wins for *what*; the human's Q4 answer wins for *why*; note any
 reconciliation in the relevant doc.

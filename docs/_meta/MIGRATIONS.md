@@ -22,6 +22,30 @@ before writing (same safety gate as `/docs-adopt`).
 
 ---
 
+## 1.13.0 — Curated skill recommendations + design SSOT
+
+- **Machinery:**
+  - **`/docs-skills`** (new command) + **`docs/_meta/skills-catalog.md`** (new
+    machinery): matches the project's signals against a short curated catalog
+    (primary source: `github.com/anthropics/skills`) and offers ≤2–3 skills.
+    Safety rules are hard: curated-only, the skill's full content is read before
+    proposing, one explicit yes per skill, installs recorded in `tech-stack.md`.
+    Bootstrap flows mention it in their closing note; never auto-runs.
+  - **Design SSOT**: new template `_meta/templates/ui-ux-guidelines.md`
+    (references, tone, tokens, layout rules, visual-verification loop). Bootstrap
+    interviews gain a design question for UI projects, and `/docs-init` creates
+    `conventions/ui-ux-guidelines.md` at bootstrap for UI projects (the deliberate
+    early-Tier-1 exception; trigger = "the project has a UI"). §4 + the
+    `doc-maintainer` skill gain a "design fact chosen → record in the design SSOT,
+    verify UI against it" trigger row.
+- **Content migration:** None (backward compatible). *Optional, recommended for
+  UI projects:* create `docs/conventions/ui-ux-guidelines.md` from the new
+  template (one short design interview: 1–2 reference sites + desired feel), and
+  run `/docs-skills` once.
+- **Breaking:** no.
+
+---
+
 ## 1.12.0 — Human-facing state surfaces (resume brief + /docs-status)
 
 - **Machinery:**

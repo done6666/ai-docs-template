@@ -46,6 +46,10 @@ language they have been writing to you in):
 4. Any **hard constraints**? (must use X, must run on Y, a deadline…)
 5. My inferred tech stack is: **<inferred stack>** — correct? Anything to add/remove?
 6. What should the project's **display name** be?
+7. *(only if the project has a user-facing UI)* **Design:** name 1–2 sites/products
+   whose look you want as the reference, and the feel you're after
+   (minimal / playful / corporate / dense…). One line is enough — this seeds the
+   design SSOT so the UI doesn't drift session to session.
 
 If the stack was fully inferable, still confirm it in Q5. Everything else
 (architecture skeleton, tech-stack table, initial state) you draft yourself.
@@ -58,6 +62,11 @@ Populate, using `docs/_meta/templates/*` and the existing stubs:
 - `docs/architecture.md` — Overview + a Source map from the actual directory tree (even if skeletal); Components from what exists.
 - `docs/STATE.md` — `Now` = "project bootstrapped"; `Next` = the immediate first action (the Q2 milestone goals seed `roadmap.md` when it's created, not a re-listed plan in STATE); `health: green`; `session: 1`; `branch` = current branch.
 - `docs/INDEX.md` — set front-matter `project_type`, `current_tier: 0`, `status: active`, `last_verified: <today>`, `template_version` (= contents of `docs/_meta/VERSION`), and `template_source` (the template repo URL this project came from; if unknown, ask once and record it); refresh the `updated`/`status` cells to `fresh`.
+- **UI projects only:** `docs/conventions/ui-ux-guidelines.md` from
+  `_meta/templates/ui-ux-guidelines.md`, seeded with the Q7 answer (references +
+  tone; tokens stay `<pending>` until real design decisions land). This is the one
+  Tier-1 doc created at bootstrap — its trigger is "the project has a UI" (§4);
+  list it in INDEX Areas.
 - Leave `ADR-0001` as-is (it already records adopting the system).
 
 Write doc **content in the project's own language** (match the user's answers);
@@ -78,4 +87,10 @@ Write the files, then print a short note in the user's language:
 - That from now on the docs update **automatically** as code is written,
 - That `/docs-audit` can be run anytime for a manual consistency check.
 
-Do **not** create Tier-1/2 docs now — they appear when their triggers fire.
+Then **offer curated skills** (optional, one line): if the project's signals match
+the catalog (`docs/_meta/skills-catalog.md`), mention that `/docs-skills` can
+recommend 2–3 vetted skills for this stack — don't run the install flow unless the
+user says yes.
+
+Do **not** create other Tier-1/2 docs now — they appear when their triggers fire
+(the UI-project `ui-ux-guidelines.md` above is the deliberate exception).

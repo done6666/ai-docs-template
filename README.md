@@ -92,6 +92,7 @@ projenizin diline göre yazılır. Bu README ve `/docs-init` röportajı **Türk
 | `/docs-adopt`     | Bootstrap (**mevcut proje**): kodu derin tarar, varsa mevcut dokümanları kayıpsız içeri alır, gerçek katmanı ve retroaktif ADR'leri yeniden kurar. |
 | `/docs-audit`     | Salt-okunur sapma denetimi: dokümanları kod/git ile karşılaştırır.                                                                                 |
 | `/docs-status`    | Salt-okunur gösterge paneli: neredeyiz — şu an / sıradaki / blocker / sizi bekleyen sorular / ilerleme / son kararlar (+ "siz yokken" git özeti).   |
+| `/docs-skills`    | Projeyi analiz edip küratörlü katalogdan en fazla 2–3 skill önerir; her kurulum tek tek izninizle (kurulmadan önce skill içeriği okunur).           |
 | `/adr "<başlık>"` | Bir sonraki mimari karar kaydını (ADR) oluşturur.                                                                                                  |
 | `/feature "<ad>"` | Bir sonraki özellik spec'ini oluşturur (features/ alanını açar).                                                                                   |
 | `/handoff`        | Devam noktasını diske yazar (oturum sonu / context compaction öncesi).                                                                             |

@@ -214,6 +214,7 @@ owner (§6) and stop.
 | A cross-subsystem contract is added/changed (event, internal API, shared invariant) | Record/update the **seam** (edge · contract · producer · consumer · enforcement path) | `architecture.md` Seams / `architecture/_seams.md` |
 | A route/endpoint is added or changed | Update the API inventory (create `api/` if first → Tier 1) | `api/endpoints.md` / `openapi.yaml` |
 | A schema / data model changes | Update the logical model (create if first) | `data-model.md` |
+| A design fact is chosen for a user-facing UI (reference, palette, type, spacing, layout rule) | Record it in the design SSOT (created at bootstrap for UI projects; create on first design decision otherwise). After UI work, verify the screen **against this doc** — mismatch means fix the code or change the doc, never silent drift | `conventions/ui-ux-guidelines.md` |
 | A domain term is used repeatedly (≥ ~3 uses, non-obvious) | Add a glossary entry (create if first) | `glossary.md` |
 | A stable identifier gains a user-facing name that could be renamed (feature/permission/plan key, event name, labelled enum) | Register `key → display name` (create if first) | `keys.md` |
 | Scope / goal / non-goal changes | Update the charter | `project-brief.md` |
@@ -522,8 +523,8 @@ docs.
 ### 12.1 Machinery vs content
 - **Machinery (upstream-owned — never hand-edit):** `.claude/commands/*`,
   `.claude/skills/*`, `.claude/hooks/*`, `docs/_meta/DOCS_SYSTEM.md`,
-  `docs/_meta/templates/*`, `docs/_meta/examples/*`, `docs/_meta/VERSION`,
-  `docs/_meta/MIGRATIONS.md`, `.gitattributes`, and the **managed block** of
+  `docs/_meta/templates/*`, `docs/_meta/examples/*`, `docs/_meta/skills-catalog.md`,
+  `docs/_meta/VERSION`, `docs/_meta/MIGRATIONS.md`, `.gitattributes`, and the **managed block** of
   `CLAUDE.md` (between the `ai-docs-template:managed` markers). Editing any of
   these means `/docs-upgrade` will overwrite your change. Project-specific agent
   rules go in `CLAUDE.md` **outside** the managed block; a custom command goes in

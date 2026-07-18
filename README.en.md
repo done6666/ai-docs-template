@@ -93,6 +93,7 @@ the `/docs-init` interview runs in the user's language.
 | `/docs-adopt` | Bootstrap (**existing project**): deep-scans the code, ingests existing docs without loss, reconstructs the real tier and retroactive ADRs (or overlays a mature docs system). |
 | `/docs-audit` | Read-only drift check: compares the docs against code/git. |
 | `/docs-status` | Read-only dashboard: where things stand — now / next / blockers / questions waiting on you / progress / recent decisions (+ a "since you left" git digest). |
+| `/docs-skills` | Analyzes the project and recommends at most 2–3 skills from a curated catalog; each install needs your explicit yes (the skill is read in full first). |
 | `/adr "<title>"` | Creates the next Architecture Decision Record. |
 | `/feature "<name>"` | Creates the next feature spec (opens the `features/` area). |
 | `/handoff` | Flushes the resume point to disk (session end / before context compaction). |

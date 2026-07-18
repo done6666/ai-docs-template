@@ -12,6 +12,22 @@ versioning: [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.13.0] - 2026-07-18
+
+### Added
+- **`/docs-skills` + curated skills catalog** (`_meta/skills-catalog.md`): the
+  system matches the project against a short, versioned catalog (primary source:
+  Anthropic's official skills repo) and offers at most 2–3 skills — each read in
+  full before proposing, each installed only on an explicit per-skill yes, each
+  recorded in `tech-stack.md`. Never an open web search: a skill is instructions
+  injected into the agent's context and is treated as such.
+- **Design SSOT** (`_meta/templates/ui-ux-guidelines.md`): design references, tone,
+  tokens, layout rules, and a visual-verification loop ("check the screen against
+  this doc, not against taste"). Bootstrap interviews gain a design question for
+  UI projects; `/docs-init` seeds `conventions/ui-ux-guidelines.md` on day one for
+  them — design now gets the same fidelity treatment as code. New §4 trigger:
+  a chosen design fact → record it in the design SSOT.
+
 ## [1.12.0] - 2026-07-18
 
 ### Added
