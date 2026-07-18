@@ -12,6 +12,14 @@ versioning: [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.13.1] - 2026-07-18
+
+### Fixed
+- Live end-to-end `/docs-init` test (fresh Next.js scaffold) caught a v1.13.0 gap:
+  the design-fact trigger existed in §4 but the `INDEX.md` skeleton's routing table
+  had no matching row — added
+  `A design fact → conventions/ui-ux-guidelines.md`.
+
 ## [1.13.0] - 2026-07-18
 
 ### Added

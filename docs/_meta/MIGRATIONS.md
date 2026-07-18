@@ -22,6 +22,19 @@ before writing (same safety gate as `/docs-adopt`).
 
 ---
 
+## 1.13.1 — Skeleton fix from a live /docs-init test
+
+- **Machinery:** end-to-end test of `/docs-init` on a fresh Next.js scaffold
+  exposed that v1.13.0 added the design-fact *trigger* (§4) but not the matching
+  **routing-table row in the `INDEX.md` skeleton** — a bootstrapping agent had to
+  invent the row. The skeleton now ships with
+  `A design fact (reference, token, layout rule) → conventions/ui-ux-guidelines.md`.
+- **Content migration:** None required. *Optional:* add the same routing row to
+  your project's `INDEX.md` if it's missing.
+- **Breaking:** no.
+
+---
+
 ## 1.13.0 — Curated skill recommendations + design SSOT
 
 - **Machinery:**

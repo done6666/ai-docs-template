@@ -53,7 +53,8 @@ template_source: <set on bootstrap>    # URL to pull upgrades from (used by /doc
 | API-wide conventions | `api/api-overview.md` | 1 |
 | A logical entity / relationship | `data-model.md` | 1 |
 | A domain term | `glossary.md` | 1 |
-| A coding / naming / UI standard | `conventions/*.md` | 1 |
+| A design fact (reference, token, layout rule) | `conventions/ui-ux-guidelines.md` | 1 |
+| A coding / naming standard | `conventions/*.md` | 1 |
 | A shipped, user-visible change | `CHANGELOG.md` (`[Unreleased]`) | 0 |
 | Deployment / runbook / observability | `operations/*.md` | 2 |
 
