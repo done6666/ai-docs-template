@@ -58,6 +58,13 @@ non-destructive; you can always add more later.
 
 ## Step 1 — Deep scan (read-only; don't ask yet)
 
+**Delegate on anything but a small repo:** don't burn the main context on raw file
+dumps — fan the sweep out to read-only subagents (e.g. one for stack/manifests, one
+for architecture/source map, one for data model + API surface, one for git facts +
+existing docs), each returning a *compact factual summary citing the paths it read*.
+Only the summaries enter the main context; Steps 2–7 (ingest, interview, the
+confirmation gate, writing) stay in the main session.
+
 Build a factual model from code + git, citing the path each fact came from:
 - **Stack/deps** — manifests + lockfiles (`package.json`, `pyproject.toml`, `go.mod`,
   `Cargo.toml`, `composer.json`, `Gemfile`, `*.csproj`, …) → exact versions.
@@ -121,36 +128,38 @@ DB, auth, monorepo, API style, infra). Rules:
   `Next` (or `roadmap.md`) as future ADRs. ADR-0001 (adopt-the-system) stays;
   retroactive start at 0002.
 
-## Step 5 — Minimal interview (in TURKISH) — only what code can't reveal
+## Step 5 — Minimal interview (in the user's language) — only what code can't reveal
 
-Ask ALL in ONE batched, numbered message; pre-fill your guesses; don't ask anything
+Ask ALL in ONE batched, numbered message, phrased in **the user's language** (the
+language they have been writing to you in); pre-fill your guesses; don't ask anything
 the scan answered:
 
-1. Bu proje tek cümlede **ne ve kim için**? (Çıkarımım: «<inferred>» — doğru mu?)
-2. Kodda görünmeyen ama önemli bir **kapsam dışı (non-goal)** var mı?
-3. Önümüzdeki dönemde **en önemli 1–3 hedef** ne? (roadmap için)
-4. Şu kararların **nedenini** kısaca doğrular mısın? Kodda görüyorum ama gerekçe
-   yazılı değil: **<ambiguous decision A>**, **<B>**. (Bir-iki kelime yeter; boş
-   bırakırsan "gerekçe kayıtlı değil" diye işaretlerim.)
-5. Projenin **görünen adı** ne olsun? (Tahminim: «<repo/pkg name>».)
-6. Eklemem/düzeltmem gereken bir **teknoloji** var mı? (Tespitim: «<stack>».)
+1. In one sentence, what is this project and **who is it for**? (My inference:
+   "<inferred>" — correct?)
+2. Any important **non-goal** that isn't visible in the code?
+3. What are the **1–3 most important goals** for the coming period? (for the roadmap)
+4. Can you briefly confirm the **why** behind these decisions? I see them in the
+   code but no rationale is recorded: **<ambiguous decision A>**, **<B>**. (A word
+   or two is enough; leave one blank and I'll mark it "rationale not recorded".)
+5. What should the project's **display name** be? (My guess: "<repo/pkg name>".)
+6. Any **technology** I should add or correct? (Detected: "<stack>".)
 
 Q4 answers promote inferred ADR rationale to confirmed; unanswered ones keep the
 honest "rationale not recorded" note.
 
-## Step 6 — Preview & confirm (in TURKISH) — the one gate
+## Step 6 — Preview & confirm (in the user's language) — the one gate
 
 Show a full, grouped plan before writing anything:
-- **Oluşturulacak (create):** each new doc + one-line summary + detected tier.
-- **Taşınacak (→ _ingest):** each `docs/X → docs/_ingest/X` collision (content preserved).
-- **Referans verilecek:** README/CONTRIBUTING/etc. left in place.
-- **Retroaktif ADR'ler:** titles + which are confirmed vs inferred.
+- **Create:** each new doc + one-line summary + detected tier.
+- **Move (→ _ingest):** each `docs/X → docs/_ingest/X` collision (content preserved).
+- **Referenced in place:** README/CONTRIBUTING/etc. left where they are.
+- **Retroactive ADRs:** titles + which are confirmed vs inferred.
 - Detected `project_type`, starting `current_tier`, ledger entries.
 
-Ask: **"Bu planı uygulayayım mı? (Hiçbir mevcut dosya silinmez; çakışanlar _ingest/
-altına taşınır.)"** Wait for an explicit yes.
+Ask (in the user's language): **"Apply this plan? (No existing file is deleted;
+collisions are moved under `_ingest/`.)"** Wait for an explicit yes.
 
-## Step 7 — Write & report (in TURKISH)
+## Step 7 — Write & report (in the user's language)
 
 On yes, execute in order: quarantine moves → new docs → `INDEX.md` (`project_type`,
 `current_tier`, `status: active`, `last_verified: <today>`, `template_version` (=
@@ -161,10 +170,11 @@ action; deferred ADRs and goals seed `roadmap.md`/the map, not a re-listed plan 
 STATE; current branch + tree status) → ADRs + `decisions/README.md` →
 `CHANGELOG.md` `[Unreleased]` from tags.
 
-Print a short Turkish note: neler oluşturuldu/taşındı; `_ingest/` altında
-orijinallerin korunduğu; bundan sonra dokümanların otomatik güncelleneceği; ve
-**öneri: hemen `/docs-audit` çalıştır** — reconstruct edilen mimari/endpoint/
-data-model kodla birebir tutuyor mu diye doğrula (adoption sonrası tek manuel adım).
+Print a short note in the user's language: what was created/moved; that the
+originals are preserved under `_ingest/`; that the docs update automatically from
+here on; and **recommend running `/docs-audit` right away** — to verify the
+reconstructed architecture/endpoints/data-model against the code (the one manual
+step after adoption).
 
 Never fabricate. Code wins for *what*; the human's Q4 answer wins for *why*; note any
 reconciliation in the relevant doc.

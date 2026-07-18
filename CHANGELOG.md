@@ -12,9 +12,39 @@ versioning: [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.11.0] - 2026-07-18
+
 ### Added
-- English README variant (`README.en.md`) with a language switcher at the top of both
-  READMEs, for wider adoption. Repo front-door only — no machinery/version change.
+- **Advisory hook layer** — the "no hooks" gap named in ADR-0001 is now covered at
+  the two riskiest moments: a Stop hook nags (once per commit cycle) when code
+  changed but `docs/STATE.md` wasn't flushed, and a post-compaction hook re-anchors
+  the session to `STATE.md`. Reminders only — hooks never write docs. Node-based;
+  `.claude/settings.json` is shared/merged, never overwritten by upgrades (§12.1).
+- **Quick reference card** at the top of `DOCS_SYSTEM.md` (~300 tokens, a labeled
+  mirror): caps, core triggers, trust rules — so a session needing one number no
+  longer pays the ~9.7k-token spec.
+- **Subagent delegation** in `/docs-adopt` (deep scan) and `/docs-audit` (check
+  families): heavy scans fan out to read-only subagents; only summaries enter the
+  main context.
+- `/docs-audit` check **9. Machinery coherence**: machinery-restated caps/triggers
+  are verified against the spec, which wins on drift (§9).
+- English README variant (`README.en.md`) with a language switcher at the top of
+  both READMEs, for wider adoption.
+
+### Changed
+- `/docs-init` and `/docs-adopt` interviews, previews, and reports now run **in the
+  user's language** (previously hard-coded Turkish), matching the rest of the
+  system's language policy.
+- ADR-0001's hooks clause revised: rules-only autonomy → rules + advisory hooks;
+  fully enforcing hooks remain rejected as intrusive.
+
+### Fixed
+- Stale `INDEX.md ≤ ~600` token cap in `doc-maintainer` skill and `/docs-init`
+  reconciled to the spec's ~900 (§7) — found by running the system's own coherence
+  standard against its machinery.
+- `INDEX.md`'s `tokens~` estimate for `DOCS_SYSTEM.md` corrected (2200 → 9700).
+- `STATE.md` stub now follows its own template: `updated`/`session`/`branch` moved
+  from front-matter into the body header line.
 
 ## [1.10.1] - 2026-07-18
 

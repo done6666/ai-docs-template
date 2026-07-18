@@ -5,13 +5,13 @@ type: index
 owns: "the live working-memory snapshot: what is happening right now"
 does_not_own: "decisions (decisions/), history (CHANGELOG.md), scope (project-brief.md)"
 status: not-bootstrapped
-updated: <pending>
-session: 0
-branch: main
 health: green
 ---
+<!-- `updated` lives in the body, not front-matter, so parallel rewrites don't churn a metadata field. -->
 
 # Current State
+
+_Updated: <pending> · branch: `main` · session: 0_
 
 > ⚠️ **NOT BOOTSTRAPPED.** This project was created from `ai-docs-template` and
 > the docs have not been generated yet. Run **`/docs-init`** — it will interview

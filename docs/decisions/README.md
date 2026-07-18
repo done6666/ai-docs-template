@@ -5,7 +5,7 @@ type: index
 owns: "the status index of all ADRs"
 does_not_own: "the decisions themselves (each ADR-NNNN-*.md file)"
 status: current
-updated: 2026-07-17
+updated: 2026-07-18
 related: [docs/architecture.md, docs/_meta/DOCS_SYSTEM.md]
 ---
 

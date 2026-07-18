@@ -29,9 +29,14 @@ confirmation. Never discard project content.
 ## Step 2 — Preview the plan (confirm before writing)
 
 Show, grouped:
-- **Machinery to replace:** the pure-machinery files that differ (`.claude/**`,
-  `docs/_meta/**` except `VERSION`/`MIGRATIONS` which also update, `.gitattributes`)
-  and the `CLAUDE.md` managed block.
+- **Machinery to replace:** the pure-machinery files that differ
+  (`.claude/commands/**`, `.claude/skills/**`, `.claude/hooks/**`, `docs/_meta/**`
+  except `VERSION`/`MIGRATIONS` which also update, `.gitattributes`) and the
+  `CLAUDE.md` managed block.
+- **Settings to merge:** `.claude/settings.json` is **shared, never overwritten
+  wholesale** (§12.1) — list only the template `hooks` entries (those invoking
+  `.claude/hooks/*`) that will be added/updated; everything else in the file
+  (permissions, env, the project's own hooks) is preserved.
 - **Content migrations:** read the fetched `docs/_meta/MIGRATIONS.md`; list the
   **Content migration** steps for every version in `(from, to]`, in ascending order,
   naming each project doc they will change. If all are "None (backward compatible)",
@@ -45,7 +50,10 @@ migrations; everything else is preserved.)"** Wait for an explicit yes.
 ## Step 3 — Apply
 
 1. **Machinery:** overwrite the pure-machinery files from the fetched copy
-   (including `docs/_meta/VERSION` and `MIGRATIONS.md`).
+   (including `docs/_meta/VERSION` and `MIGRATIONS.md`). For
+   `.claude/settings.json`, **merge**: add/replace only the template's `hooks`
+   entries (those invoking `.claude/hooks/*`); if the file doesn't exist, create
+   it from the fetched copy.
 2. **CLAUDE.md managed block:** replace only the text between
    `<!-- ai-docs-template:managed:start ... -->` and
    `<!-- ai-docs-template:managed:end -->` with the fetched version's block. Leave

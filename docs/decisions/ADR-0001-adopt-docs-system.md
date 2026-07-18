@@ -36,15 +36,22 @@ We will use the `ai-docs-template` documentation system:
   (`owns`/`does_not_own` front-matter).
 - The full protocol lives in `docs/_meta/DOCS_SYSTEM.md`, which is authoritative;
   `CLAUDE.md` is its short summary. Autonomy comes from `CLAUDE.md` rules plus the
-  `doc-maintainer` skill; **no hooks** are used, for portability.
+  `doc-maintainer` skill, backed by a **thin advisory hook layer**
+  (`.claude/settings.json` + `.claude/hooks/*`, since template v1.11.0): a Stop
+  hook that reminds once per commit cycle when code changed but `STATE.md` wasn't
+  flushed, and a post-compaction hook that re-anchors the session to `STATE.md`.
+  Hooks **remind** — they never write docs themselves.
 
 ## Consequences
 
 - **Positive:** fresh sessions orient cheaply and resume reliably; decisions and
   their rationale are captured; docs stay proportional to project size; the system
-  is self-healing and fully cross-platform (no hooks).
-- **Negative:** the agent must follow the triggers diligently; without a hook,
-  session-end `STATE.md` updates rely on the rule + skill being honoured.
+  is self-healing; the two riskiest moments (session end, post-compaction) are
+  covered by hook reminders instead of goodwill alone.
+- **Negative:** the agent must still follow the trigger table diligently — the
+  hooks are advisory reminders, not full enforcement. The hook scripts require
+  Node.js; on a machine without Node, remove the `hooks` entries from
+  `.claude/settings.json` and the system degrades to rules-only.
 - **Follow-ups:** run `/docs-init` to bootstrap; run `/docs-audit` periodically to
   catch drift.
 
@@ -54,5 +61,8 @@ We will use the `ai-docs-template` documentation system:
   code and history can't express. Rejected.
 - **Comprehensive docs from day one:** too heavy for small projects; hard for the
   agent to keep in sync. Rejected in favour of tiering.
-- **Enforcement via hooks:** stronger session-end guarantees but adds
-  cross-platform/portability cost and can be intrusive. Deferred; may revisit.
+- **Rules-only, no hooks (v1.0.0–v1.10.x):** fully portable, but session-end
+  `STATE.md` updates depended entirely on the rules being honoured — the system's
+  own acknowledged weakest point. Revised in template v1.11.0 (2026-07-18) to the
+  advisory hook layer above. Fully *enforcing* hooks (auto-writing docs, blocking
+  unconditionally) remain rejected as intrusive.

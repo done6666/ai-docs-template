@@ -22,6 +22,44 @@ before writing (same safety gate as `/docs-adopt`).
 
 ---
 
+## 1.11.0 — Advisory hooks, quick-reference card, language neutrality, coherence fixes
+
+- **Machinery:**
+  - **Advisory hook layer** (new): `.claude/settings.json` + `.claude/hooks/*` — a
+    Stop hook that blocks once per commit cycle when code changed but
+    `docs/STATE.md` wasn't touched, and a `SessionStart(compact)` hook that
+    re-anchors the session to `STATE.md` after context compaction. Reminders only;
+    they never write docs. Requires Node — delete the hook entries on a Node-less
+    machine. `.claude/settings.json` is **shared** (hook entries merged in), never
+    overwritten wholesale (§12.1).
+  - `DOCS_SYSTEM.md` gains a ~300-token **Quick reference** card at the top
+    (a labeled mirror of §4/§6/§7/§14/§15) so a session needing one number reads
+    the card, not the file.
+  - `/docs-init` + `/docs-adopt` interviews, previews, and reports are now **in
+    the user's language** (previously hard-coded Turkish).
+  - `/docs-adopt` Step 1 and `/docs-audit` now **delegate heavy scans to
+    read-only subagents** on larger repos; only summaries/finding rows enter the
+    main context.
+  - `/docs-audit` gains check **9. Machinery coherence** — machinery-restated
+    caps/triggers verified against the spec (the spec wins, §9).
+  - Coherence fixes: stale `INDEX ≤ ~600` cap in the skill and `/docs-init`
+    corrected to ~900 (§7); `INDEX.md`'s token estimate for the spec corrected
+    (2200 → 9700); the `STATE.md` stub now follows its own template (`updated` in
+    the body, not front-matter); ADR-0001's "no hooks" clause revised to the
+    advisory hook layer.
+- **Content migration:** None (backward compatible). *Optional, recommended:*
+  1. `.claude/settings.json` — created if absent; if present, only the two
+     template hook entries are merged in (everything else preserved).
+  2. If your `STATE.md` still carries `updated`/`session`/`branch` in
+     front-matter, move them into the body header line
+     (`_Updated: … · branch: … · session: N_`), per the template.
+  3. Your bootstrapped `ADR-0001` predates the advisory-hook revision — optionally
+     update its hooks clause to match the new template text, or leave it as a
+     historical record.
+- **Breaking:** no.
+
+---
+
 ## 1.10.1 — Adopter polish (presentation only)
 
 - **Machinery:** README front-door polished (a Mermaid session-flow diagram; the

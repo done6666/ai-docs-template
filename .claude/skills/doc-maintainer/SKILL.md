@@ -61,8 +61,9 @@ Apply these as they occur:
   `suspect` doc blindly — verify its high-stakes facts against that code first. Keep
   `INDEX.md` rows (`status`/`updated`) in sync.
 - **Size caps:** `STATE.md` ≤ ~400 tokens (overwrite, don't append; promote lasting
-  items to their owner doc first); `INDEX.md` ≤ ~600; other docs ≤ ~1,200–1,500.
-  On overflow: split, summarise, or archive — never keep appending.
+  items to their owner doc first); `INDEX.md` ≤ ~900; other docs ≤ ~1,200–1,500.
+  On overflow: split, summarise, or archive — never keep appending (§7 is the
+  authoritative cap list).
 - **Tiering:** don't create a doc until its trigger fires; prefer updating over
   spawning; archive (`status: archived`), never delete. Log tier escalations in
   `INDEX.md`.

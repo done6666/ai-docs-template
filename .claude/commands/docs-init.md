@@ -34,17 +34,18 @@ Scan the repo before asking anything:
 
 Build a draft model of stack, type, and structure from this.
 
-## Step 2 — Ask a short, batched interview (in TURKISH)
+## Step 2 — Ask a short, batched interview (in the user's language)
 
 Ask **all** of these in ONE message, numbered, and wait for the answers. Keep it to
-these ~6 — never an interrogation. Phrase in Turkish:
+these ~6 — never an interrogation. Phrase them in **the user's language** (the
+language they have been writing to you in):
 
-1. Bu proje **ne** ve **kim için**? (bir-iki cümle)
-2. Önümüzdeki kilometre taşı için **en önemli 1–3 hedef** ne?
-3. Açıkça **kapsam dışı** (non-goal) olan bir şey var mı?
-4. **Zorunlu kısıtlar** var mı? (X kullanılmalı, Y üzerinde çalışmalı, deadline…)
-5. Tahmin ettiğim teknoloji yığını şu: **<inferred stack>** — doğru mu, ekleme/çıkarma?
-6. Projenin **görünen adı** ne olsun?
+1. What is this project, and **who is it for**? (a sentence or two)
+2. What are the **1–3 most important goals** for the next milestone?
+3. Is anything explicitly **out of scope** (a non-goal)?
+4. Any **hard constraints**? (must use X, must run on Y, a deadline…)
+5. My inferred tech stack is: **<inferred stack>** — correct? Anything to add/remove?
+6. What should the project's **display name** be?
 
 If the stack was fully inferable, still confirm it in Q5. Everything else
 (architecture skeleton, tech-stack table, initial state) you draft yourself.
@@ -62,18 +63,19 @@ Populate, using `docs/_meta/templates/*` and the existing stubs:
 Write doc **content in the project's own language** (match the user's answers);
 keep the structural labels/front-matter in English.
 
-Respect size caps (`DOCS_SYSTEM.md §7`): STATE ≤ ~400 tokens, INDEX ≤ ~600.
+Respect size caps (`DOCS_SYSTEM.md §7`): STATE ≤ ~400 tokens, INDEX ≤ ~900.
 
-## Step 4 — Preview & confirm (in TURKISH)
+## Step 4 — Preview & confirm (in the user's language)
 
 Before writing, show a compact preview: the file list + a 2–3 line summary of each.
-Ask: **"Bunları oluşturayım mı?"** Wait for a yes. This is the one confirmation gate.
+Ask (in the user's language): **"Shall I create these?"** Wait for a yes. This is
+the one confirmation gate.
 
-## Step 5 — Write & report (in TURKISH)
+## Step 5 — Write & report (in the user's language)
 
-Write the files, then print a short Turkish note:
-- Hangi dosyalar oluşturuldu,
-- Bundan sonra dokümanların **otomatik** olarak (sen kod yazdıkça) güncelleneceği,
-- İstediğinde `/docs-audit` ile manuel tutarlılık kontrolü yapılabileceği.
+Write the files, then print a short note in the user's language:
+- Which files were created,
+- That from now on the docs update **automatically** as code is written,
+- That `/docs-audit` can be run anytime for a manual consistency check.
 
 Do **not** create Tier-1/2 docs now — they appear when their triggers fire.

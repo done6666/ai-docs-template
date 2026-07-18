@@ -5,7 +5,7 @@ type: reference
 owns: "the full rules, tiers, triggers, templates, and audit procedure for this docs/ system"
 does_not_own: "project-specific content (that lives in the docs it describes)"
 status: current
-updated: 2026-07-17
+updated: 2026-07-18
 related: [CLAUDE.md, docs/INDEX.md]
 ---
 
@@ -25,6 +25,30 @@ Scaling & modes — §10 concurrency/worktrees · §11 adopting (+ overlay) · �
 & upgrades · §13 large-scale/federated (Tier 3).
 Read path — §14 task intake & token budget · §15 trust & verification · §16
 multi-subsystem (seams) · §17 decisions at scale (register/decay).
+
+## Quick reference — read this card, not the file
+
+> Mirror — authoritative homes: §4, §6, §7, §14, §15. This card exists so a
+> session that needs one number or one trigger pays ~300 tokens, not ~10k.
+> Jump to a §N only when the card doesn't settle it.
+
+- **Boot:** `CLAUDE.md` → `INDEX.md` → `STATE.md`; then open only the 1–3 docs the
+  task's nouns route to (INDEX load rules). Never crawl the tree (§14).
+- **Caps (§7):** `STATE.md` ≤ ~400 tokens (overwrite, never append) · `INDEX.md`
+  ≤ ~900 · core/content doc ≤ ~1,500 · area/reference doc ≤ ~1,200. Over cap →
+  split, summarise, or archive — never keep appending.
+- **Write triggers (full table §4):** session end/compaction → feature
+  `## Current state` + `STATE.md` · lasting decision → ADR + register ·
+  non-trivial feature → `FEAT-*` before coding · unit done → map `[x]` + how-note
+  · failed approach / must-never → `guardrails.md` · dep → `tech-stack` ·
+  structure → `architecture` · route → `api/*` · schema → `data-model` · shipped →
+  `CHANGELOG` · code contradicts a doc → reconcile in the same change.
+- **Trust (§15):** code = *what*, ADRs = *why*; volatile high-stakes fact from a
+  `suspect` doc → spot-check the code first; in neither docs nor code → say
+  "not documented", never invent.
+- **One home per fact (§6):** done/next queue = `implementation-map` · live cursor
+  = `STATE` · in-flight resume = feature `## Current state`; any echo must be
+  labeled `> Mirror — home: X`.
 
 ## 0. First principle
 
@@ -361,6 +385,10 @@ offers to fix mechanical drift and lists judgment calls for confirmation.
 7. **Contradiction scan:** no two docs `own` the same fact class; no accepted ADR
    contradicts a later accepted ADR without a `superseded_by` link.
 8. **Cross-links:** every `related[]` path and routing-table path resolves.
+9. **Machinery coherence:** every spec fact the machinery restates (caps in the
+   skill and `/docs-init`, trigger subsets in `CLAUDE.md` and the skill, the
+   Quick-reference card above, `INDEX.md` `tokens~` estimates) still matches this
+   file — on drift, this file wins (§9); reconcile the machinery to it.
 
 ---
 
@@ -493,13 +521,20 @@ docs.
 
 ### 12.1 Machinery vs content
 - **Machinery (upstream-owned — never hand-edit):** `.claude/commands/*`,
-  `.claude/skills/*`, `docs/_meta/DOCS_SYSTEM.md`, `docs/_meta/templates/*`,
-  `docs/_meta/examples/*`, `docs/_meta/VERSION`, `docs/_meta/MIGRATIONS.md`,
-  `.gitattributes`, and the **managed block** of `CLAUDE.md` (between the
-  `ai-docs-template:managed` markers). Editing any of these means `/docs-upgrade`
-  will overwrite your change. Project-specific agent rules go in `CLAUDE.md`
-  **outside** the managed block; a custom command goes in a **new** file, never by
-  editing a shipped one.
+  `.claude/skills/*`, `.claude/hooks/*`, `docs/_meta/DOCS_SYSTEM.md`,
+  `docs/_meta/templates/*`, `docs/_meta/examples/*`, `docs/_meta/VERSION`,
+  `docs/_meta/MIGRATIONS.md`, `.gitattributes`, and the **managed block** of
+  `CLAUDE.md` (between the `ai-docs-template:managed` markers). Editing any of
+  these means `/docs-upgrade` will overwrite your change. Project-specific agent
+  rules go in `CLAUDE.md` **outside** the managed block; a custom command goes in
+  a **new** file, never by editing a shipped one.
+- **Shared (merged, never overwritten wholesale):** `.claude/settings.json` —
+  projects legitimately own permissions/env/other hooks there. Upgrades only
+  add or replace the template's own `hooks` entries (the ones invoking
+  `.claude/hooks/*`), preserving everything else in the file. The shipped hooks
+  are advisory reminders (session-end flush, post-compaction re-orient); they
+  require Node — a project without Node may delete them (rules-only degradation,
+  see ADR-0001).
 - **Content (project-owned):** everything else under `docs/` — `INDEX`, `STATE`,
   `project-brief`, `architecture`, `tech-stack`, `decisions/`, `features/`, `api/`,
   etc. Upgrades never overwrite content; at most they *migrate* its format with a

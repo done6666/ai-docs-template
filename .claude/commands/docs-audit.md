@@ -21,6 +21,11 @@ report first, then offer fixes. Follow the audit procedure in
   when it matches. Cheap re-verification.
 - **Coverage report:** list subsystems whose `last_verified` is old relative to their
   `covers:` paths' churn — the drift backlog.
+- **Delegation:** on a medium/large repo, run the check families below via parallel
+  read-only subagents (deps · routes+structure · state/map/guardrails freshness ·
+  decisions+links), each returning only its finding rows (`doc | claim | reality |
+  severity`). The main session merges the tables and owns the fix conversation — the
+  audit stays within one context without flooding it (§13.6).
 
 ## Checks
 
@@ -67,6 +72,14 @@ Run each and collect findings:
    supersession/scoping); and stale context (ADRs whose cited constraints no longer
    hold — flag `context-stale`). Report the decay backlog.
 8. **Cross-links** — every `related[]` entry and routing-table path resolves.
+9. **Machinery coherence** — the machinery restates a few spec facts for cheap
+   access; verify they still match `DOCS_SYSTEM.md` (it wins — §9): the size caps
+   quoted in `.claude/skills/doc-maintainer/SKILL.md` and
+   `.claude/commands/docs-init.md` match §7; the trigger subsets in `CLAUDE.md` §3
+   and the skill's table are consistent with §4; the spec's own Quick-reference
+   card matches its authoritative §s; `INDEX.md`'s `tokens~` estimates are within
+   ~2× of actual file size. Flag drift as `high` — a stale machinery number
+   silently miscalibrates every future session.
 
 ## Output
 

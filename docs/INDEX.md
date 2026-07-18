@@ -27,7 +27,7 @@ template_source: <set on bootstrap>    # URL to pull upgrades from (used by /doc
 | architecture.md | system shape, boundaries, invariants, source map | <pending> | 900 | not-bootstrapped |
 | tech-stack.md | technologies + versions (SSOT) | <pending> | 400 | not-bootstrapped |
 | decisions/README.md | ADR status index | 2026-07-17 | 200 | fresh |
-| _meta/DOCS_SYSTEM.md | full spec / constitution | 2026-07-17 | 2200 | fresh |
+| _meta/DOCS_SYSTEM.md | full spec / constitution (read the TOC + one §, not the file) | 2026-07-18 | 9700 | fresh |
 
 ## Areas (Tier 1/2 — created on trigger, then listed here)
 
