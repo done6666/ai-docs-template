@@ -12,6 +12,21 @@ versioning: [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-07-17
+
+### Added
+- Read-path optimization (`DOCS_SYSTEM.md §14`): an explicit task-intake procedure
+  (classify from the prompt's nouns → route to the minimal doc set → open only
+  those), layered reads (INDEX row → front-matter `owns` → summary → section anchor
+  → body), stop conditions so the AI doesn't get lost, an anti-hallucination
+  grounding rule ("if it's in neither the docs nor the code you checked, say
+  'not documented' — never invent"), and the token economy.
+
+### Changed
+- `CLAUDE.md` §2 reframed from "Read before you act" into a tight 4-step "Working a
+  task (read path)" protocol (locate → read shallow-first → ground → resume fast).
+- `doc-maintainer` skill and `INDEX` load rules now point at the §14 read path.
+
 ## [1.1.0] - 2026-07-17
 
 ### Added

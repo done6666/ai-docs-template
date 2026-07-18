@@ -55,6 +55,10 @@ template_source: <set on bootstrap>    # URL to pull upgrades from (used by /doc
 
 ## Load rules — "task touches… → open these"
 
+> Open only what the task implicates. A doc's front-matter (`owns`) + summary decide
+> relevance *before* you open the body; read the section (anchor), not the whole
+> file. See the read-path protocol in `_meta/DOCS_SYSTEM.md §14`.
+
 | Task touches… | Open |
 |---------------|------|
 | UI / components | `conventions/ui-ux-guidelines.md`, the relevant `features/FEAT-*` |

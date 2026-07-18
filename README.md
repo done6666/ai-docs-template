@@ -27,6 +27,11 @@ onaran bir yapıya kavuşturur:
   bildirir; kimse başka bir dokümandaki bilgiyi tekrar etmez, sadece bağ verir.
 - **Kendi kendini onarır** — tüm kuralların tam metni `docs/_meta/DOCS_SYSTEM.md`
   içindedir; `CLAUDE.md` onun özetidir. Çelişki olursa spec kazanır.
+- **Hızlı, temelli (grounded) ve az-token okuma** — bir görev verildiğinde AI,
+  istemin isimlerinden yola çıkıp **minimum doküman setini** açar (katmanlı okuma:
+  INDEX satırı → `owns` → özet → bölüm), dokümanlar arasında kaybolmaz ve **kodda
+  veya dokümanda okumadığı bir şeyi uydurmaz** ("belgelenmemiş" der). Detay:
+  `DOCS_SYSTEM.md §14`.
 
 Dil: kurallar, şablonlar ve yapı **İngilizce**; oluşturulan doküman *içeriği*
 projenizin diline göre yazılır. Bu README ve `/docs-init` röportajı **Türkçe**.

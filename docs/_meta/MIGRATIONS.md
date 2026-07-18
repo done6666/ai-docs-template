@@ -22,6 +22,20 @@ before writing (same safety gate as `/docs-adopt`).
 
 ---
 
+## 1.2.0 — Read-path optimization (task intake, grounding, token budget)
+
+- **Machinery:** added `DOCS_SYSTEM.md §14` (the read path: task-intake procedure,
+  layered reads, stop conditions, the anti-hallucination grounding rule, and the
+  token economy). `CLAUDE.md` §2 reframed from "Read before you act" into a 4-step
+  "Working a task (read path)" protocol. `INDEX` load-rules note + `doc-maintainer`
+  skill orient step point at §14.
+- **Content migration:** None (backward compatible). The `CLAUDE.md` change lands via
+  the normal managed-block replacement during `/docs-upgrade`; project content is
+  untouched.
+- **Breaking:** no.
+
+---
+
 ## 1.1.0 — Large-scale / federated mode (Tier 3)
 
 - **Machinery:** added `DOCS_SYSTEM.md §13` (partitioning, federated INDEX,

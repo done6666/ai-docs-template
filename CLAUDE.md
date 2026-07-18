@@ -1,6 +1,6 @@
 # Operating Rules for Claude Code
 
-<!-- ai-docs-template:managed:start (template v1.1.0) — Machinery, upstream-owned.
+<!-- ai-docs-template:managed:start (template v1.2.0) — Machinery, upstream-owned.
      Do NOT hand-edit; `/docs-upgrade` replaces everything between these markers.
      Put project-specific rules BELOW the :end marker, not inside this block. -->
 
@@ -15,13 +15,24 @@ autonomously, as a normal part of doing the work. Never ask *"should I update th
 docs?"* — updating docs is part of finishing the task. Announce doc changes in one
 line; don't request permission for them.
 
-## 2. Read before you act
+## 2. Working a task (read path)
 
-At the start of every session, before making changes, read **`docs/INDEX.md`**
-then **`docs/STATE.md`**. Load further docs on demand using `INDEX.md`'s load
-rules and routing table (e.g. touching endpoints → `docs/api/*`; persistence →
-`docs/data-model.md`; a named feature → its `docs/features/FEAT-*`). Do **not**
-re-read the whole `docs/` tree — read only what the task implicates.
+At session start read **`docs/INDEX.md`** then **`docs/STATE.md`**. Then, for any
+task, orient cheaply and stay grounded (full detail: `DOCS_SYSTEM.md §14`):
+
+1. **Locate.** From the task's nouns (feature, entity, endpoint, subsystem), use
+   `INDEX.md`'s routing/load rules to pick the **minimal** doc set. Open only what
+   the task implicates — never re-read the whole tree.
+2. **Read shallow-first.** A doc's front-matter (`owns`) + ≤5-line summary tell you
+   if it's relevant *before* you open the body; then read the relevant
+   **section/anchor**, not the whole file. `related[]` links are for traceability —
+   follow one only if you need that exact fact, not on sight.
+3. **Ground — don't hallucinate.** Base your plan on specific statements you
+   actually read in the docs or code. **Code is authoritative for *what*, ADRs for
+   *why*.** If a needed fact is in neither the docs nor the code you've checked, say
+   "not documented" and read the code or ask — never invent it.
+4. **Resume fast.** For work already in progress, `STATE.md` + the active feature's
+   `## Current state` is your on-ramp — don't re-derive what they already say.
 
 ## 3. Write as you work (triggers)
 

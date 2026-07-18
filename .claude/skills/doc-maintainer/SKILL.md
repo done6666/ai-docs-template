@@ -17,7 +17,10 @@ checklist.
 
 If you haven't this session, read `docs/INDEX.md` then `docs/STATE.md`. Use
 `INDEX.md`'s **routing table** to decide *where* a fact goes and its **load rules**
-to decide *what* to open. Never crawl the tree.
+to decide *what* to open. Never crawl the tree. Follow the read-path protocol
+(`DOCS_SYSTEM.md §14`): open only what the task implicates, read the section not the
+whole file, and ground every claim in a doc or code you actually read — if a fact is
+in neither, say "not documented" rather than invent it.
 
 ## Triggers → actions
 

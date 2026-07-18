@@ -531,3 +531,65 @@ owned/deployed. The **root** `docs/` keeps the federated root INDEX (Subsystems
 table pointing into each package's docs), the cross-cutting ADRs, and the STATE
 dashboard. Package-local docs own that package's architecture/data/api. One boot
 path, federated downward.
+
+---
+
+## 14. The read path — task intake, grounding & token budget
+
+The rest of this spec is the **write path** (keeping docs true). This section is the
+**read path**: how a session, given a task, connects the prompt to the right docs
+**fast**, stays **grounded** (no hallucination), doesn't get lost, and spends the
+**fewest tokens** for the most grounding. A docs system that is expensive or
+confusing to read won't be used — so the read path is a first-class design goal.
+
+### 14.1 Task intake (the cheap procedure)
+On any task, in order:
+1. **Classify from the prompt's nouns.** Which feature, entity, endpoint, module, or
+   subsystem does the task name? Those nouns are your index keys.
+2. **Route to the minimal set.** Use `INDEX.md`'s **routing table** (where a fact
+   lives) and **load rules** (task → docs) to pick the 1–3 docs that actually bear
+   on the task. At Tier 3, the subsystem catalog (§13.3) narrows it to one subsystem.
+3. **Open only those.** Never crawl `docs/`, never "read everything to be safe."
+   Breadth is the enemy of both speed and grounding.
+
+### 14.2 Layered reads (spend tokens where they pay)
+Read in cheapening-to-expensive layers; stop as soon as you have what the task needs:
+1. **INDEX row** — `purpose`, `tokens~`, `status` say whether a doc is even worth opening.
+2. **Front-matter** — `owns` / `does_not_own` is a precise relevance filter: it tells
+   you if this doc is the SSOT for the fact you need *before* you read prose.
+3. **Summary** — the ≤5-line summary at the top confirms relevance.
+4. **Section (anchor)** — read the specific section, not the whole file. Stable
+   anchors (§7) exist so you can deep-link.
+5. **Body** — only if the section wasn't enough.
+Because of this, a doc's front-matter + summary are **load-bearing**: keep them
+genuinely informative when you write, so future reads can decide cheaply.
+
+### 14.3 Don't get lost (stop conditions)
+- **Minimal set, then stop.** Once the opened docs answer the task, stop reading and act.
+- **`related[]` is not a reading queue.** It exists for traceability; follow a link
+  only when you need that specific linked fact — not because it's there.
+- **The on-ramp for continuing work is `STATE.md` + the active feature's
+  `## Current state`.** They already hold the resume point; don't re-derive it by
+  re-reading architecture/decisions.
+
+### 14.4 Grounding — the anti-hallucination rule
+- Every claim in your plan must trace to something you **actually read** — a doc
+  statement or a line of code — not to assumption.
+- **Precedence:** code is authoritative for *what* the system does; ADRs for *why*.
+  If a doc and the code disagree, trust the code and reconcile the doc (§4, §7).
+- **If a needed fact is in neither the docs nor the code you've checked, say
+  "not documented"** and then read the code or ask the user. Never fill the gap by
+  inventing a plausible answer. A missing doc is a signal to read code or write a
+  doc — not licence to guess.
+- When useful, name what grounds a non-obvious decision ("per `data-model.md`
+  User owns email uniqueness") so the reasoning is auditable.
+
+### 14.5 The token economy (what costs what)
+- **Always loaded:** `CLAUDE.md` (kept short on purpose — detail lives here, loaded
+  on demand). Don't bloat it.
+- **Every boot:** `INDEX.md` + `STATE.md`. Keeping INDEX lean (and federated at
+  scale, §13.2) and STATE capped (§7) keeps the fixed cost low.
+- **Per task:** the 1–3 docs the task implicates, read by layers (14.2). This is the
+  variable cost, and the intake procedure exists to keep it small.
+The whole design — INDEX summaries, `owns` filters, size caps, anchors, federation —
+is there so the read path stays **cheap and grounded** as the project grows.
