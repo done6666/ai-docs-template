@@ -12,6 +12,25 @@ Her tür projeyle uyumlu, web projeleri için optimize edilmiş, uyarlanabilir
 
 ---
 
+## Nasıl çalışır (bir bakışta)
+
+```mermaid
+flowchart TD
+  A["Oturum başı"] --> B["CLAUDE.md<br/>kısa anayasa"]
+  B --> C["docs/INDEX.md<br/>manifest + yönlendirme"]
+  C --> D["docs/STATE.md<br/>devam noktası"]
+  D --> E{"Görev"}
+  E -->|"istemin isimlerinden"| F["minimum doküman seti<br/>owns → özet → bölüm"]
+  F --> G["Kod yaz — grounded"]
+  G -->|"karar · özellik · şema/route/yapı değişimi"| H["Dokümanları güncelle<br/>doc-maintainer skill"]
+  H --> D
+```
+
+Her oturum bu döngüyü izler: **ucuz yönlen → minimum oku → grounded kod yaz →
+dokümanları otomatik güncelle.** Siz yalnızca kod istersiniz; hafıza arkada kendini tutar.
+
+---
+
 ## Neden?
 
 AI ile çok oturumlu geliştirme yaparken yapay zekânın kalıcı bir "hafızaya"
@@ -29,17 +48,11 @@ onaran bir yapıya kavuşturur:
   bildirir; kimse başka bir dokümandaki bilgiyi tekrar etmez, sadece bağ verir.
 - **Kendi kendini onarır** — tüm kuralların tam metni `docs/_meta/DOCS_SYSTEM.md`
   içindedir; `CLAUDE.md` onun özetidir. Çelişki olursa spec kazanır.
-- **Hızlı, temelli (grounded) ve az-token okuma** — bir görev verildiğinde AI,
-  istemin isimlerinden yola çıkıp **minimum doküman setini** açar (katmanlı okuma:
-  INDEX satırı → `owns` → özet → bölüm), dokümanlar arasında kaybolmaz ve **kodda
-  veya dokümanda okumadığı bir şeyi uydurmaz** ("belgelenmemiş" der). Detay:
-  `DOCS_SYSTEM.md §14`.
-- **Bayat dokümana karşı kalibre güven** — oynak+yüksek-riskli gerçekleri, üzerine
-  kod yazmadan önce dokümanın işaret ettiği koda karşı **dar doğrular** (`§15`);
-  kör sadakatle yanlış kod yazmaz.
-- **Çok-alt-sistemli görevlerde yanal bağlam** — etki alanını haritalar, alt-sistem
-  *kenarlarındaki* sözleşmeleri (**seams**) okur (tüm düğümleri değil), tamlık
-  kontrolü yapar; ne token patlatır ne bağlantıyı uydurur (`§16`).
+- **AI için optimize okuma yolu** — minimum doküman seti + katmanlı okuma (az token);
+  okumadığını uydurmaz ("belgelenmemiş" der); bayat dokümanı koda karşı **dar
+  doğrular**; çok-alt-sistemli görevde *kenarları (seams)* okur. Detay: `§14–§17`.
+- **Negatif bilgi de var** — projeye özel "asla/hep" kuralları, tuzaklar ve
+  **başarısız yaklaşımlar** (`guardrails.md`) → AI aynı hatayı tekrarlamaz.
 
 Dil: kurallar, şablonlar ve yapı **İngilizce**; oluşturulan doküman *içeriği*
 projenizin diline göre yazılır. Bu README ve `/docs-init` röportajı **Türkçe**.

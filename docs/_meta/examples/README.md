@@ -13,3 +13,5 @@ Claude Code creates the real versions at their canonical paths (`docs/features/`
 | `FEAT-0001-example.md` | a feature spec | `docs/features/FEAT-NNNN-<slug>.md` |
 | `api-overview.example.md` | API-wide conventions | `docs/api/api-overview.md` |
 | `ui-ux-guidelines.example.md` | web design-system reference | `docs/conventions/ui-ux-guidelines.md` |
+| `implementation-map.example.md` | the build ledger (done/next + how-notes) | `docs/implementation-map.md` |
+| `guardrails.example.md` | negative knowledge (must/never · pitfalls · failed) | `docs/guardrails.md` |

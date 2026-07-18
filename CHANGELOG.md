@@ -12,6 +12,13 @@ versioning: [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.10.1] - 2026-07-18
+
+### Changed
+- Adopter polish (presentation only, no behavior change): README gains a Mermaid
+  session-flow diagram and a tightened, scannable "why" section; added filled
+  `implementation-map` and `guardrails` examples under `docs/_meta/examples/`.
+
 ## [1.10.0] - 2026-07-18
 
 ### Fixed

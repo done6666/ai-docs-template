@@ -22,6 +22,17 @@ before writing (same safety gate as `/docs-adopt`).
 
 ---
 
+## 1.10.1 — Adopter polish (presentation only)
+
+- **Machinery:** README front-door polished (a Mermaid session-flow diagram; the
+  "why" list tightened to be scannable); two filled reference examples added under
+  `docs/_meta/examples/` (`implementation-map.example.md`, `guardrails.example.md`).
+  No rule, trigger, template, or command behavior changed.
+- **Content migration:** None (backward compatible; presentation/examples only).
+- **Breaking:** no.
+
+---
+
 ## 1.10.0 — Coherence audit (self-consistency fixes)
 
 Ran the system's own audit against its own artifacts. Fixes:
