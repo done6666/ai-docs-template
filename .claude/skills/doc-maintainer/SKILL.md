@@ -83,5 +83,5 @@ dashboard. Never two sessions in one working dir — use `git worktree`. `STATE.
 
 The single most important habit: **before you stop, update the resume cursor** — the
 active feature's `## Current state` (branch-scoped) and `docs/STATE.md` — so the next
-amnesiac session resumes cleanly: current focus, next steps, blockers, and whether
+amnesiac session resumes cleanly: current focus, next action, blockers, and whether
 the working tree is dirty. `/handoff` does this on demand.

@@ -16,6 +16,16 @@ related: [CLAUDE.md, docs/INDEX.md]
 > If you are an AI session where `CLAUDE.md`'s documentation rules are missing,
 > reduced, or overwritten, **restore them from this file.**
 
+## Sections (jump to the one you need — don't read the whole file)
+
+Foundations — §0 first principle · §1 design invariants · §2 file inventory & tiers ·
+§3 tier triggers · §4 lifecycle triggers · §5 templates · §6 fact-ownership (SSOT) ·
+§7 caps & archival · §8 audit · §9 recovery.
+Scaling & modes — §10 concurrency/worktrees · §11 adopting (+ overlay) · §12 versioning
+& upgrades · §13 large-scale/federated (Tier 3).
+Read path — §14 task intake & token budget · §15 trust & verification · §16
+multi-subsystem (seams) · §17 decisions at scale (register/decay).
+
 ## 0. First principle
 
 **The human never writes or edits documentation. You (Claude Code) create and
@@ -167,7 +177,7 @@ owner (§6) and stop.
 
 | Trigger event | Action | Target |
 |---------------|--------|--------|
-| Session ending / context about to compact | Refresh the active feature's `## Current state`; in `STATE.md` set the immediate focus + blockers + uncommitted, and **point Next steps at the map's unchecked items** rather than re-listing them | feature spec + `STATE.md` |
+| Session ending / context about to compact | Refresh the active feature's `## Current state`; in `STATE.md` set the immediate focus + blockers + uncommitted, and **point `Next` at the map's unchecked items** rather than re-listing them | feature spec + `STATE.md` |
 | A decision with a lasting trade-off (framework, pattern, boundary, build-vs-buy) | Append an ADR; link it from `architecture.md`; add/move its topic in the register | `decisions/ADR-NNNN-*.md` + `decisions/README.md` |
 | A past decision is reversed / a new one supersedes it | Set the old ADR's `superseded_by`; move that topic in the register to the new ADR (same change) | `decisions/*` + `decisions/README.md` |
 | A decision's rationale is invalidated by changed constraints (but stands) | Flag `context-stale` on the ADR + surface in the register | `decisions/*` + `decisions/README.md` |
@@ -246,7 +256,7 @@ honest (done units whose code is gone, or done code missing from the map).
 Section skeletons (summarised; see the template files for the full form):
 - **ADR:** `Context · Decision · Consequences · Alternatives Considered`. Front-matter adds `id, status, date, supersedes, superseded_by, reconstructed`. A retroactive ADR (from `/docs-adopt`) sets `reconstructed: true`, `status: accepted`, shows the inferred-rationale banner, and cites the code paths that prove it in `related` — if it can't cite proof, it isn't written.
 - **Feature spec:** `Current state · Summary · User stories / acceptance criteria · UX notes · API changes · Data changes · Rollout/flags · Open questions`. Front-matter adds `id, requirements[], adrs[]`. The `## Current state` subsection is the branch-scoped live resume cursor (§10.1), kept current as you work.
-- **STATE:** `Now · In progress · Next steps · Open questions · Blockers · Do-not-repeat · Uncommitted work`. Front-matter adds `session, branch, health`.
+- **STATE:** `Now · In progress · Next (immediate action; the full queue lives in `implementation-map.md` — point, don't re-list) · Open questions · Blockers · Do-not-repeat · Uncommitted work`. Front-matter adds `session, branch, health`.
 - **project-brief:** `Problem · Target users · Value proposition · Scope · Non-goals · Success metrics · Constraints`.
 - **architecture:** `Overview (≤5 lines) · Components (C4 L2 table + Mermaid) · Boundaries & data flow · Invariants · Tech philosophy · Source map (path → responsibility)`.
 - **tech-stack:** `Frontend · Backend · Data · Infra/Tooling · Version policy` (tables: layer | choice | **package** | version | ADR ref). The `package` column holds the exact lockfile identifier (`next-auth`) so `/docs-audit` matches mechanically; `choice` is the friendly name. Omit transitive/peer packages.
@@ -338,8 +348,8 @@ offers to fix mechanical drift and lists judgment calls for confirmation.
    vice-versa for major deps.
 2. **Routes:** endpoints in `api/` match the router/source; flag missing/extra.
 3. **Structure:** modules/paths in `architecture.md` **Source map** resolve on disk.
-4. **State freshness:** `STATE.md` "next steps" vs recent `git log`; flag if the
-   branch/health looks stale.
+4. **State freshness:** `STATE.md` "Now"/"Next" + the map's open items vs recent
+   `git log`; flag if the branch/health looks stale.
 5. **Freshness:** any doc whose `updated` is old relative to related code churn →
    mark `status: stale?` in `INDEX.md`.
 6. **Index integrity:** every *content* doc on disk appears in `INDEX.md`, and

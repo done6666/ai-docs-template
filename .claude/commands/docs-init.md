@@ -55,7 +55,7 @@ Populate, using `docs/_meta/templates/*` and the existing stubs:
 - `docs/project-brief.md` — from Q1–Q4, Q6.
 - `docs/tech-stack.md` — from inference + Q5 (fill the tables; leave ADR column blank until a decision is recorded).
 - `docs/architecture.md` — Overview + a Source map from the actual directory tree (even if skeletal); Components from what exists.
-- `docs/STATE.md` — `Now` = "project bootstrapped"; `Next steps` = the Q2 milestone goals; `health: green`; set `session: 1`, `branch` to the current branch.
+- `docs/STATE.md` — `Now` = "project bootstrapped"; `Next` = the immediate first action (the Q2 milestone goals seed `roadmap.md` when it's created, not a re-listed plan in STATE); `health: green`; `session: 1`; `branch` = current branch.
 - `docs/INDEX.md` — set front-matter `project_type`, `current_tier: 0`, `status: active`, `last_verified: <today>`, `template_version` (= contents of `docs/_meta/VERSION`), and `template_source` (the template repo URL this project came from; if unknown, ask once and record it); refresh the `updated`/`status` cells to `fresh`.
 - Leave `ADR-0001` as-is (it already records adopting the system).
 

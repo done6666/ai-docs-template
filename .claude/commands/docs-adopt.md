@@ -118,8 +118,8 @@ DB, auth, monorepo, API style, infra). Rules:
 - State only what code proves. For the true *why*: if not evident, write "Rationale
   not recorded at the time; inferred: …" and route the genuinely ambiguous ones to
   the Step-5 interview rather than guessing. Cap at 7; note the rest in STATE
-  "Next steps" as future ADRs. ADR-0001 (adopt-the-system) stays; retroactive start
-  at 0002.
+  `Next` (or `roadmap.md`) as future ADRs. ADR-0001 (adopt-the-system) stays;
+  retroactive start at 0002.
 
 ## Step 5 — Minimal interview (in TURKISH) — only what code can't reveal
 
@@ -156,8 +156,9 @@ On yes, execute in order: quarantine moves → new docs → `INDEX.md` (`project
 `current_tier`, `status: active`, `last_verified: <today>`, `template_version` (=
 `docs/_meta/VERSION`), `template_source` (ask once if unknown), Core+Areas rows,
 ledger)
-→ `STATE.md` (`Now` = "adopted into existing project"; `Next steps` = Q3 goals +
-deferred ADRs; current branch + tree status) → ADRs + `decisions/README.md` →
+→ `STATE.md` (`Now` = "adopted into existing project"; `Next` = the immediate first
+action; deferred ADRs and goals seed `roadmap.md`/the map, not a re-listed plan in
+STATE; current branch + tree status) → ADRs + `decisions/README.md` →
 `CHANGELOG.md` `[Unreleased]` from tags.
 
 Print a short Turkish note: neler oluşturuldu/taşındı; `_ingest/` altında

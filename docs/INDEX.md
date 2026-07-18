@@ -10,17 +10,13 @@ template_source: <set on bootstrap>    # URL to pull upgrades from (used by /doc
 
 # Documentation Manifest
 
-> **Boot read #1.** Read `CLAUDE.md`, then this file, then `STATE.md`. Use the
-> tables and rules below to load only what a task needs — never crawl the tree.
+> **Boot read #1** (`CLAUDE.md` → this → `STATE.md`). Load only what a task needs;
+> never crawl the tree. **NOT bootstrapped yet** — run **`/docs-init`** (new repo) or
+> **`/docs-adopt`** (existing code); rows below are the skeleton.
 >
-> **This project is NOT bootstrapped yet.** Run **`/docs-init`** (empty/new repo) or
-> **`/docs-adopt`** (a repo that already has substantial code) to generate the docs.
-> Until then, the rows below describe the *skeleton*.
-
-> **`status` = trust signal:** `fresh` (verified against code) · `stale?` (maybe
-> drifted) · `suspect` (`last_verified` missing/older than `updated`, or its code
-> changed since). Spot-check a `suspect`/`stale?` doc's volatile facts before coding
-> against them (`_meta/DOCS_SYSTEM.md §15`).
+> **`status` = trust:** `fresh` (verified vs code) · `stale?` (maybe drifted) ·
+> `suspect` (`last_verified` missing/older than `updated`, or code changed since) —
+> spot-check a suspect doc's volatile facts before coding against them (§15).
 
 ## Core (Tier 0 — always available)
 
@@ -63,9 +59,8 @@ template_source: <set on bootstrap>    # URL to pull upgrades from (used by /doc
 
 ## Load rules — "task touches… → open these"
 
-> Open only what the task implicates. A doc's front-matter (`owns`) + summary decide
-> relevance *before* you open the body; read the section (anchor), not the whole
-> file. See the read-path protocol in `_meta/DOCS_SYSTEM.md §14`.
+> Open only what the task implicates; `owns` + summary decide relevance before the
+> body; read the section, not the file (read-path: `_meta/DOCS_SYSTEM.md §14`).
 
 | Task touches… | Open |
 |---------------|------|

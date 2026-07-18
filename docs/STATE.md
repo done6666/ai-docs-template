@@ -29,9 +29,9 @@ Project not yet bootstrapped. Waiting for `/docs-init`.
 
 - [ ] Bootstrap the docs system (`/docs-init`)
 
-## Next steps
+## Next
 
-1. Run `/docs-init` to generate Tier-0 documentation.
+- Run `/docs-init` to generate Tier-0 documentation.
 
 ## Open questions
 

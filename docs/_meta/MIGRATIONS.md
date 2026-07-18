@@ -22,6 +22,24 @@ before writing (same safety gate as `/docs-adopt`).
 
 ---
 
+## 1.10.0 — Coherence audit (self-consistency fixes)
+
+Ran the system's own audit against its own artifacts. Fixes:
+- **Self-contradiction (main):** the v1.8.0 status-SSOT change (STATE points to the
+  map, doesn't re-list "Next steps") hadn't propagated to §5, §8, and the
+  `docs-init`/`docs-adopt`/`docs-audit`/`handoff` commands, which still described a
+  "Next steps" plan in STATE. Reconciled everywhere: STATE holds `Now`/`Next`
+  (immediate action) and points to `implementation-map.md` for the queue.
+- **Self-violation:** the `INDEX.md` stub exceeded its own ~900-token cap (954) →
+  trimmed under it.
+- **Read-cheapness:** `DOCS_SYSTEM.md` (~9.7k tokens) had no jump index → added a
+  Sections TOC so an AI reads the TOC and jumps to the one §N it needs.
+- **Content migration:** None (backward compatible). *Optional:* rename a project's
+  `STATE.md` "Next steps" heading to "Next" and point it at the map.
+- **Breaking:** no.
+
+---
+
 ## 1.9.0 — Learnings from adopting a real mature project
 
 Applied after test-driving `/docs-adopt` on a large real project (Nx monorepo) that

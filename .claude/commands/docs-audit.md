@@ -45,8 +45,8 @@ Run each and collect findings:
    `MUST`/`NEVER` rule the code now visibly violates, and a `FAILED` note whose
    referenced code no longer exists. Guardrails are advisory memory, so report — don't
    auto-delete.
-4. **State freshness** — `STATE.md` "Next steps" vs recent `git log`; flag if the
-   branch or health looks stale relative to actual activity.
+4. **State freshness** — `STATE.md` "Now"/"Next" + `implementation-map.md` open items
+   vs recent `git log`; flag if the branch or health looks stale relative to activity.
 4b. **Seams** (if an `architecture` Seams table / `architecture/_seams.md` exists) —
    each seam's producer, consumer, and enforcement code paths resolve; flag a seam
    whose contract (event name, interface) no longer matches the code.

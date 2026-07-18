@@ -12,6 +12,19 @@ versioning: [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.10.0] - 2026-07-18
+
+### Fixed
+- **Coherence audit** (ran the system's own checks against its own artifacts):
+  - Reconciled a self-contradiction — v1.8.0's status-SSOT change (STATE points to
+    the implementation-map, doesn't re-list "Next steps") now propagated to
+    `DOCS_SYSTEM §5/§8` and the `docs-init`/`docs-adopt`/`docs-audit`/`handoff`
+    commands + the `STATE.md` stub, which still described the old "Next steps" plan.
+  - Trimmed the `INDEX.md` stub back under its own ~900-token cap (was 954).
+  - Added a **Sections TOC** to `DOCS_SYSTEM.md` (~9.7k tokens) so it's navigable by
+    jumping to a §N instead of reading the whole file — the spec now obeys its own
+    read-cheapness rule.
+
 ## [1.9.0] - 2026-07-18
 
 ### Added
