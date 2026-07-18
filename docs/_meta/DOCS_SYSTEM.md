@@ -155,16 +155,25 @@ Record the current tier and the escalation history in `INDEX.md` front-matter
 These are the events that make the docs maintain themselves. Apply them without
 being asked. Each is detectable from work you are already doing.
 
+**Proportionality (don't over-document a small change).** Apply triggers in
+proportion to the change: update only the doc(s) whose facts actually changed, and
+**batch doc updates at logical checkpoints** (a unit finished, a session ending) —
+not after every micro-edit. A one-file tweak does not need the full ceremony
+(FEAT + map + architecture + CHANGELOG); a renamed field touches `data-model`, not
+`project-brief`. Over-documenting a trivial change wastes tokens the same way
+under-documenting a big one loses context. When in doubt, update the fact's single
+owner (§6) and stop.
+
 | Trigger event | Action | Target |
 |---------------|--------|--------|
-| Session ending / context about to compact | Rewrite current focus, changes, next steps, open questions, blockers, uncommitted work | `STATE.md` |
+| Session ending / context about to compact | Refresh the active feature's `## Current state`; in `STATE.md` set the immediate focus + blockers + uncommitted, and **point Next steps at the map's unchecked items** rather than re-listing them | feature spec + `STATE.md` |
 | A decision with a lasting trade-off (framework, pattern, boundary, build-vs-buy) | Append an ADR; link it from `architecture.md`; add/move its topic in the register | `decisions/ADR-NNNN-*.md` + `decisions/README.md` |
 | A past decision is reversed / a new one supersedes it | Set the old ADR's `superseded_by`; move that topic in the register to the new ADR (same change) | `decisions/*` + `decisions/README.md` |
 | A decision's rationale is invalidated by changed constraints (but stands) | Flag `context-stale` on the ADR + surface in the register | `decisions/*` + `decisions/README.md` |
 | A non-trivial feature is starting (>1-file change; new user-visible capability) | Create the feature spec **before** writing code | `features/FEAT-NNNN-*.md` |
 | **An implementation unit is finished** | Flip it to `[x]`, add a tight "how it was built" note + code path, update **Last implemented** (create the map if first → Tier 1) | `implementation-map.md` |
 | **A failed approach / must-never rule / recurring bug is learned** | Record a tight entry (rule · why · where it applies); promote it out of `STATE`'s Do-not-repeat so it persists (create if first → Tier 1) | `guardrails.md` |
-| A feature is completed | Mark spec `shipped`; fold a summary into `STATE.md`; update `architecture.md` if structure changed; mark its units done in the map | feature spec + `STATE.md` + `implementation-map.md` |
+| A feature is completed | Mark units `[x]` in the map (the done/next SSOT); set the spec `shipped` and **collapse its `## Current state` to a one-line "shipped — see map"** (don't keep a rich cursor on a shipped feature); update `architecture.md` only if structure changed | `implementation-map.md` + feature spec |
 | A dependency/tool is added, removed, or major-version bumped | Update the stack table + rationale pointer | `tech-stack.md` |
 | A module/subsystem is added, or a boundary/data-flow changes | Update structure + diagram/description | `architecture.md` |
 | A cross-subsystem contract is added/changed (event, internal API, shared invariant) | Record/update the **seam** (edge · contract · producer · consumer · enforcement path) | `architecture.md` Seams / `architecture/_seams.md` |
@@ -257,7 +266,9 @@ doc's `owns` field.
 | Endpoint contracts | `openapi.yaml`, else `api/endpoints.md` | features link |
 | Requirements (normative) | `requirements.md` (REQ-IDs) | features reference REQ-IDs |
 | Feature design | `features/FEAT-*` | roadmap links |
-| Implementation progress + "how built" notes | `implementation-map.md` | STATE/roadmap link; features link their units |
+| Implementation progress — done/next queue + "how built" notes | `implementation-map.md` | STATE points to it (doesn't re-list); features link their units |
+| Live session cursor (immediate focus, blockers, uncommitted) | `STATE.md` | — |
+| An in-flight feature's resume detail | that feature's `## Current state` | dropped/collapsed once the feature ships (the map's `[x]` + note is the record) |
 | Negative knowledge (must/never, pitfalls, failed approaches) | `guardrails.md` | conventions/architecture link the critical ones |
 | Shipped history | `CHANGELOG.md` | roadmap "Shipped" summarises only |
 | Domain terms | `glossary.md` | all docs link on first use |

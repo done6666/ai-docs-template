@@ -33,8 +33,10 @@ One paragraph: what is being worked on and its immediate status.
 ### In progress
 - [ ] <task> — <rough % / state>
 
-### Next steps
-1. <ordered, resumable next action>
+### Next
+<!-- The immediate next action only. The full queue lives in implementation-map.md
+     ([ ] items) — point to it, don't re-list it here (that's the done/next SSOT). -->
+- <the one next action> — full queue: `implementation-map.md`
 
 ### Open questions
 - Q: <question blocking a clean decision>

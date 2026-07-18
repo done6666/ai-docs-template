@@ -22,6 +22,26 @@ before writing (same safety gate as `/docs-adopt`).
 
 ---
 
+## 1.8.0 — Simplifications (from a live end-to-end test)
+
+First *reducing* release. A real multi-scenario run surfaced three frictions, fixed here:
+- **Status SSOT (de-dup):** done/next lived in three places (`STATE` Next steps,
+  feature `## Current state`, `implementation-map`) → drift. Now the map is the sole
+  done/next queue; `STATE` keeps only the immediate focus and **points** to the map;
+  a feature's `## Current state` is for in-flight work and **collapses to one line
+  when shipped**. (§4, §6, STATE/feature templates.)
+- **Leaner always-loaded `CLAUDE.md`** (~1400 → ~840 tokens): read-path/trust/seams/
+  decisions guidance compressed; the full trigger table now lives in §4 + the skill,
+  with only the core triggers in `CLAUDE.md`.
+- **Proportionality (§4):** apply triggers in proportion to the change and batch doc
+  updates at checkpoints — a trivial change doesn't need the full ceremony.
+- **Content migration:** None (backward compatible). Existing docs stay valid;
+  they just get leaner going forward. *Optional cleanup:* trim `STATE.md` "Next
+  steps" to a pointer, and collapse shipped features' `## Current state`.
+- **Breaking:** no. (`CLAUDE.md` updates via the normal managed-block replacement.)
+
+---
+
 ## 1.7.0 — Decisions at scale (register, currency, decay)
 
 - **Machinery:** new `DOCS_SYSTEM.md §17` — `decisions/README.md` evolves from a flat

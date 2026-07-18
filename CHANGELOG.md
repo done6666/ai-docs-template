@@ -12,6 +12,20 @@ versioning: [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.8.0] - 2026-07-18
+
+### Changed
+- **Simplifications from a live end-to-end test** (first reducing release):
+  - **Status SSOT** — done/next progress is owned solely by `implementation-map.md`;
+    `STATE.md` now keeps only the immediate focus and points to the map (no re-listed
+    plan), and a feature's `## Current state` collapses to one line once shipped. Ends
+    the three-places-for-status redundancy that caused `STATE` to drift.
+  - **Leaner `CLAUDE.md`** — the always-loaded constitution trimmed ~1400 → ~840
+    tokens; the full trigger table moved to `DOCS_SYSTEM §4` + the skill, leaving core
+    triggers in `CLAUDE.md`.
+  - **Proportionality (`DOCS_SYSTEM §4`)** — apply doc triggers in proportion to the
+    change; batch updates at checkpoints; a trivial change skips the full ceremony.
+
 ## [1.7.0] - 2026-07-17
 
 ### Added

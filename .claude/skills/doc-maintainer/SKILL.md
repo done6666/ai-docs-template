@@ -28,7 +28,7 @@ Apply these as they occur:
 
 | Trigger | Action → target |
 |---------|-----------------|
-| Session ending / context compacting | Update the active feature's `## Current state` (keep current *as you work*), then refresh `docs/STATE.md`. `/handoff` flushes deliberately. See `DOCS_SYSTEM.md §10` |
+| Session ending / context compacting | Update the active feature's `## Current state`, then in `docs/STATE.md` set immediate focus/blockers/uncommitted and **point Next at the map's `[ ]` items** (don't re-list). `/handoff` flushes deliberately (§10) |
 | Decision with a lasting trade-off | Append `docs/decisions/ADR-NNNN-*` (template: `_meta/templates/adr.md`); link from `architecture.md`; add/move the topic in the `decisions/README.md` register |
 | A past decision is reversed / superseded | Set the old ADR's `superseded_by` **and** move that topic in the register to the new ADR (same change). A `superseded` ADR is not current truth (§17) |
 | Non-trivial feature starting | Create `docs/features/FEAT-*` **before** coding (template: `_meta/templates/feature.md`) |
@@ -65,6 +65,11 @@ Apply these as they occur:
 - **Tiering:** don't create a doc until its trigger fires; prefer updating over
   spawning; archive (`status: archived`), never delete. Log tier escalations in
   `INDEX.md`.
+- **Proportionality:** update only the doc(s) whose facts changed; batch updates at
+  checkpoints (unit done, session end), not every micro-edit. A trivial change
+  doesn't need the full ceremony. **One home per fact** — done/next queue lives in
+  `implementation-map.md`; `STATE` and feature `## Current state` point to it, they
+  don't restate it.
 
 ## Parallel work (only when it happens)
 

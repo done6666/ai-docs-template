@@ -18,10 +18,11 @@ related: []
 
 ## Current state
 
-> Live resume cursor for THIS workstream — **branch-scoped**, updated continuously
-> as you work (not only at session end), so a compacted or fresh session resumes
-> here. This is the SSOT for what this feature is doing right now; `STATE.md` only
-> links to it. Anchor: `#current-state`.
+> Live resume cursor **only while this feature is in flight** — branch-scoped, kept
+> current as you work so a compacted/fresh session resumes here. Anchor:
+> `#current-state`. **When the feature ships, collapse this to one line** ("shipped —
+> see `implementation-map.md`"); the map's `[x]` + note is the durable record, so a
+> shipped feature doesn't keep a rich cursor (avoids status living in three places).
 
 - **Status:** draft — 0%
 - **Last done:** <last completed step>
