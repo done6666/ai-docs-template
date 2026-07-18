@@ -22,6 +22,21 @@ before writing (same safety gate as `/docs-adopt`).
 
 ---
 
+## 1.4.0 — Guardrails (negative knowledge)
+
+- **Machinery:** new `guardrails.md` doc type + template — project must/never rules,
+  known pitfalls, and failed approaches (don't-retry). Wired into tier triggers (§3),
+  lifecycle triggers (§4), fact-ownership (§6), the STATE→guardrails promotion path
+  (§7), the grounding rule (§14.4), `/docs-audit` (check 3c), routing/load rules, the
+  `doc-maintainer` skill, and the STATE template's Do-not-repeat note.
+- **Content migration:** None (backward compatible). *Optional:* create
+  `docs/guardrails.md` from the template and seed it with any standing must/never
+  rules or known pitfalls the project already relies on; otherwise let it accrue as
+  failed approaches/rules are learned.
+- **Breaking:** no.
+
+---
+
 ## 1.3.0 — Implementation map (build ledger)
 
 - **Machinery:** new `implementation-map.md` doc type + template — a build ledger

@@ -12,6 +12,20 @@ versioning: [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-07-17
+
+### Added
+- Guardrails (`guardrails.md`, Tier 1): the AI's negative-knowledge memory —
+  project **MUST/NEVER** rules, known **PITFALL**s, and **FAILED** approaches
+  (don't-retry), organized by area so a session scans only what it's editing.
+  Checked before writing code (grounding rule §14.4) to avoid re-treading failed
+  paths, violating project invariants, and reintroducing fixed bugs — a cheap read
+  that saves an expensive wrong attempt.
+- STATE→guardrails **promotion path**: durable "Do-not-repeat" learnings are
+  promoted to `guardrails.md` instead of dying on the next `STATE.md` overwrite.
+- Wired into tier + lifecycle triggers, fact-ownership, `/docs-audit` (check 3c),
+  routing/load rules, and the `doc-maintainer` skill.
+
 ## [1.3.0] - 2026-07-17
 
 ### Added

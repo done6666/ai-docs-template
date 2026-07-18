@@ -86,6 +86,7 @@ Docs grow with the project. Create a doc only when its tier trigger fires (§3).
 | `docs/requirements.md` | Functional + non-functional requirements (REQ-IDs). |
 | `docs/roadmap.md` | Now / Next / Later; links to features. |
 | `docs/implementation-map.md` | Build ledger: which units are done, what's left, and a per-unit "how it was built" note. |
+| `docs/guardrails.md` | Negative knowledge: project must/never rules, known pitfalls, and failed approaches (don't-retry). |
 | `docs/data-model.md` | Entities, relationships, invariants — **logical** model only. |
 | `docs/api/api-overview.md` | Style, auth, versioning, error/pagination conventions. |
 | `docs/api/endpoints.md` | Human endpoint reference (defers to `openapi.yaml` at Tier 2). |
@@ -123,6 +124,8 @@ but with front-matter + section headers) and logs the escalation in `INDEX.md`.
 - Distinct capabilities exceed ~5 (outgrows the brief's Scope section) → `requirements.md`.
 - Implementation work spans multiple units or sessions → `implementation-map.md`
   (so progress and per-unit "how built" notes survive without re-scanning code).
+- A failed approach, a must/never rule, or a recurring bug pattern is learned →
+  `guardrails.md` (so the negative knowledge persists instead of being re-discovered).
 
 **Tier 1 → Tier 2** — when *any* fires:
 - More than one deployable/runnable container (e.g. frontend + backend + worker).
@@ -158,6 +161,7 @@ being asked. Each is detectable from work you are already doing.
 | A decision with a lasting trade-off (framework, pattern, boundary, build-vs-buy) | Append an ADR; link it from `architecture.md` | `decisions/ADR-NNNN-*.md` |
 | A non-trivial feature is starting (>1-file change; new user-visible capability) | Create the feature spec **before** writing code | `features/FEAT-NNNN-*.md` |
 | **An implementation unit is finished** | Flip it to `[x]`, add a tight "how it was built" note + code path, update **Last implemented** (create the map if first → Tier 1) | `implementation-map.md` |
+| **A failed approach / must-never rule / recurring bug is learned** | Record a tight entry (rule · why · where it applies); promote it out of `STATE`'s Do-not-repeat so it persists (create if first → Tier 1) | `guardrails.md` |
 | A feature is completed | Mark spec `shipped`; fold a summary into `STATE.md`; update `architecture.md` if structure changed; mark its units done in the map | feature spec + `STATE.md` + `implementation-map.md` |
 | A dependency/tool is added, removed, or major-version bumped | Update the stack table + rationale pointer | `tech-stack.md` |
 | A module/subsystem is added, or a boundary/data-flow changes | Update structure + diagram/description | `architecture.md` |
@@ -210,6 +214,7 @@ Template files shipped:
 - `templates/feature.md` — feature spec.
 - `templates/state.md` — the STATE.md skeleton.
 - `templates/implementation-map.md` — the build ledger (progress + per-unit notes).
+- `templates/guardrails.md` — negative knowledge (must/never rules, pitfalls, failed approaches).
 - `templates/requirements.md` — requirements doc.
 - `templates/data-model.md` — logical data model.
 - `templates/api-overview.md` — API conventions.
@@ -249,6 +254,7 @@ doc's `owns` field.
 | Requirements (normative) | `requirements.md` (REQ-IDs) | features reference REQ-IDs |
 | Feature design | `features/FEAT-*` | roadmap links |
 | Implementation progress + "how built" notes | `implementation-map.md` | STATE/roadmap link; features link their units |
+| Negative knowledge (must/never, pitfalls, failed approaches) | `guardrails.md` | conventions/architecture link the critical ones |
 | Shipped history | `CHANGELOG.md` | roadmap "Shipped" summarises only |
 | Domain terms | `glossary.md` | all docs link on first use |
 | System structure & invariants | `architecture.md` | features link |
@@ -280,9 +286,11 @@ specific*) → code (*how, literal*).
   archived`, and update `INDEX.md`. Archived docs are never read unless a task
   explicitly needs history.
 - **STATE is overwritten, never appended, and regenerated — not hand-merged.**
-  Anything in STATE with lasting value (a decision, a learned constraint, a term)
-  must be **promoted** to its owner doc (ADR / glossary / architecture) *before* it
-  is dropped from STATE. STATE and INDEX are derivable snapshots; on a merge
+  Anything in STATE with lasting value must be **promoted** to its owner doc
+  *before* it is dropped from STATE: a decision → ADR; a term → glossary; a
+  structural fact → architecture; **a failed approach / must-never rule / recurring
+  bug (STATE's "Do-not-repeat") → `guardrails.md`** (else the learning dies on the
+  next overwrite). STATE and INDEX are derivable snapshots; on a merge
   conflict, take either side and rewrite from the branch list + feature specs
   (§10). For parallel work, per-workstream detail lives in each feature spec's
   `## Current state`, and STATE becomes a thin dashboard (§10).
@@ -604,6 +612,9 @@ genuinely informative when you write, so future reads can decide cheaply.
   doc — not licence to guess.
 - When useful, name what grounds a non-obvious decision ("per `data-model.md`
   User owns email uniqueness") so the reasoning is auditable.
+- **Check `guardrails.md` before writing code in an area.** Do not retry an approach
+  it marks `FAILED`, and do not violate a `MUST`/`NEVER` — these are cheap reads
+  that prevent an expensive wrong attempt or a faithful-but-wrong implementation.
 
 ### 14.5 The token economy (what costs what)
 - **Always loaded:** `CLAUDE.md` (kept short on purpose — detail lives here, loaded

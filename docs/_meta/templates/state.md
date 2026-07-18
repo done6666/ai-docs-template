@@ -43,6 +43,8 @@ One paragraph: what is being worked on and its immediate status.
 - <blocker, or "None.">
 
 ### Do-not-repeat (learned this session)
+<!-- Ephemeral. Anything durable (a failed approach, a must-never rule, a recurring
+     bug) must be PROMOTED to docs/guardrails.md before this file is overwritten. -->
 - <gotcha a fresh session would otherwise rediscover the hard way>
 
 ### Uncommitted work
