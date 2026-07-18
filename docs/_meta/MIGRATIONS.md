@@ -22,6 +22,23 @@ before writing (same safety gate as `/docs-adopt`).
 
 ---
 
+## 1.6.0 — Seams & multi-subsystem tasks (lateral context)
+
+- **Machinery:** new `DOCS_SYSTEM.md §16` — **seams** (cross-subsystem contracts:
+  edge · contract · producer · consumer · enforcement path, owned by `architecture`;
+  a Seams table at Tier 2+, `architecture/_seams.md` at Tier 3) + a procedure for
+  multi-subsystem tasks (map the blast radius → gather laterally but shallow → plan
+  against seams → order by dependency → completeness-check). Wired into §4 lifecycle,
+  §6 fact-ownership, §13.1 partitioning; `architecture` template gains a Seams
+  section; `CLAUDE.md` read path, `INDEX` load rules, `/docs-audit` (check 4b), and
+  the `doc-maintainer` skill updated.
+- **Content migration:** None (backward compatible). *Optional:* when a project has
+  real cross-subsystem contracts, add a Seams table to `architecture.md` (or
+  `architecture/_seams.md` at scale). Existing docs stay valid.
+- **Breaking:** no.
+
+---
+
 ## 1.5.0 — Trust & verification (don't follow stale docs blindly)
 
 - **Machinery:** new `DOCS_SYSTEM.md §15` — a read-time trust model (trust =

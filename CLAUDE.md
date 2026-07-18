@@ -1,6 +1,6 @@
 # Operating Rules for Claude Code
 
-<!-- ai-docs-template:managed:start (template v1.5.0) — Machinery, upstream-owned.
+<!-- ai-docs-template:managed:start (template v1.6.0) — Machinery, upstream-owned.
      Do NOT hand-edit; `/docs-upgrade` replaces everything between these markers.
      Put project-specific rules BELOW the :end marker, not inside this block. -->
 
@@ -23,6 +23,10 @@ task, orient cheaply and stay grounded (full detail: `DOCS_SYSTEM.md §14`):
 1. **Locate.** From the task's nouns (feature, entity, endpoint, subsystem), use
    `INDEX.md`'s routing/load rules to pick the **minimal** doc set. Open only what
    the task implicates — never re-read the whole tree.
+   - **Spans multiple subsystems?** First map the full **blast radius** (subsystem
+     catalog + `architecture` **Seams**); read each touched subsystem *shallow* + the
+     **seam contract** between them (edges, not full nodes); order by dependency; and
+     **completeness-check** before finishing so no subsystem is missed (`§16`).
 2. **Read shallow-first.** A doc's front-matter (`owns`) + ≤5-line summary tell you
    if it's relevant *before* you open the body; then read the relevant
    **section/anchor**, not the whole file. `related[]` links are for traceability —

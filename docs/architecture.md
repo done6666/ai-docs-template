@@ -38,6 +38,16 @@ flowchart LR
 
 <2–4 critical request/data paths, described briefly.>
 
+## Seams (cross-subsystem contracts)
+
+<Only when subsystems couple via events/internal APIs/shared invariants. Small
+projects: the prose above is enough. When contracts multiply (Tier 2+), list them
+here; federate to `architecture/_seams.md` at Tier 3 (`DOCS_SYSTEM.md §16.1`).>
+
+| Edge (A → B) | Contract | Producer | Consumer | Enforced in |
+|--------------|----------|----------|----------|-------------|
+| <invoices → notifications> | `InvoiceShared` event | `src/…` | `src/…` | `src/…` |
+
 ## Invariants
 
 <Rules that must always hold across the system — the things a change must not break.>

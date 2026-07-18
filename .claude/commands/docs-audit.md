@@ -47,6 +47,9 @@ Run each and collect findings:
    auto-delete.
 4. **State freshness** — `STATE.md` "Next steps" vs recent `git log`; flag if the
    branch or health looks stale relative to actual activity.
+4b. **Seams** (if an `architecture` Seams table / `architecture/_seams.md` exists) —
+   each seam's producer, consumer, and enforcement code paths resolve; flag a seam
+   whose contract (event name, interface) no longer matches the code.
 5. **Freshness & trust** — set `last_verified` (today/SHA) on every doc you confirm
    matches code, at any tier. Mark `status: suspect` in `INDEX.md` for docs where
    `last_verified` is missing, older than `updated`, or older than the last change to

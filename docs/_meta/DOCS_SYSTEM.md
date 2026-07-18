@@ -165,6 +165,7 @@ being asked. Each is detectable from work you are already doing.
 | A feature is completed | Mark spec `shipped`; fold a summary into `STATE.md`; update `architecture.md` if structure changed; mark its units done in the map | feature spec + `STATE.md` + `implementation-map.md` |
 | A dependency/tool is added, removed, or major-version bumped | Update the stack table + rationale pointer | `tech-stack.md` |
 | A module/subsystem is added, or a boundary/data-flow changes | Update structure + diagram/description | `architecture.md` |
+| A cross-subsystem contract is added/changed (event, internal API, shared invariant) | Record/update the **seam** (edge · contract · producer · consumer · enforcement path) | `architecture.md` Seams / `architecture/_seams.md` |
 | A route/endpoint is added or changed | Update the API inventory (create `api/` if first → Tier 1) | `api/endpoints.md` / `openapi.yaml` |
 | A schema / data model changes | Update the logical model (create if first) | `data-model.md` |
 | A domain term is used repeatedly (≥ ~3 uses, non-obvious) | Add a glossary entry (create if first) | `glossary.md` |
@@ -258,6 +259,7 @@ doc's `owns` field.
 | Shipped history | `CHANGELOG.md` | roadmap "Shipped" summarises only |
 | Domain terms | `glossary.md` | all docs link on first use |
 | System structure & invariants | `architecture.md` | features link |
+| Cross-subsystem contracts (seams) | `architecture.md` Seams (→ `architecture/_seams.md` at Tier 3) | subsystems link to the seams they touch |
 | Scope / goals / non-goals | `project-brief.md` | requirements link |
 | Function/class signatures, file trees | **code** (do not store) | docs point to paths |
 | Commit history / authorship / "what changed" | **git** (do not store) | — |
@@ -496,7 +498,7 @@ own seams (packages, modules, bounded contexts) so they stay stable.
 
 | Doc | Partitions into | Top-level file becomes |
 |-----|-----------------|------------------------|
-| `architecture.md` | `architecture/<subsystem>.md` (C4 L3 per subsystem) | C4 L1/L2 overview + **subsystem catalog** (table: subsystem → path → doc) |
+| `architecture.md` | `architecture/<subsystem>.md` (C4 L3 per subsystem) + `architecture/_seams.md` (cross-subsystem contracts, §16.1) | C4 L1/L2 overview + **subsystem catalog** (table: subsystem → path → doc) |
 | `data-model.md` | `data-model/<domain>.md` (per bounded context) | ER overview + **domain index** |
 | `api/endpoints.md` | `openapi.yaml` (SSOT) or `api/<resource>.md` | overview that defers to the spec / resource docs |
 | `conventions/*` | already a directory — add per-area files as needed | — |
@@ -685,3 +687,53 @@ build on.**
 - `/docs-audit` sets `last_verified` on docs it confirms and marks the rest
   `status: suspect`; `INDEX`'s `status` (`fresh` / `stale?` / `suspect`) surfaces
   trust at boot so you know which docs to spot-check.
+
+---
+
+## 16. Multi-subsystem tasks — gathering lateral context
+
+§14 optimizes the read path for **localized** tasks (1–3 docs). A task that spans
+several subsystems — "email an invoice" (invoices + notifications + auth + UI), or a
+cross-cutting change like "audit-log every mutation" — needs **lateral** context, and
+the two naive approaches are both wrong: reading every touched subsystem's full docs
+(**token blowup**) or guessing how they connect (**integration hallucination**).
+Gather breadth cheaply by reading **edges (seam contracts), not full nodes.**
+
+### 16.1 Seams (integration contracts)
+A **seam** is a cross-subsystem contract — an event, an internal call/interface, or a
+shared invariant that couples two subsystems. It is owned by `architecture` (a
+boundary is structure), recorded as: **edge → contract → producer → consumer →
+enforcement code path.** By scale:
+- **Small:** the `architecture.md` **Boundaries & data flow** prose covers the few flows.
+- **Tier 2+** (contracts multiply): promote to a structured **Seams** table in
+  `architecture.md`.
+- **Tier 3** (architecture federated per subsystem): seams live *between* subsystems,
+  so they go in a root **`architecture/_seams.md`** — they belong to no single
+  subsystem doc.
+Reading the seam lets you code A↔B correctly without reading both subsystems' code.
+
+### 16.2 The procedure
+For a task touching more than one subsystem:
+1. **Map the blast radius.** List every subsystem the task touches. Start from the
+   prompt's nouns, then expand via the subsystem catalog (§13.3) and seams — a
+   subsystem coupled by a seam to a named one is often in scope. For a *cross-cutting
+   concern* (tenant-scoping, money, audit-logging), the guardrail/seam that defines it
+   names its touchpoints. **Don't start coding until the radius is known** — an
+   unlisted subsystem is the classic incompleteness bug.
+2. **Gather laterally but shallow.** For each subsystem in the radius, read its
+   INDEX/summary + only the section this task implicates — not its whole doc set —
+   plus the **seam contract** between them. Breadth via edges, not full nodes.
+3. **Plan against the seams.** Your plan must honour each seam's contract (event
+   names, signatures, shared invariants). Spot-check (§15) the volatile contracts you
+   will code against.
+4. **Order by dependency.** Producer before consumer; data-model → api → UI. Record
+   the order in `STATE` / `implementation-map` so a compacted session resumes right.
+5. **Completeness check.** Before finishing, confirm every subsystem in the radius was
+   addressed or explicitly deferred (note deferrals in `STATE`/map). A missing
+   touchpoint is the defining failure of a cross-cutting change.
+
+### 16.3 Token framing
+Naive breadth = N subsystems × their full docs (blowup), or guessing the wiring
+(hallucination). Seam-based breadth = the edges (small, structured) + one relevant
+section per node + a narrow spot-check of the contracts you build on. That is how a
+multi-subsystem task stays both **complete** and **cheap**.

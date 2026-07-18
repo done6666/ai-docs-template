@@ -12,6 +12,21 @@ versioning: [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-07-17
+
+### Added
+- Seams & multi-subsystem tasks (`DOCS_SYSTEM.md §16`): a **seam** is a
+  cross-subsystem contract (event / internal API / shared invariant) recorded as
+  edge · contract · producer · consumer · enforcement path, owned by `architecture`
+  (a Seams table at Tier 2+, `architecture/_seams.md` at Tier 3). A task spanning
+  multiple subsystems is handled by mapping the blast radius, gathering each
+  subsystem shallow + the seam contract (edges, not full nodes), planning against
+  the seams, ordering by dependency, and a completeness check — so cross-cutting
+  changes stay both complete (no missed subsystem) and cheap (no reading everything
+  or guessing the wiring).
+- `architecture.md` template gains a Seams section; `/docs-audit` verifies seam
+  producer/consumer/enforcement paths (check 4b).
+
 ## [1.5.0] - 2026-07-17
 
 ### Added

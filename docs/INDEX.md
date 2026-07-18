@@ -70,6 +70,7 @@ template_source: <set on bootstrap>    # URL to pull upgrades from (used by /doc
 |---------------|------|
 | "What's left / last built / how was X built" | `implementation-map.md` (one read; avoids a code scan) |
 | Writing code in any area (before you start) | `guardrails.md` (that area's must/never + pitfalls + failed approaches) |
+| A task spanning multiple subsystems | `architecture` **Seams** + each touched subsystem's summary (edges, not full nodes — §16) |
 | UI / components | `conventions/ui-ux-guidelines.md`, the relevant `features/FEAT-*` |
 | An endpoint | `api/api-overview.md`, `api/endpoints.md` |
 | Persistence / schema | `data-model.md` |

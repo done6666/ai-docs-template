@@ -36,6 +36,7 @@ Apply these as they occur:
 | Feature completed | Mark spec `shipped`; fold summary into `STATE.md`; update `architecture.md` if structure changed; add a `CHANGELOG.md` `[Unreleased]` entry |
 | Dependency/tool added/removed/major-bumped | Update `docs/tech-stack.md` |
 | Module/boundary/data-flow change | Update `docs/architecture.md` (Components / Source map / Invariants) |
+| Cross-subsystem contract added/changed (event, internal API, shared invariant) | Record/update the **seam** (edge · contract · producer · consumer · enforcement path) in `architecture` Seams / `architecture/_seams.md` |
 | Route/endpoint added or changed | Update `docs/api/*` (create the `api/` area if first → Tier 1) |
 | Schema / data-model change | Update `docs/data-model.md` (create if first) |
 | Recurring non-obvious domain term (≥~3 uses) | Add to `docs/glossary.md` (create if first) |

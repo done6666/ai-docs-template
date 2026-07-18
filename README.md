@@ -34,6 +34,12 @@ onaran bir yapıya kavuşturur:
   INDEX satırı → `owns` → özet → bölüm), dokümanlar arasında kaybolmaz ve **kodda
   veya dokümanda okumadığı bir şeyi uydurmaz** ("belgelenmemiş" der). Detay:
   `DOCS_SYSTEM.md §14`.
+- **Bayat dokümana karşı kalibre güven** — oynak+yüksek-riskli gerçekleri, üzerine
+  kod yazmadan önce dokümanın işaret ettiği koda karşı **dar doğrular** (`§15`);
+  kör sadakatle yanlış kod yazmaz.
+- **Çok-alt-sistemli görevlerde yanal bağlam** — etki alanını haritalar, alt-sistem
+  *kenarlarındaki* sözleşmeleri (**seams**) okur (tüm düğümleri değil), tamlık
+  kontrolü yapar; ne token patlatır ne bağlantıyı uydurur (`§16`).
 
 Dil: kurallar, şablonlar ve yapı **İngilizce**; oluşturulan doküman *içeriği*
 projenizin diline göre yazılır. Bu README ve `/docs-init` röportajı **Türkçe**.
