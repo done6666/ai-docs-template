@@ -12,6 +12,16 @@ versioning: [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.14.0] - 2026-07-18
+
+### Added
+- **Template front-door cleanup** in `/docs-init`: a fresh "Use this template"
+  project no longer keeps the template's own README as its front page — Step 3
+  drafts a minimal project README (name, description, run instructions, pointer to
+  `docs/`), and offers to remove `README.en.md` and reset `CHANGELOG.md` to an
+  empty `[Unreleased]`. All through the existing single confirmation gate.
+  (Observation 3 from the 1.13.1 live end-to-end test.)
+
 ## [1.13.1] - 2026-07-18
 
 ### Fixed

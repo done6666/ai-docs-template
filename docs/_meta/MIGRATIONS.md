@@ -22,6 +22,23 @@ before writing (same safety gate as `/docs-adopt`).
 
 ---
 
+## 1.14.0 — Template front-door cleanup at bootstrap
+
+- **Machinery:** `/docs-init` Step 3 now drafts a **minimal project README** to
+  replace the template's own README when it's still in place (a "Use this
+  template" project otherwise keeps the docs-system's front page as its own), and
+  offers — through the same single Step-4 gate — to remove the template's
+  `README.en.md` variant and reset the root `CHANGELOG.md` to an empty
+  `[Unreleased]` (the template's release history lives upstream). Prompted by
+  observation 3 of the 1.13.1 live end-to-end test.
+- **Content migration:** None required. *Optional, for projects bootstrapped
+  earlier:* if your repo root still carries the template's README /
+  `README.en.md` / template release history in `CHANGELOG.md`, apply the same
+  cleanup by hand (or ask the agent to).
+- **Breaking:** no.
+
+---
+
 ## 1.13.1 — Skeleton fix from a live /docs-init test
 
 - **Machinery:** end-to-end test of `/docs-init` on a fresh Next.js scaffold

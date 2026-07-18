@@ -67,6 +67,14 @@ Populate, using `docs/_meta/templates/*` and the existing stubs:
   tone; tokens stay `<pending>` until real design decisions land). This is the one
   Tier-1 doc created at bootstrap — its trigger is "the project has a UI" (§4);
   list it in INDEX Areas.
+- **Template front-door cleanup:** if `README.md` is still the template's own
+  (it describes the docs system, not this project), draft a minimal project
+  README to replace it — display name (Q6), a one-paragraph description (Q1),
+  how to run it, and a one-line pointer to `docs/` ("docs are AI-maintained").
+  The README is the human-facing exception (§0). In the same pass, offer to
+  remove the template's `README.en.md` variant and to reset the root
+  `CHANGELOG.md` to an empty `[Unreleased]` — the template's release history
+  lives upstream, not in this project.
 - Leave `ADR-0001` as-is (it already records adopting the system).
 
 Write doc **content in the project's own language** (match the user's answers);
@@ -76,7 +84,9 @@ Respect size caps (`DOCS_SYSTEM.md §7`): STATE ≤ ~400 tokens, INDEX ≤ ~900.
 
 ## Step 4 — Preview & confirm (in the user's language)
 
-Before writing, show a compact preview: the file list + a 2–3 line summary of each.
+Before writing, show a compact preview: the file list + a 2–3 line summary of each,
+**including the front-door cleanup** (README replacement, `README.en.md` removal,
+`CHANGELOG.md` reset) as explicit lines — the single yes covers those too.
 Ask (in the user's language): **"Shall I create these?"** Wait for a yes. This is
 the one confirmation gate.
 
